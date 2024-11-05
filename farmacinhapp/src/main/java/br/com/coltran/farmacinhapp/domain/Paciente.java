@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(name = "pacientes")
 public class Paciente {
 
     @Id
@@ -15,6 +16,9 @@ public class Paciente {
     private String sobrenome;
     private int idade;
     private LocalDate dataNascimento;
+
+    @OneToMany(targetEntity = Farmacia.class, mappedBy = "paciente", fetch = FetchType.EAGER)
+    private List<Farmacia> farmacias;
 
 
     public Paciente() {
@@ -59,4 +63,14 @@ public class Paciente {
     public void setIdade(int idade) {
         this.idade = idade;
     }
+
+    public List<Farmacia> getFarmacias() {
+        return farmacias;
+    }
+
+    public void setFarmacias(List<Farmacia> farmacias) {
+        this.farmacias = farmacias;
+    }
+
+
 }

@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Table(name = "farmacias")
 public class Farmacia {
 
     @Id
@@ -14,6 +15,9 @@ public class Farmacia {
     private String nome;
     private LocalDate dataCriacao;
     private LocalDateTime dataAlteracao;
+
+    @Column
+    private Paciente paciente;
 
     public Farmacia() {
     }
@@ -48,5 +52,13 @@ public class Farmacia {
 
     public void setDataAlteracao(LocalDateTime dataAlteracao) {
         this.dataAlteracao = dataAlteracao;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 }
