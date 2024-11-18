@@ -1,17 +1,28 @@
 package br.com.coltran.farmacinhapp.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "remedios")
 public class Remedio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String nome;
+    private String informacoesAdicionais;
+    private Integer doses;
+    private Integer consumoDiario;
+    private LocalDateTime dataInicioTratamento;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime dataAlteracao;
+
+    @ManyToOne(targetEntity = Gramatura.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Gramatura gramatura;
+
+    @ManyToOne(targetEntity = Farmacia.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Farmacia farmacia;
 
     public Remedio() {
     }

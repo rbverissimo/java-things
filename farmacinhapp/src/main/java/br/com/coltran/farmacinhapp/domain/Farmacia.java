@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "farmacias")
@@ -16,8 +17,11 @@ public class Farmacia {
     private LocalDate dataCriacao;
     private LocalDateTime dataAlteracao;
 
-    @Column
+    @ManyToOne(targetEntity = Paciente.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Paciente paciente;
+
+    @OneToMany(targetEntity = Remedio.class, mappedBy = "farmacia", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Remedio> remedios;
 
     public Farmacia() {
     }
@@ -60,5 +64,13 @@ public class Farmacia {
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+    }
+
+    public Set<Remedio> getRemedios() {
+        return remedios;
+    }
+
+    public void setRemedios(Set<Remedio> remedios) {
+        this.remedios = remedios;
     }
 }
