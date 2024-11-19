@@ -1,6 +1,6 @@
 package br.com.coltran.farmacinhapp.domain;
 
-import br.com.coltran.farmacinhapp.security.User;
+import br.com.coltran.farmacinhapp.security.domain.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
