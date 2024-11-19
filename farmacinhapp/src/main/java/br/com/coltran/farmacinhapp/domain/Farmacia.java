@@ -1,9 +1,10 @@
 package br.com.coltran.farmacinhapp.domain;
 
+import br.com.coltran.farmacinhapp.security.User;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,6 +23,9 @@ public class Farmacia {
 
     @OneToMany(targetEntity = Remedio.class, mappedBy = "farmacia", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Remedio> remedios;
+
+    @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private User user;
 
     public Farmacia() {
     }
@@ -72,5 +76,13 @@ public class Farmacia {
 
     public void setRemedios(Set<Remedio> remedios) {
         this.remedios = remedios;
+    }
+
+    public User getUsuario() {
+        return user;
+    }
+
+    public void setUsuario(User user) {
+        this.user = user;
     }
 }
