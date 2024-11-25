@@ -2,8 +2,6 @@ package br.com.coltran.farmacinhapp.security.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class AuthController {
@@ -14,8 +12,8 @@ public class AuthController {
         return "login.html";
     }
 
-    @PostMapping("/auth_login")
-    public String authLogin(){
-        return "";
+    @GetMapping("/")
+    public String home(){
+        return "index";
     }
 }

@@ -1,6 +1,8 @@
 package br.com.coltran.farmacinhapp.security;
 
 import br.com.coltran.farmacinhapp.security.repositories.UserRepository;
+import br.com.coltran.farmacinhapp.security.services.UserService;
+import br.com.coltran.farmacinhapp.security.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +21,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig  {
 
+
+    @Autowired
+    private UserService userService;
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -28,11 +34,11 @@ public class SecurityConfig  {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .authorizeRequests()
-                .antMatchers("/js/**", "/css/**", "/img/**")
-                .permitAll()
-                .anyRequest().authenticated()
-                .and()
+                //.authorizeRequests()
+                //.antMatchers("/js/**", "/css/**", "/img/**")
+                //.permitAll()
+                //.anyRequest().authenticated()
+                //.and()
                 .formLogin()
                 .loginPage("/login")
                 .and()
@@ -49,14 +55,9 @@ public class SecurityConfig  {
     @Bean
     public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-        //auth.setUserDetailsService(userService);
+        auth.setUserDetailsService(userService);
         auth.setPasswordEncoder(passwordEncoder());
         return auth;
-    }
-
-    @Bean
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
     }
 
 }
