@@ -3,6 +3,7 @@ package br.com.coltran.farmacinhapp.security.domain;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -16,6 +17,7 @@ public class User {
     private String email;
     private String password;
     private String passwordConfirm;
+    private LocalDate dataNascimento;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",
@@ -85,5 +87,13 @@ public class User {
 
     public void setFarmacias(Set<Farmacia> farmacias) {
         this.farmacias = farmacias;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 }
