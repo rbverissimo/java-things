@@ -13,24 +13,24 @@
 </head>
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
     <main class="form-signin w-100 m-auto">
-        <form th:action="@{/register}" method="post">
+        <form th:action="@{/register-process}" method="post">
             <h1 class="h3 mb-3 fw-normal">Cadastre-se</h1>
 
             <div class="form-floating py-1">
-                <input type="text" class="form-control" id="floatingUsername" placeholder="Digite seu usuário:">
+                <input type="text" class="form-control" id="floatingUsername" name="username" placeholder="Digite seu usuário:">
                 <label for="floatingUsername">Nome:</label>
             </div>
             <div class="form-floating py-1">
-                <input type="email" class="form-control" id="floatingInput" placeholder="user@email.com.br">
+                <input type="email" class="form-control" id="floatingInput" name="email" placeholder="user@email.com.br">
                 <label for="floatingInput">E-mail:</label>
             </div>
             <div class="form-floating py-1">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="">
+                <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="">
                 <label for="floatingPassword">Senha:</label>
             </div>
 
             <div class="form-floating py-1">
-                <input type="password" class="form-control" id="floatingConfirmPassword" placeholder="">
+                <input type="password" class="form-control" id="floatingConfirmPassword" name="passwordConfirm" placeholder="">
                 <label for="floatingConfirmPassword">Repita sua senha:</label>
             </div>
             <div class="mt-2 mb-2">

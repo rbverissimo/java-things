@@ -5,6 +5,7 @@ public class UserRegDTO {
     private String username;
     private String email;
     private String password;
+    private String passwordConfirm;
 
     public UserRegDTO() {
     }
@@ -31,5 +32,13 @@ public class UserRegDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 }

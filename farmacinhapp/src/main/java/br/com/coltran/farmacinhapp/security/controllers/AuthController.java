@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -31,10 +32,12 @@ public class AuthController {
         return "register";
     }
 
-    @PostMapping("/register")
-    public String register(@RequestBody UserRegDTO userRegDTO, BindingResult bindingResult){
+    @PostMapping("/register-process")
+    public String registerProcess(@ModelAttribute UserRegDTO userRegDTO, BindingResult bindingResult){
 
         if(bindingResult.hasErrors()) return "register";
+        if(!userRegDTO.getPassword().equals(userRegDTO.getPasswordConfirm())) return "register";
+
         User user = new User();
         user.setEmail(userRegDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userRegDTO.getPassword()));
@@ -42,7 +45,7 @@ public class AuthController {
 
         userRepository.save(user);
 
-        return  "redirect:/login";
+        return "redirect:/login";
     }
 
     @GetMapping("/")
