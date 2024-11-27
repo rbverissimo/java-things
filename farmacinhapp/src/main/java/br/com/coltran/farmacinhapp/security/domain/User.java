@@ -17,6 +17,8 @@ public class User {
     private String email;
     private String password;
     private String passwordConfirm;
+
+    //TODO: tornar nullable
     private LocalDate dataNascimento;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

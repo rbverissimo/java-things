@@ -6,6 +6,7 @@ import br.com.coltran.farmacinhapp.security.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,15 +29,18 @@ public class AuthController {
     }
 
     @GetMapping("/register")
-    public String register(){
+    public String register(Model model){
+        model.addAttribute("userRegDTO", new UserRegDTO());
         return "register";
     }
 
     @PostMapping("/register-process")
-    public String registerProcess(@ModelAttribute UserRegDTO userRegDTO, BindingResult bindingResult){
+    public String registerProcess(@ModelAttribute UserRegDTO userRegDTO, BindingResult bindingResult, Model model){
 
-        if(bindingResult.hasErrors()) return "register";
-        if(!userRegDTO.getPassword().equals(userRegDTO.getPasswordConfirm())) return "register";
+        if(bindingResult.hasErrors()){
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "register";
+        }
 
         User user = new User();
         user.setEmail(userRegDTO.getEmail());
