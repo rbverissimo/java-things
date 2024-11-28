@@ -13,25 +13,30 @@
 </head>
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
     <main class="form-signin w-100 m-auto">
-        <form th:action="@{/register-process}" method="post">
+        <form th:action="@{/register-process}" th:object="${userRegDto}" method="post">
             <h1 class="h3 mb-3 fw-normal">Cadastre-se</h1>
 
             <div class="form-floating py-1">
                 <input type="text" class="form-control" id="floatingUsername" name="username" placeholder="Digite seu usuário:">
                 <label for="floatingUsername">Nome:</label>
+                <span th:if="${#fields.hasErrors('username')}" style="font-size: 0.8rem" th:errors="*{username}" class="text-danger"></span>
+
             </div>
             <div class="form-floating py-1">
                 <input type="email" class="form-control" id="floatingInput" name="email" placeholder="user@email.com.br">
                 <label for="floatingInput">E-mail:</label>
+                <span th:if="${#fields.hasErrors('email')}" style="font-size: 0.8rem" th:errors="*{email}" class="text-danger"></span>
             </div>
             <div class="form-floating py-1">
                 <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="">
                 <label for="floatingPassword">Senha:</label>
+                <span th:if="${#fields.hasErrors('password')}" style="font-size: 0.8rem" th:errors="*{password}" class="text-danger"></span>
             </div>
 
             <div class="form-floating py-1">
                 <input type="password" class="form-control" id="floatingConfirmPassword" name="passwordConfirm" placeholder="">
                 <label for="floatingConfirmPassword">Repita sua senha:</label>
+                <span th:if="${#fields.hasErrors('passwordConfirm')}" style="font-size: 0.8rem" th:errors="*{passwordConfirm}" class="text-danger"></span>
             </div>
             <div class="mt-2 mb-2">
                 <button class="w-100 btn btn-lg btn-primary" type="submit">Cadastrar</button>

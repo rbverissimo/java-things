@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
+
 @Controller
 public class AuthController {
 
@@ -29,13 +31,12 @@ public class AuthController {
     }
 
     @GetMapping("/register")
-    public String register(Model model){
-        model.addAttribute("userRegDTO", new UserRegDTO());
+    public String register(@ModelAttribute("userRegDto") UserRegDTO userRegDTO){
         return "register";
     }
 
     @PostMapping("/register-process")
-    public String registerProcess(@ModelAttribute UserRegDTO userRegDTO, BindingResult bindingResult, Model model){
+    public String registerProcess(@Valid @ModelAttribute("userRegDto") UserRegDTO userRegDTO, BindingResult bindingResult, Model model){
 
         if(bindingResult.hasErrors()){
             model.addAttribute("errors", bindingResult.getAllErrors());

@@ -4,12 +4,10 @@ import br.com.coltran.farmacinhapp.security.validators.PasswordMatchValidador;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
-@Target({ElementType.FIELD})
+@Documented
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = PasswordMatchValidador.class)
 public @interface PasswordMatch {
