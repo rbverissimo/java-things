@@ -11,4 +11,9 @@ public class MainController {
     public String error(){
         return "error.html";
     }
+
+    @GetMapping("/page")
+    public String page(){
+        return "page";
+    }
 }

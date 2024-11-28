@@ -35,7 +35,7 @@ public class AuthController {
         return "register";
     }
 
-    @PostMapping("/register-process")
+    @PostMapping("/register")
     public String registerProcess(@Valid @ModelAttribute("userRegDto") UserRegDTO userRegDTO, BindingResult bindingResult, Model model){
 
         if(bindingResult.hasErrors()){

@@ -13,7 +13,7 @@
 </head>
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
     <main class="form-signin w-100 m-auto">
-        <form th:action="@{/register-process}" th:object="${userRegDto}" method="post">
+        <form th:action="@{/register}" th:object="${userRegDto}" method="post">
             <h1 class="h3 mb-3 fw-normal">Cadastre-se</h1>
 
             <div th:if="${errors}">

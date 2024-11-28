@@ -38,7 +38,7 @@ public class SecurityConfig  {
 
         http
                 .authorizeRequests()
-                .antMatchers("/login", "/register", "/register-process", "/css/**", "/js/**").permitAll()
+                .antMatchers("/login", "/register", "/page", "/css/**", "/js/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -66,6 +66,7 @@ public class SecurityConfig  {
     @Bean
     WebSecurityCustomizer webSecurityCustomizer(){
         return web -> web.ignoring()
-                .requestMatchers(new AntPathRequestMatcher("/h2/**"));
+                .requestMatchers(new AntPathRequestMatcher("/h2/**"))
+                .requestMatchers(new AntPathRequestMatcher("/webjars/**"));
     }
 }
