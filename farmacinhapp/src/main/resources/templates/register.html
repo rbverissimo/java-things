@@ -16,6 +16,12 @@
         <form th:action="@{/register-process}" th:object="${userRegDto}" method="post">
             <h1 class="h3 mb-3 fw-normal">Cadastre-se</h1>
 
+            <div th:if="${errors}">
+                <div class="alert alert-danger alert-dismissible " role="alert" th:each="error : ${errors}" th:text="${error.defaultMessage}">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+
             <div class="form-floating py-1">
                 <input type="text" class="form-control" id="floatingUsername" name="username" placeholder="Digite seu usuário:">
                 <label for="floatingUsername">Nome:</label>
