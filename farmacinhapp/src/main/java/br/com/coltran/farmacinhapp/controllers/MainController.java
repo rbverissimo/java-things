@@ -12,6 +12,11 @@ public class MainController {
         return "error.html";
     }
 
+    @GetMapping("/home")
+    public String index(){
+        return "index";
+    }
+
     @GetMapping("/page")
     public String page(){
         return "page";

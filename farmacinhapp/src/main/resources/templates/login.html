@@ -7,15 +7,24 @@
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
 
     <main class="form-signin w-100 m-auto">
-        <form th:action="@{/auth_login}" method="post">
+
+
+        <form th:action="@{/login}" method="post">
             <h1 class="h3 mb-3 fw-normal">Olá, seja bem-vindo(a)</h1>
 
+            <div th:if="${param.error}">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span style="font-size: 0.8rem">Credenciais inválidas</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+
             <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" placeholder="user@email.com.br">
+                <input type="email" class="form-control" id="floatingInput" name="email" placeholder="user@email.com.br">
                 <label for="floatingInput">E-mail:</label>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="">
+                <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="">
                 <label for="floatingPassword">Senha:</label>
             </div>
 

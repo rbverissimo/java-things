@@ -2,6 +2,7 @@ package br.com.coltran.farmacinhapp.security.services;
 
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.security.dto.UserRegDTO;
+import br.com.coltran.farmacinhapp.security.repositories.RoleRepository;
 import br.com.coltran.farmacinhapp.security.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +19,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
 
     @Override
