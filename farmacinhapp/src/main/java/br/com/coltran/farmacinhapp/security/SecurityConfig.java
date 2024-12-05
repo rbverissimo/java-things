@@ -42,7 +42,7 @@ public class SecurityConfig  {
                 .antMatchers("/login", "/register", "/page", "/css/**", "/js/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin(form -> form.loginPage("/login").usernameParameter("email").defaultSuccessUrl("/home", true))
+                .formLogin(form -> form.loginPage("/login").usernameParameter("email").defaultSuccessUrl("/", true))
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")

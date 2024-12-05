@@ -8,12 +8,7 @@ public class MainController {
 
     @GetMapping("/error")
     public String error(){
-        return "error.html";
-    }
-
-    @GetMapping("/home")
-    public String index(){
-        return "index";
+        return "error";
     }
 
     @GetMapping("/page")
