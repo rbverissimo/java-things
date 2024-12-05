@@ -42,10 +42,8 @@ public class SecurityConfig  {
                 .antMatchers("/login", "/register", "/page", "/css/**", "/js/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home").usernameParameter("email"))
+                .formLogin(form -> form.loginPage("/login").usernameParameter("email").defaultSuccessUrl("/home", true))
                 .logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
                 .deleteCookies("JSESSIONID");
