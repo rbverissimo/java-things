@@ -1,7 +1,6 @@
 package br.com.coltran.farmacinhapp.security.domain;
 
 import br.com.coltran.farmacinhapp.domain.Farmacia;
-import org.springframework.context.annotation.Bean;
 
 import javax.persistence.*;
 import java.time.LocalDate;
