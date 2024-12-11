@@ -1,14 +1,8 @@
 package br.com.coltran.farmacinhapp.controllers;
 
-import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.repositories.FarmaciaRepository;
-import br.com.coltran.farmacinhapp.security.domain.User;
-import br.com.coltran.farmacinhapp.security.repositories.UserRepository;
 import br.com.coltran.farmacinhapp.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

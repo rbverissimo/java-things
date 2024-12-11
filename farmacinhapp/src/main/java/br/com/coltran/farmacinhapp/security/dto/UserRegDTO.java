@@ -1,7 +1,6 @@
 package br.com.coltran.farmacinhapp.security.dto;
 
 import br.com.coltran.farmacinhapp.security.validators.abstractions.PasswordMatch;
-import org.springframework.context.annotation.Bean;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
