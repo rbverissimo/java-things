@@ -1,35 +1,33 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="fragments/bootstrap :: bootstrap">
-</head>
+<head th:replace="fragments/bootstrap :: bootstrap"></head>
+<head th:insert="fragments/css :: styles"></head>
 <head th:insert="fragments/title :: title(title = 'Farmacinha - Lista de farmácias')"></head>
 <body>
     <header th:insert="fragments/navheader :: navheader">
     </header>
     <main>
         <div class="container-fluid">
+            <div class="d-flex justify-content-center">
+                <div class="main-container">
+                    <div th:if="${farmacias != null and !farmacias.isEmpty()}">
+                    </div>
 
-            <div th:if="${farmacias != null and !farmacias.isEmpty()}">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="farmacia : ${farmacias}">
-                        <td th:text="${farmacia.id}"></td>
-                        <td th:text="${farmacia.nome}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+                    <div th:unless="${farmacias != null and !farmacias.isEmpty()}">
+                        <div class="mt-5">
+                            <div class="card">
+                                <div class="card-header">
+                                    Nenhuma farmácia cadastrada
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">Para cadastrar uma farmácia, clique no botão logo abaixo.</p>
+                                    <a href="#" class="btn btn-primary">Cadastrar farmácia</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div th:unless="${farmacias != null and !farmacias.isEmpty()}">
-                <p>No farmacias found.</p>
-            </div>
-
         </div>
     </main>
 </body>
