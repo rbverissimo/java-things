@@ -4,6 +4,7 @@ import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.repositories.FarmaciaRepository;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.security.repositories.UserRepository;
+import br.com.coltran.farmacinhapp.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,16 +25,12 @@ public class FarmaciasController {
     private FarmaciaRepository farmaciaRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private AuthService authService;
 
     @GetMapping("/")
     public String index(Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        UserDetails userDetails = (UserDetails)  authentication.getPrincipal();
-        Optional<User> user = userRepository.findByEmail(userDetails.getUsername());
-
-        user.ifPresent(u -> {
+        authService.usuarioLogado().ifPresent(u -> {
             model.addAttribute("farmacias", u.getFarmacias());
         });
 

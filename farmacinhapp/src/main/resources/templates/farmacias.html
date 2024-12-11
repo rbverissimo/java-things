@@ -9,6 +9,27 @@
     <main>
         <div class="container-fluid">
 
+            <div th:if="${farmacias != null and !farmacias.isEmpty()}">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="farmacia : ${farmacias}">
+                        <td th:text="${farmacia.id}"></td>
+                        <td th:text="${farmacia.nome}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div th:unless="${farmacias != null and !farmacias.isEmpty()}">
+                <p>No farmacias found.</p>
+            </div>
+
         </div>
     </main>
 </body>
