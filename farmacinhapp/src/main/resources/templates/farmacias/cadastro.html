@@ -24,7 +24,13 @@
                                     <div class="accordion-body">
                                        <div class="row">
                                            <div class="col">
-                                               <input class="form-control" type="text" placeholder="Nome da farmácia" />
+                                               <div class="form-floating py-1">
+                                                   <input id="nome-farmacia" name="nome-farmacia"
+                                                          class="form-control"
+                                                          type="text"
+                                                          placeholder="Nome da farmácia" />
+                                                   <label for="nome-farmacia">Nome da farmácia</label>
+                                               </div>
                                            </div>
                                        </div>
                                     </div>
@@ -44,13 +50,18 @@
                                     <div class="accordion-body">
                                         <div class="row">
                                             <div class="col">
-                                                <input class="form-control" type="text" placeholder="Nome da paciente" />
+                                                <div class="form-floating py-1">
+                                                    <input class="form-control" type="text" id="nome-paciente" name="nome-paciente" placeholder="Nome do paciente" />
+                                                    <label for="nome-paciente">Nome do paciente</label>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <label for="nascimento-paciente">Data de nascimento:</label>
-                                                <input id="nascimento-paciente" type="date" class="form-control">
+                                                <div class="form-floating py-1">
+                                                    <input id="nascimento-paciente" name="nascimento-paciente" type="date" class="form-control"/>
+                                                    <label for="nascimento-paciente">Data de nascimento:</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
