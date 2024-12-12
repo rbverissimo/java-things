@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/bootstrap :: bootstrap"></head>
+<head th:insert="fragments/css :: styles"></head>
+<head th:insert="fragments/title :: title(title = 'Farmacinha - Cadastro da farmácia')"></head>
+<body>
+    <header th:insert="fragments/navheader :: navheader">
+    </header>
+    <main>
+        <div class="container-fluid">
+            <div class="d-flex justify-content-center">
+                <div class="main-container">
+                    <div class="mt-5 w-100" >
+                        <div class="accordion" id="cf-form">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-one-f-form">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#cf-form-one"
+                                            aria-expanded="true"
+                                            aria-controls="cf-form-one">
+                                        Dados da farmácia
+                                    </button>
+                                </h2>
+                                <div id="cf-form-one" class="accordion-collapse collapse show" aria-labelledby="heading-one-f-form" data-bs-parent="#heading-one-f-form">
+                                    <div class="accordion-body">
+                                       <div class="row">
+                                           <div class="col">
+                                               <input class="form-control" type="text" placeholder="Nome da farmácia" />
+                                           </div>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion" id="cp-form">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-one-p-form">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#cp-form-one"
+                                            aria-expanded="true"
+                                            aria-controls="cp-form-one">
+                                        Dados do paciente
+                                    </button>
+                                </h2>
+                                <div id="cp-form-one" class="accordion-collapse collapse show" aria-labelledby="heading-one-p-form" data-bs-parent="#heading-one-p-form">
+                                    <div class="accordion-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <input class="form-control" type="text" placeholder="Nome da paciente" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="nascimento-paciente">Data de nascimento:</label>
+                                                <input id="nascimento-paciente" type="date" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+
+    </script>
+</body>
+</html>

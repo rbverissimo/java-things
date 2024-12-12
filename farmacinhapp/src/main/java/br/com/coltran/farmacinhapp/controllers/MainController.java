@@ -10,9 +10,4 @@ public class MainController {
     public String error(){
         return "error";
     }
-
-    @GetMapping("/page")
-    public String page(){
-        return "page";
-    }
 }

@@ -1,10 +1,11 @@
 package br.com.coltran.farmacinhapp.controllers;
 
 import br.com.coltran.farmacinhapp.repositories.FarmaciaRepository;
-import br.com.coltran.farmacinhapp.services.AuthService;
+import br.com.coltran.farmacinhapp.security.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,11 +22,15 @@ public class FarmaciasController {
     @GetMapping("/")
     public String index(Model model){
 
-        authService.usuarioLogado().ifPresent(u -> {
-            model.addAttribute("farmacias", u.getFarmacias());
-        });
+        model.addAttribute("farmacias", authService.usuarioLogado().getFarmacias());
 
-        return "farmacias";
+        return "farmacias/index";
+    }
+
+    @GetMapping("/cadastro")
+    public String cadastro(){
+        if(!CollectionUtils.isEmpty(authService.usuarioLogado().getFarmacias()))  return "farmacias/index";
+        return "farmacias/cadastro";
     }
 
 }

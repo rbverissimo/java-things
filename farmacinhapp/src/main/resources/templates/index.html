@@ -7,7 +7,16 @@
     <header th:insert="fragments/navheader :: navheader">
     </header>
     <main>
-        
+        <div class="container mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <p>
+                        Olá,
+                        <span th:text="${usuario.username}"></span>.
+                    </p>
+                </div>
+            </div>
+        </div>
     </main>
 </body>
 </html>
