@@ -11,63 +11,71 @@
             <div class="d-flex justify-content-center">
                 <div class="main-container">
                     <div class="mt-5 w-100" >
-                        <div class="accordion" id="cf-form">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading-one-f-form">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#cf-form-one"
-                                            aria-expanded="true"
-                                            aria-controls="cf-form-one">
-                                        Dados da farmácia
-                                    </button>
-                                </h2>
-                                <div id="cf-form-one" class="accordion-collapse collapse show" aria-labelledby="heading-one-f-form" data-bs-parent="#heading-one-f-form">
-                                    <div class="accordion-body">
-                                       <div class="row">
-                                           <div class="col">
-                                               <div class="form-floating py-1">
-                                                   <input id="nome-farmacia" name="nome-farmacia"
-                                                          class="form-control"
-                                                          type="text"
-                                                          placeholder="Nome da farmácia" />
-                                                   <label for="nome-farmacia">Nome da farmácia</label>
-                                               </div>
-                                           </div>
-                                       </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion" id="cp-form">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading-one-p-form">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#cp-form-one"
-                                            aria-expanded="true"
-                                            aria-controls="cp-form-one">
-                                        Dados do paciente
-                                    </button>
-                                </h2>
-                                <div id="cp-form-one" class="accordion-collapse collapse show" aria-labelledby="heading-one-p-form" data-bs-parent="#heading-one-p-form">
-                                    <div class="accordion-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-floating py-1">
-                                                    <input class="form-control" type="text" id="nome-paciente" name="nome-paciente" placeholder="Nome do paciente" />
-                                                    <label for="nome-paciente">Nome do paciente</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-floating py-1">
-                                                    <input id="nascimento-paciente" name="nascimento-paciente" type="date" class="form-control"/>
-                                                    <label for="nascimento-paciente">Data de nascimento:</label>
+                        <form th:action="@{/farmacias/cadastro}" th:object="${farmacia}" method="POST">
+                            <div class="accordion" id="cf-form">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading-one-f-form">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#cf-form-one"
+                                                aria-expanded="true"
+                                                aria-controls="cf-form-one">
+                                            Dados da farmácia
+                                        </button>
+                                    </h2>
+                                    <div id="cf-form-one" class="accordion-collapse collapse show" aria-labelledby="heading-one-f-form" data-bs-parent="#heading-one-f-form">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-floating py-1">
+                                                        <input id="nome-farmacia" th:field="*{nome}"
+                                                               class="form-control"
+                                                               type="text"
+                                                               placeholder="Nome da farmácia" />
+                                                        <label for="nome-farmacia">Nome da farmácia</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="accordion" id="cp-form">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading-one-p-form">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#cp-form-one"
+                                                aria-expanded="true"
+                                                aria-controls="cp-form-one">
+                                            Dados do paciente
+                                        </button>
+                                    </h2>
+                                    <div id="cp-form-one" class="accordion-collapse collapse show"
+                                         aria-labelledby="heading-one-p-form" data-bs-parent="#heading-one-p-form">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-floating py-1">
+                                                        <input class="form-control" type="text" id="nome-paciente"
+                                                               th:field="*{paciente.nome}" placeholder="Nome do paciente" />
+                                                        <label for="nome-paciente">Nome do paciente</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-floating py-1">
+                                                        <input id="nascimento-paciente"
+                                                               th:field="*{paciente.dataNascimento}" type="date" class="form-control"/>
+                                                        <label for="nascimento-paciente">Data de nascimento:</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-2 d-flex justify-content-center w-50">
+                                <button class="btn btn-primary" type="submit">Cadastrar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
