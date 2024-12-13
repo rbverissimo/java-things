@@ -1,6 +1,8 @@
 package br.com.coltran.farmacinhapp.domain;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,6 +17,8 @@ public class Paciente {
     private String nome;
     private String sobrenome;
     private int idade;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
 
     @OneToMany(targetEntity = Farmacia.class, mappedBy = "paciente", fetch = FetchType.EAGER)

@@ -41,7 +41,7 @@ public class FarmaciasController {
 
         if(paciente != null){
            String inputNome =  paciente.getNome();
-           paciente.setNome(Arrays.stream(inputNome.split(" ")).skip(1).collect(Collectors.joining(" ")));
+           paciente.setSobrenome(Arrays.stream(inputNome.split(" ")).skip(1).collect(Collectors.joining(" ")));
         }
 
 
