@@ -27,7 +27,10 @@ public class User {
     private Set<Role> roles;
 
 
-    @OneToMany(targetEntity = Farmacia.class, mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_farmacias",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "farmacia_id"))
     public Set<Farmacia> farmacias;
 
     public User() {

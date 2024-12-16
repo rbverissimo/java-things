@@ -1,6 +1,7 @@
 package br.com.coltran.farmacinhapp.domain;
 
 
+import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;

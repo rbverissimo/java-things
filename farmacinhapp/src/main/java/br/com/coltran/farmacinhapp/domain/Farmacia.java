@@ -1,10 +1,9 @@
 package br.com.coltran.farmacinhapp.domain;
 
+import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import br.com.coltran.farmacinhapp.security.domain.User;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
@@ -16,6 +15,8 @@ public class Farmacia implements TableEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String nome;
+
+    private String bio;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime dataCriacao;
@@ -29,8 +30,11 @@ public class Farmacia implements TableEntity {
     @OneToMany(targetEntity = Remedio.class, mappedBy = "farmacia", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Remedio> remedios;
 
-    @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private User user;
+    @OneToMany(targetEntity = Lembrete.class, mappedBy = "farmacia", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Lembrete> lembretes;
+
+    @ManyToMany(mappedBy = "farmacias")
+    private Set<User> users;
 
     public Farmacia() {
     }
@@ -49,6 +53,14 @@ public class Farmacia implements TableEntity {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public ZonedDateTime  getDataCriacao() {
@@ -83,11 +95,15 @@ public class Farmacia implements TableEntity {
         this.remedios = remedios;
     }
 
-    public User getUsuario() {
-        return user;
+    public Set<Lembrete> getLembretes() {
+        return lembretes;
     }
 
-    public void setUsuario(User user) {
-        this.user = user;
+    public void setLembretes(Set<Lembrete> lembretes) {
+        this.lembretes = lembretes;
+    }
+
+    public Set<User> getUsers() {
+        return users;
     }
 }

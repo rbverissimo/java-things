@@ -1,4 +1,4 @@
-package br.com.coltran.farmacinhapp.domain;
+package br.com.coltran.farmacinhapp.domain.interfaces;
 
 import java.time.ZonedDateTime;
 

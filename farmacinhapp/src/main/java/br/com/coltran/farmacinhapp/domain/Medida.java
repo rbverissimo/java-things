@@ -1,5 +1,7 @@
 package br.com.coltran.farmacinhapp.domain;
 
+import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
+
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.Set;
