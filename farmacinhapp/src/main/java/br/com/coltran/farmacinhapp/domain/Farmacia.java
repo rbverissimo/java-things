@@ -5,18 +5,23 @@ import br.com.coltran.farmacinhapp.security.domain.User;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Entity
 @Table(name = "farmacias")
-public class Farmacia {
+public class Farmacia implements TableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String nome;
-    private LocalDate dataCriacao;
-    private LocalDateTime dataAlteracao;
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private ZonedDateTime dataCriacao;
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private ZonedDateTime  dataAlteracao;
 
     @ManyToOne(targetEntity = Paciente.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Paciente paciente;
@@ -46,19 +51,19 @@ public class Farmacia {
         this.nome = nome;
     }
 
-    public LocalDate getDataCriacao() {
+    public ZonedDateTime  getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(LocalDate dataCriacao) {
+    public void setDataCriacao(ZonedDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public LocalDateTime getDataAlteracao() {
+    public ZonedDateTime  getDataAlteracao() {
         return dataAlteracao;
     }
 
-    public void setDataAlteracao(LocalDateTime dataAlteracao) {
+    public void setDataAlteracao(ZonedDateTime dataAlteracao) {
         this.dataAlteracao = dataAlteracao;
     }
 

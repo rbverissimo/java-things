@@ -18,13 +18,10 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/farmacias")
-public class FarmaciasController {
+public class FarmaciasController extends ControllerCommons {
 
     @Autowired
     private FarmaciaRepository farmaciaRepository;
-
-    @Autowired
-    private AuthService authService;
 
     @GetMapping("/")
     public String index(Model model){
@@ -42,8 +39,10 @@ public class FarmaciasController {
         if(paciente != null){
            String inputNome =  paciente.getNome();
            paciente.setSobrenome(Arrays.stream(inputNome.split(" ")).skip(1).collect(Collectors.joining(" ")));
+           setCriacaoAlteracaoAgora(paciente);
         }
 
+        setCriacaoAlteracaoAgora(farmacia);
 
         farmaciaRepository.save(farmacia);
         return "redirect:/farmacias/";

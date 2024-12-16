@@ -1,12 +1,13 @@
 package br.com.coltran.farmacinhapp.domain;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
 
 @Entity()
 @Table(name = "gramaturas")
-public class Gramatura {
+public class Gramatura implements TableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,6 +20,12 @@ public class Gramatura {
 
     @OneToMany(targetEntity = Remedio.class, mappedBy = "gramatura", fetch = FetchType.EAGER)
     private List<Remedio> remedios;
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private ZonedDateTime dataCriacao;
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private ZonedDateTime dataAlteracao;
 
     public Gramatura() {
     }
@@ -61,5 +68,21 @@ public class Gramatura {
 
     public void setRemedios(List<Remedio> remedios) {
         this.remedios = remedios;
+    }
+
+    public ZonedDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(ZonedDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public ZonedDateTime getDataAlteracao() {
+        return dataAlteracao;
+    }
+
+    public void setDataAlteracao(ZonedDateTime dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
     }
 }

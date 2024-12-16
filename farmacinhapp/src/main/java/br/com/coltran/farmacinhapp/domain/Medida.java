@@ -1,11 +1,12 @@
 package br.com.coltran.farmacinhapp.domain;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Entity
 @Table(name = "medidas")
-public class Medida {
+public class Medida implements TableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,6 +19,12 @@ public class Medida {
             inverseJoinColumns = @JoinColumn(name = "gramatura_id")
     )
     private Set<Gramatura> gramaturas;
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private ZonedDateTime dataCriacao;
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private ZonedDateTime dataAlteracao;
 
     public Medida() {
     }
@@ -44,5 +51,21 @@ public class Medida {
 
     public void setGramaturas(Set<Gramatura> gramaturas) {
         this.gramaturas = gramaturas;
+    }
+
+    public ZonedDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(ZonedDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public ZonedDateTime getDataAlteracao() {
+        return dataAlteracao;
+    }
+
+    public void setDataAlteracao(ZonedDateTime dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
     }
 }
