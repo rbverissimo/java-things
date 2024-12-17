@@ -1,14 +1,16 @@
 package br.com.coltran.farmacinhapp.security.domain;
 
 import br.com.coltran.farmacinhapp.domain.Farmacia;
+import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-public class User {
+public class User implements TableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,6 +34,12 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "farmacia_id"))
     public Set<Farmacia> farmacias;
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    public ZonedDateTime dataCriacao;
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    public ZonedDateTime dataAlteracao;
 
     public User() {
     }
@@ -99,5 +107,23 @@ public class User {
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    @Override
+    public ZonedDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    @Override
+    public void setDataCriacao(ZonedDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public ZonedDateTime getDataAlteracao() {
+        return dataAlteracao;
+    }
+
+    public void setDataAlteracao(ZonedDateTime dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
     }
 }
