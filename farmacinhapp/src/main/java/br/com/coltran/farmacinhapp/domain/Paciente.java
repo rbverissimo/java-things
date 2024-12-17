@@ -5,6 +5,9 @@ import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -16,11 +19,15 @@ public class Paciente implements TableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @NotEmpty(message = "Digite um nome válido para o paciente")
     private String nome;
     private String sobrenome;
     private int idade;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Informe a data de nascimento do paciente")
+    @Past(message = "A data de nascimento deve ser uma data anterior à data de hoje")
     private LocalDate dataNascimento;
 
     @OneToMany(targetEntity = Farmacia.class, mappedBy = "paciente", fetch = FetchType.EAGER)

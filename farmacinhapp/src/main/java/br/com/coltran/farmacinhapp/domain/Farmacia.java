@@ -4,6 +4,8 @@ import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import br.com.coltran.farmacinhapp.security.domain.User;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
@@ -14,8 +16,11 @@ public class Farmacia implements TableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @NotEmpty(message = "Digite um nome válido para a farmácia")
     private String nome;
 
+    @NotEmpty(message = "Digite uma descrição válida para a farmácia")
     private String bio;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
@@ -24,6 +29,7 @@ public class Farmacia implements TableEntity {
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime  dataAlteracao;
 
+    @Valid
     @ManyToOne(targetEntity = Paciente.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Paciente paciente;
 
