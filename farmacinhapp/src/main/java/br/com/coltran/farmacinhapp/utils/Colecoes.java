@@ -1,6 +1,5 @@
 package br.com.coltran.farmacinhapp.utils;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 

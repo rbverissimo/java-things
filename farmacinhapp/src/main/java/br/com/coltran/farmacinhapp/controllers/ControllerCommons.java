@@ -2,7 +2,6 @@ package br.com.coltran.farmacinhapp.controllers;
 
 import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import br.com.coltran.farmacinhapp.security.services.AuthService;
-import br.com.coltran.farmacinhapp.utils.Colecoes;
 import br.com.coltran.farmacinhapp.utils.ZonedBrasilTime;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -2,7 +2,6 @@ package br.com.coltran.farmacinhapp.controllers;
 
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.Paciente;
-import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import br.com.coltran.farmacinhapp.repositories.FarmaciaRepository;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.utils.Colecoes;
