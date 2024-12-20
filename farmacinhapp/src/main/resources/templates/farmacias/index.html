@@ -12,12 +12,24 @@
                 <div class="main-container">
                     <div th:if="${farmacias != null and !farmacias.isEmpty()}">
                         <div class="mt-5">
-                            <div class="card">
-                                <div class="card-body">
+                            <div th:each="farmacia : ${farmacias}">
+                                <div class="card" style="width: 100%">
+                                    <div class="card-header">
+                                        <p th:text="${farmacia.nome}"></p>
+                                    </div>
+                                    <div class="card-body">
 
-                                </div>
-                                <div class="card-footer">
-                                    <a th:href="@{/remedios/cadastro}" class="btn btn-primary">Remédios</a>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <a th:href="@{'/remedios/i/{farmacia_id}'(farmacia_id=${farmacia.id})}" class="btn btn-primary">Remédios</a>
+                                            </div>
+                                            <div class="col-3">
+                                                <a th:href="@{'/pacientes/{id}'(id=${farmacia.paciente.id})}" class="btn btn-primary">Paciente</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
