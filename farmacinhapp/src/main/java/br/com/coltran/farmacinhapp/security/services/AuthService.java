@@ -21,7 +21,7 @@ public class AuthService {
         return userRepository.findByEmail(userDetails.getUsername()).get();
     }
 
-    public void cadastrarUsuario(User user){
+    public void salvarUsuario(User user){
         userRepository.save(user);
     }
 }

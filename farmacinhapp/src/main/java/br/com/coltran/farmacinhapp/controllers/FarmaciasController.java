@@ -2,8 +2,10 @@ package br.com.coltran.farmacinhapp.controllers;
 
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.Paciente;
+import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import br.com.coltran.farmacinhapp.repositories.FarmaciaRepository;
-import br.com.coltran.farmacinhapp.security.services.AuthService;
+import br.com.coltran.farmacinhapp.security.domain.User;
+import br.com.coltran.farmacinhapp.utils.Colecoes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -25,11 +28,12 @@ public class FarmaciasController extends ControllerCommons {
     @Autowired
     private FarmaciaRepository farmaciaRepository;
 
+    @Autowired
+    private Colecoes.SET<Farmacia> colecoesSet;
+
     @GetMapping("/")
     public String index(Model model){
-
         model.addAttribute("farmacias", authService.usuarioLogado().getFarmacias());
-
         return "farmacias/index";
     }
 
@@ -45,10 +49,13 @@ public class FarmaciasController extends ControllerCommons {
            paciente.setSobrenome(Arrays.stream(inputNome.split(" ")).skip(1).collect(Collectors.joining(" ")));
            setCriacaoAlteracaoAgora(paciente);
         }
-
         setCriacaoAlteracaoAgora(farmacia);
-
         farmaciaRepository.save(farmacia);
+
+        User usuario = authService.usuarioLogado();
+        colecoesSet.adicionar(usuario.getFarmacias(), farmacia);
+        authService.salvarUsuario(usuario);
+
         return "redirect:/farmacias/";
     }
 

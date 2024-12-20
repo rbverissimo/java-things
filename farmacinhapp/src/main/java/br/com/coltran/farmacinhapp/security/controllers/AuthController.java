@@ -2,7 +2,6 @@ package br.com.coltran.farmacinhapp.security.controllers;
 
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.security.dto.UserRegDTO;
-import br.com.coltran.farmacinhapp.security.repositories.UserRepository;
 import br.com.coltran.farmacinhapp.security.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 
@@ -49,7 +47,7 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(userRegDTO.getPassword()));
         user.setUsername(userRegDTO.getUsername());
 
-        authService.cadastrarUsuario(user);
+        authService.salvarUsuario(user);
 
         return "redirect:/login";
     }
