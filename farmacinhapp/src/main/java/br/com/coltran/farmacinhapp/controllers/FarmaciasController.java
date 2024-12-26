@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.Arrays;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -45,9 +44,12 @@ public class FarmaciasController extends ControllerCommons {
 
         if(paciente != null){
            String inputNome =  paciente.getNome();
+           paciente.setNome(inputNome.split(" ")[0]);
            paciente.setSobrenome(Arrays.stream(inputNome.split(" ")).skip(1).collect(Collectors.joining(" ")));
+           paciente.setIdade(datasUtils.calcularIdade(paciente.getDataNascimento()));
            setCriacaoAlteracaoAgora(paciente);
         }
+
         setCriacaoAlteracaoAgora(farmacia);
         farmaciaRepository.save(farmacia);
 

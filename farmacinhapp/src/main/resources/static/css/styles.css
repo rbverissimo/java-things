@@ -3,3 +3,8 @@
     width: 80%;
     justify-content: center;
 }
+
+.card-md {
+    min-width: 22rem;
+    max-width: 50rem;
+}

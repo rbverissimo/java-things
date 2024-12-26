@@ -12,21 +12,28 @@
                 <div class="main-container">
                     <div th:if="${farmacias != null and !farmacias.isEmpty()}">
                         <div class="mt-5">
-                            <div th:each="farmacia : ${farmacias}">
-                                <div class="card" style="width: 100%">
-                                    <div class="card-header">
-                                        <p th:text="${farmacia.nome}"></p>
-                                    </div>
-                                    <div class="card-body">
-
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <a th:href="@{'/remedios/i/{farmacia_id}'(farmacia_id=${farmacia.id})}" class="btn btn-primary">Remédios</a>
-                                            </div>
-                                            <div class="col-3">
-                                                <a th:href="@{'/pacientes/{id}'(id=${farmacia.paciente.id})}" class="btn btn-primary">Paciente</a>
+                            <div class="container">
+                                <div th:each="farmacia : ${farmacias}">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <p th:text="${farmacia.nome}"></p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p>Paciente: <span th:text="${farmacia.paciente.nome}"></span></p>
+                                                    <p th:text="${farmacia.bio}"></p>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="row d-flex justify-content-end">
+                                                        <div class="col-3" style="margin-right: 0.25rem">
+                                                            <a th:href="@{'/remedios/i/{farmacia_id}'(farmacia_id=${farmacia.id})}" class="btn btn-primary">Remédios</a>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <a th:href="@{'/pacientes/{id}'(id=${farmacia.paciente.id})}" class="btn btn-primary">Paciente</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
