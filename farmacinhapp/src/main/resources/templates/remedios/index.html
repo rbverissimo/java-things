@@ -7,6 +7,39 @@
     <header th:insert="fragments/navheader :: navheader"></header>
     <main>
 
+        <div class="container-fluid mt-5">
+            <div class="d-flex justify-content-center w-80">
+                <div th:if="${remedios != null and !remedios.isEmpty()}">
+                    <div th:each="remedio : ${remedios}">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <p th:text="${remedio.nome}"></p>
+                                    </div>
+                                    <div class="card-body">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:unless="${remedios != null and !remedios.isEmpty()}">
+                    <div class="card">
+                        <div class="card-header">
+                            Nenhuma farmácia remédio nesta farmácia
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Para cadastrar um remédio, clique no botão logo abaixo.</p>
+                            <a th:href="@{'/remedios/cadastro/{farmacia_id}'(farmacia_id=${farmaciaId})}" class="btn btn-primary">Cadastrar remédio</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 </body>
 </html>

@@ -25,10 +25,15 @@ public class RemediosController extends ControllerCommons {
     @GetMapping("/i/{farmacia_id}")
     @PreAuthorize("@farmaciaService.isResourceOwner(#farmaciaId)")
     public String indexByFarmacia(@PathVariable("farmacia_id") long farmaciaId, Pageable pageable, Model model){
-
         remedioService.getRemediosByFarmacia(farmaciaId, pageable);
-
+        model.addAttribute("farmaciaId", farmaciaId);
         return "remedios/index";
+    }
+
+    @GetMapping("/cadastro/{farmacia_id}")
+    @PreAuthorize("@farmaciasService.isResourceOwner(#farmaciaId)")
+    public String cadastroGET(Model model){
+        return "";
     }
 
     public String cadastroPOST(){
