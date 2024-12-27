@@ -6,7 +6,10 @@ import br.com.coltran.farmacinhapp.services.interfaces.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class PacienteService extends ServiceWorker<Paciente> implements RepositoryService {
 
 

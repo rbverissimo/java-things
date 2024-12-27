@@ -5,9 +5,14 @@ import br.com.coltran.farmacinhapp.repositories.RemedioRepository;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.services.interfaces.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class RemedioService extends ServiceWorker<Remedio> implements RepositoryService {
 
     @Autowired
@@ -27,6 +32,10 @@ public class RemedioService extends ServiceWorker<Remedio> implements Repository
     public Remedio save(Remedio remedio){
         timestamps(remedio);
         return remedioRepository.save(remedio);
+    }
+
+    public Page<Remedio> getRemediosByFarmacia(Long farmaciaId, Pageable pageable){
+        return remedioRepository.findAllByFarmacia(farmaciaId, pageable);
     }
 
 }
