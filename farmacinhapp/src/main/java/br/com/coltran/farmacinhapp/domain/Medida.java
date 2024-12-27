@@ -12,7 +12,7 @@ public class Medida implements TableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     private String descricao;
 
     @ManyToMany(targetEntity = Gramatura.class, cascade = CascadeType.ALL)
@@ -31,11 +31,11 @@ public class Medida implements TableEntity {
     public Medida() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

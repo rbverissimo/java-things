@@ -11,7 +11,7 @@ public class Remedio implements TableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     private String nome;
     private String informacoesAdicionais;
     private Integer doses;
@@ -35,11 +35,11 @@ public class Remedio implements TableEntity {
     public Remedio() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

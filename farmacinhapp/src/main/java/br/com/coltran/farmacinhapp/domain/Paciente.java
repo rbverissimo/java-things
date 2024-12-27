@@ -18,7 +18,7 @@ public class Paciente implements TableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     @NotEmpty(message = "Digite um nome válido para o paciente")
     private String nome;
@@ -43,11 +43,11 @@ public class Paciente implements TableEntity {
     public Paciente() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -20,7 +20,11 @@ public class RemediosController extends ControllerCommons {
     @GetMapping("/i/{farmacia_id}")
     @PreAuthorize("@farmaciaService.isResourceOwner(#farmaciaId)")
     public String indexByFarmacia(@PathVariable("farmacia_id") int farmaciaId, Model model){
-        model.addAttribute("farmacia", farmaciaService.findFarmaciaById(farmaciaId));
+        model.addAttribute("farmacia", farmaciaService.findResourceById(farmaciaId));
         return "remedios/index";
+    }
+
+    public String cadastroPOST(){
+        return "";
     }
 }

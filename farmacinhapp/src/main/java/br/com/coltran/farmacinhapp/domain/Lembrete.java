@@ -3,6 +3,7 @@ package br.com.coltran.farmacinhapp.domain;
 import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -13,6 +14,7 @@ public class Lembrete implements TableEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotEmpty(message = "Declare um conteúdo válido para salvar este lembrete")
     private String conteudo;
 
     @ManyToOne(targetEntity = Farmacia.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)

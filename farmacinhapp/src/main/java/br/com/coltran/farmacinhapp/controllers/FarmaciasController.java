@@ -4,6 +4,8 @@ import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.Paciente;
 import br.com.coltran.farmacinhapp.repositories.FarmaciaRepository;
 import br.com.coltran.farmacinhapp.security.domain.User;
+import br.com.coltran.farmacinhapp.services.FarmaciaService;
+import br.com.coltran.farmacinhapp.services.PacienteService;
 import br.com.coltran.farmacinhapp.utils.Colecoes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -24,7 +27,7 @@ import java.util.stream.Collectors;
 public class FarmaciasController extends ControllerCommons {
 
     @Autowired
-    private FarmaciaRepository farmaciaRepository;
+    private FarmaciaService farmaciaService;
 
     @Autowired
     private Colecoes.SET<Farmacia> colecoesSet;
@@ -40,18 +43,14 @@ public class FarmaciasController extends ControllerCommons {
 
         if(bindingResult.hasErrors()) return "/farmacias/cadastro";
 
-        Paciente paciente = farmacia.getPaciente();
+        Optional.ofNullable(farmacia.getPaciente()).ifPresent(p -> {
+            String inputNome =  p.getNome();
+            p.setNome(inputNome.split(" ")[0]);
+            p.setSobrenome(Arrays.stream(inputNome.split(" ")).skip(1).collect(Collectors.joining(" ")));
+            p.setIdade(datasUtils.calcularIdade(p.getDataNascimento()));
+        });
 
-        if(paciente != null){
-           String inputNome =  paciente.getNome();
-           paciente.setNome(inputNome.split(" ")[0]);
-           paciente.setSobrenome(Arrays.stream(inputNome.split(" ")).skip(1).collect(Collectors.joining(" ")));
-           paciente.setIdade(datasUtils.calcularIdade(paciente.getDataNascimento()));
-           setCriacaoAlteracaoAgora(paciente);
-        }
-
-        setCriacaoAlteracaoAgora(farmacia);
-        farmaciaRepository.save(farmacia);
+        farmaciaService.save(farmacia);
 
         User usuario = authService.usuarioLogado();
         colecoesSet.adicionar(usuario.getFarmacias(), farmacia);
