@@ -6,6 +6,10 @@ import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
+/**
+ * Este domínio mapeia de forma estática se a medida de uma gramtura é em mg ou g.
+ * O objeteivo deste mapeamento é facilitar nos cálculos das dosagens dos remédios.
+ */
 @Entity
 @Table(name = "medidas")
 public class Medida implements TableEntity {

@@ -1,5 +1,6 @@
 package br.com.coltran.farmacinhapp.controllers;
 
+import br.com.coltran.farmacinhapp.domain.Remedio;
 import br.com.coltran.farmacinhapp.services.FarmaciaService;
 import br.com.coltran.farmacinhapp.services.RemedioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/remedios")
@@ -32,11 +33,13 @@ public class RemediosController extends ControllerCommons {
 
     @GetMapping("/cadastro/{farmacia_id}")
     @PreAuthorize("@farmaciasService.isResourceOwner(#farmaciaId)")
-    public String cadastroGET(Model model){
-        return "";
+    public String cadastroGET(@PathVariable("farmacia_id") long farmaciaId, Model model){
+        return "remedios/cadastro";
     }
 
-    public String cadastroPOST(){
+    @PostMapping("/cadastro/{farmacia_id}")
+    @PreAuthorize("@farmaciasService.isResourceOwner(#farmacia_id)")
+    public String cadastroPOST(@PathVariable("farmacia_id") long farmaciaId, @Valid @ModelAttribute Remedio remedio){
         return "";
     }
 }

@@ -7,7 +7,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
 
-@Entity()
+@Entity
 @Table(name = "gramaturas")
 public class Gramatura implements TableEntity {
 
@@ -20,7 +20,7 @@ public class Gramatura implements TableEntity {
     @ManyToMany(targetEntity = Medida.class, mappedBy = "gramaturas")
     private Set<Medida> medidas;
 
-    @OneToMany(targetEntity = Remedio.class, mappedBy = "gramatura", fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Remedio.class, mappedBy = "gramatura", fetch = FetchType.LAZY)
     private List<Remedio> remedios;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")

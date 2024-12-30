@@ -29,6 +29,9 @@ public class Remedio implements TableEntity {
     @ManyToOne(targetEntity = Gramatura.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Gramatura gramatura;
 
+    @ManyToOne(targetEntity = TipoRemedio.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private TipoRemedio tipoRemedio;
+
     @ManyToOne(targetEntity = Farmacia.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Farmacia farmacia;
 
@@ -105,6 +108,14 @@ public class Remedio implements TableEntity {
 
     public void setGramatura(Gramatura gramatura) {
         this.gramatura = gramatura;
+    }
+
+    public TipoRemedio getTipoRemedio() {
+        return tipoRemedio;
+    }
+
+    public void setTipoRemedio(TipoRemedio tipoRemedio) {
+        this.tipoRemedio = tipoRemedio;
     }
 
     public Farmacia getFarmacia() {

@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RemedioRepository extends JpaRepository<Remedio, Long> {
 
-    @Query("SELECT r FROM REMEDIO r WHERE r.farmacia.id = :farmaciaId ")
-    Page<Remedio> findAllByFarmacia(@Param("farmaciaId") Long farmaciaId, Pageable pageable);
+    @Query("SELECT r FROM Remedio r WHERE r.farmacia.id =:farmaciaId ")
+    public Page<Remedio> findAllByFarmacia(@Param("farmaciaId") Long farmaciaId, Pageable pageable);
 }
