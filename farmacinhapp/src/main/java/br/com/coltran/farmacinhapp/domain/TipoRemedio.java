@@ -23,7 +23,10 @@ public class TipoRemedio implements TableEntity {
     @OneToMany(targetEntity = Remedio.class, mappedBy = "tipoRemedio", fetch = FetchType.LAZY)
     private List<Remedio> remedios;
 
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime dataCriacao;
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime dataAlteracao;
 
     @Override
