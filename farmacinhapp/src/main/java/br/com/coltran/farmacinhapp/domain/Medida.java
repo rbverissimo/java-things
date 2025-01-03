@@ -20,7 +20,7 @@ public class Medida implements TableEntity {
     private String descricao;
 
     @ManyToMany(targetEntity = Gramatura.class, cascade = CascadeType.ALL)
-    @JoinTable(name = "remedios_gramaturas",
+    @JoinTable(name = "medidas_gramaturas",
             joinColumns = @JoinColumn(name = "medida_id"),
             inverseJoinColumns = @JoinColumn(name = "gramatura_id")
     )
