@@ -1,11 +1,8 @@
 package br.com.coltran.farmacinhapp.controllers;
 
 import br.com.coltran.farmacinhapp.domain.Farmacia;
-import br.com.coltran.farmacinhapp.domain.Paciente;
-import br.com.coltran.farmacinhapp.repositories.FarmaciaRepository;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.services.FarmaciaService;
-import br.com.coltran.farmacinhapp.services.PacienteService;
 import br.com.coltran.farmacinhapp.utils.Colecoes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,7 +51,7 @@ public class FarmaciasController extends ControllerCommons {
 
         User usuario = authService.usuarioLogado();
         colecoesSet.adicionar(usuario.getFarmacias(), farmacia);
-        authService.salvarUsuario(usuario);
+        authService.alterarUsuario(usuario);
 
         return "redirect:/farmacias/";
     }

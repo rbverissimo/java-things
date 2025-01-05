@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/bootstrap :: bootstrap"></head>
+<head th:insert="fragments/css :: styles"></head>
+<head th:insert="fragments/title :: title(title = 'Farmacinha - Cadastro de remédios')"></head>
 <body>
+<header th:insert="fragments/navheader :: navheader">
+</header>
+<main>
+    <div class="container-fluid">
+        <div class="d-flex justify-content-center">
+            <div class="main-container">
+                <div class="mt-5 w-100" >
+                    <form th:action="@{'/remedios/cadastro/{farmacia_id}'(farmacia_id=${farmaciaId})}" th:object="${remedio}" method="POST">
 
+                        <div class="mt-2 d-flex justify-content-center">
+                            <div class="row w-100">
+                                <button class="btn btn-primary" type="submit">Cadastrar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+
+</script>
 </body>
 </html>

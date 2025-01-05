@@ -1,5 +1,6 @@
 package br.com.coltran.farmacinhapp.security.controllers;
 
+import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.security.dto.UserRegDTO;
 import br.com.coltran.farmacinhapp.security.services.AuthService;
@@ -15,14 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 
 @Controller
-public class AuthController {
+public class AuthController extends ControllerCommons {
 
 
     @Autowired
     private AuthService authService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public String login(){
@@ -41,13 +39,7 @@ public class AuthController {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "register";
         }
-
-        User user = new User();
-        user.setEmail(userRegDTO.getEmail());
-        user.setPassword(passwordEncoder.encode(userRegDTO.getPassword()));
-        user.setUsername(userRegDTO.getUsername());
-
-        authService.salvarUsuario(user);
+        authService.salvar(userRegDTO);
 
         return "redirect:/login";
     }

@@ -32,14 +32,16 @@ public class RemediosController extends ControllerCommons {
     }
 
     @GetMapping("/cadastro/{farmacia_id}")
-    @PreAuthorize("@farmaciasService.isResourceOwner(#farmaciaId)")
+    @PreAuthorize("@farmaciaService.isResourceOwner(#farmaciaId)")
     public String cadastroGET(@PathVariable("farmacia_id") long farmaciaId, Model model){
+        model.addAttribute("farmaciaId", farmaciaId);
         return "remedios/cadastro";
     }
 
     @PostMapping("/cadastro/{farmacia_id}")
-    @PreAuthorize("@farmaciasService.isResourceOwner(#farmacia_id)")
+    @PreAuthorize("@farmaciaService.isResourceOwner(#farmacia_id)")
     public String cadastroPOST(@PathVariable("farmacia_id") long farmaciaId, @Valid @ModelAttribute Remedio remedio){
+
         return "";
     }
 }
