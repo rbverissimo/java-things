@@ -8,9 +8,9 @@
     </header>
     <main>
         <div class="container-fluid">
-            <div class="d-flex justify-content-center w-80">
-                <div th:if="${farmacias != null and !farmacias.isEmpty()}">
-                    <div class="mt-5">
+            <div class="d-flex justify-content-center">
+                <div class="main-container">
+                    <div class="mt-5 w-100" th:if="${farmacias != null and !farmacias.isEmpty()}">
                         <div th:each="farmacia : ${farmacias}">
                             <div class="row">
                                 <div class="col-12">
@@ -23,12 +23,12 @@
                                             <p th:text="${farmacia.bio}"></p>
                                         </div>
                                         <div class="card-footer">
-                                            <div class="row d-flex justify-content-end">
-                                                <div class="col-3">
-                                                    <a th:href="@{'/remedios/i/{farmacia_id}'(farmacia_id=${farmacia.id})}" class="btn btn-primary">Remédios</a>
+                                            <div class="row d-flex w-100 justify-content-end">
+                                                <div class="col-4 gx-1">
+                                                    <a th:href="@{'/remedios/i/{farmacia_id}'(farmacia_id=${farmacia.id})}" class="btn btn-primary w-100">Remédios</a>
                                                 </div>
-                                                <div class="col-3">
-                                                    <a th:href="@{'/pacientes/{id}'(id=${farmacia.paciente.id})}" class="btn btn-primary">Paciente</a>
+                                                <div class="col-4">
+                                                    <a th:href="@{'/pacientes/{id}'(id=${farmacia.paciente.id})}" class="btn btn-primary w-100">Paciente</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -37,21 +37,21 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div th:unless="${farmacias != null and !farmacias.isEmpty()}">
-                    <div class="mt-5">
-                        <div class="card">
-                            <div class="card-header">
-                                Nenhuma farmácia cadastrada
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">Para cadastrar uma farmácia, clique no botão logo abaixo.</p>
-                                <a th:href="@{/farmacias/cadastro}" class="btn btn-primary">Cadastrar farmácia</a>
+                    <div th:unless="${farmacias != null and !farmacias.isEmpty()}">
+                        <div class="mt-5 w-100">
+                            <div class="card">
+                                <div class="card-header">
+                                    Nenhuma farmácia cadastrada
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">Para cadastrar uma farmácia, clique no botão logo abaixo.</p>
+                                    <a th:href="@{/farmacias/cadastro}" class="btn btn-primary">Cadastrar farmácia</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </main>

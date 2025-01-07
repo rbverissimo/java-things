@@ -1,10 +1,28 @@
 .main-container {
     display: flex;
-    width: 80%;
+    width: 95%;
     justify-content: center;
 }
 
 .card-md {
     min-width: 22rem;
     max-width: 50rem;
+}
+
+@media(min-width: 768px) {
+    .main-container {
+        width: 80%;
+    }
+}
+
+@media(min-width: 992px) {
+    .main-container {
+        width: 62%
+    }
+}
+
+@media(min-width: 1200px) {
+    .main-container {
+        width: 50%
+    }
 }

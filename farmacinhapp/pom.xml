@@ -122,11 +122,23 @@
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>8.5.13</version>
 				<configuration>
+					<url>jdbc:h2:file:~/spring-boot-h2-db</url>
+					<user>sa</user>
+					<password> </password>
 					<locations>
 						<location>classpath:db/migration</location>
 					</locations>
 					<cleanDisabled>false</cleanDisabled>
 				</configuration>
+				<executions>
+					<execution>
+						<id>repair-db</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>repair</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
