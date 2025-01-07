@@ -1,10 +1,10 @@
 package br.com.coltran.farmacinhapp.domain;
 
 import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,14 +14,17 @@ public class Gramatura implements TableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Nullable
     private String principioAtivo;
+
     private Double valorGramatura;
 
     @ManyToMany(targetEntity = Medida.class, mappedBy = "gramaturas")
     private Set<Medida> medidas;
 
-    @OneToMany(targetEntity = Remedio.class, mappedBy = "gramatura", fetch = FetchType.LAZY)
-    private List<Remedio> remedios;
+    @ManyToMany(targetEntity = Remedio.class, mappedBy = "gramaturas", fetch = FetchType.LAZY)
+    private Set<Remedio> remedios;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime dataCriacao;
@@ -64,11 +67,11 @@ public class Gramatura implements TableEntity {
         this.medidas = medidas;
     }
 
-    public List<Remedio> getRemedios() {
+    public Set<Remedio> getRemedios() {
         return remedios;
     }
 
-    public void setRemedios(List<Remedio> remedios) {
+    public void setRemedios(Set<Remedio> remedios) {
         this.remedios = remedios;
     }
 

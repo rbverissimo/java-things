@@ -17,7 +17,10 @@ public class Medida implements TableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     private String descricao;
+
+    private String abreviacao;
 
     @ManyToMany(targetEntity = Gramatura.class, cascade = CascadeType.ALL)
     @JoinTable(name = "medidas_gramaturas",
@@ -49,6 +52,14 @@ public class Medida implements TableEntity {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getAbreviacao() {
+        return abreviacao;
+    }
+
+    public void setAbreviacao(String abreviacao) {
+        this.abreviacao = abreviacao;
     }
 
     public Set<Gramatura> getGramaturas() {

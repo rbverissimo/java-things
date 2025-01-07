@@ -1,6 +1,8 @@
 package br.com.coltran.farmacinhapp.controllers;
 
 import br.com.coltran.farmacinhapp.domain.Remedio;
+import br.com.coltran.farmacinhapp.repositories.MedidaRepository;
+import br.com.coltran.farmacinhapp.repositories.TipoRemedioRepository;
 import br.com.coltran.farmacinhapp.services.FarmaciaService;
 import br.com.coltran.farmacinhapp.services.RemedioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,12 @@ public class RemediosController extends ControllerCommons {
     @Autowired
     private FarmaciaService farmaciaService;
 
+    @Autowired
+    private TipoRemedioRepository tipoRemedioRepository;
+
+    @Autowired
+    private MedidaRepository medidaRepository;
+
     @GetMapping("/i/{farmacia_id}")
     @PreAuthorize("@farmaciaService.isResourceOwner(#farmaciaId)")
     public String indexByFarmacia(@PathVariable("farmacia_id") long farmaciaId, Pageable pageable, Model model){
@@ -35,6 +43,8 @@ public class RemediosController extends ControllerCommons {
     @PreAuthorize("@farmaciaService.isResourceOwner(#farmaciaId)")
     public String cadastroGET(@PathVariable("farmacia_id") long farmaciaId, Model model){
         model.addAttribute("farmaciaId", farmaciaId);
+        model.addAttribute("tiposRemedio", tipoRemedioRepository.findAll());
+        model.addAttribute("medidas", medidaRepository.findAll());
         return "remedios/cadastro";
     }
 

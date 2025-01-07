@@ -4,6 +4,7 @@ import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "remedios")
@@ -26,8 +27,12 @@ public class Remedio implements TableEntity {
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime dataAlteracao;
 
-    @ManyToOne(targetEntity = Gramatura.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Gramatura gramatura;
+    @ManyToMany(targetEntity = Gramatura.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "remedios_gramaturas",
+        joinColumns = @JoinColumn(name = "remedio_id"),
+        inverseJoinColumns = @JoinColumn(name = "gramatura_id")
+    )
+    private Set<Gramatura> gramaturas;
 
     @ManyToOne(targetEntity = TipoRemedio.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private TipoRemedio tipoRemedio;
@@ -102,12 +107,12 @@ public class Remedio implements TableEntity {
         this.dataAlteracao = dataAlteracao;
     }
 
-    public Gramatura getGramatura() {
-        return gramatura;
+    public Set<Gramatura> getGramaturas() {
+        return gramaturas;
     }
 
-    public void setGramatura(Gramatura gramatura) {
-        this.gramatura = gramatura;
+    public void setGramaturas(Set<Gramatura> gramaturas) {
+        this.gramaturas = gramaturas;
     }
 
     public TipoRemedio getTipoRemedio() {
