@@ -1,6 +1,7 @@
 package br.com.coltran.farmacinhapp.domain;
 
 import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -14,6 +15,8 @@ public class Remedio implements TableEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String nome;
+
+    @Nullable
     private String informacoesAdicionais;
     private Integer doses;
     private Integer consumoDiario;

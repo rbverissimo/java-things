@@ -13,6 +13,20 @@
                 <div class="mt-5 w-100" >
                     <form th:action="@{'/remedios/cadastro/{farmacia_id}'(farmacia_id=${farmaciaId})}" th:object="${remedio}" method="POST">
 
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-floating py-1">
+                                    <input id="nome-remedio" th:field="*{nome}"
+                                           class="form-control"
+                                           type="text"
+                                           placeholder="Dorflex, Cataflam, etc" />
+                                    <label for="nome-remedio">Nome do remédio</label>
+                                    <span th:if="${#fields.hasErrors('nome')}" style="font-size: 0.8rem"
+                                          th:errors="*{nome}" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="mt-2 d-flex justify-content-center">
                             <div class="row w-100">
                                 <button class="btn btn-primary" type="submit">Cadastrar</button>
