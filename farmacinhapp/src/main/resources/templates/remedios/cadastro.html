@@ -10,36 +10,59 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-center">
             <div class="main-container">
-                <div class="mt-5 w-100" >
-                    <form th:action="@{'/remedios/cadastro/{farmacia_id}'(farmacia_id=${farmaciaId})}" th:object="${remedio}" method="POST">
+                <div id="app">
+                    <div class="mt-5 w-100" >
+                        <form th:action="@{'/remedios/cadastro/{farmacia_id}'(farmacia_id=${farmaciaId})}" th:object="${remedio}" method="POST">
 
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-floating py-1">
-                                    <input id="nome-remedio" th:field="*{nome}"
-                                           class="form-control"
-                                           type="text"
-                                           placeholder="Dorflex, Cataflam, etc" />
-                                    <label for="nome-remedio">Nome do remédio</label>
-                                    <span th:if="${#fields.hasErrors('nome')}" style="font-size: 0.8rem"
-                                          th:errors="*{nome}" class="text-danger"></span>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-floating py-1">
+                                        <input id="nome-remedio" th:field="*{nome}"
+                                               class="form-control"
+                                               type="text"
+                                               placeholder="Dorflex, Cataflam, etc" />
+                                        <label for="nome-remedio">Nome do remédio</label>
+                                        <span th:if="${#fields.hasErrors('nome')}" class="text-danger fs-08rem"
+                                              th:errors="*{nome}"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-floating py-1">
+                                        <input id="consumo-diario" th:field="*{consumoDiario}"
+                                               type="number"
+                                               class="form-control"
+                                               placeholder="Defina um número para o consumo diário de doses"
+                                        >
+                                        <label for="consumo-diario">Consumo diário</label>
+                                        <span th:if="${#fields.hasErrors('consumoDiario')}"
+                                              th:errors="*{consumoDiario}" class="text-danger fs-08rem "></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="mt-2 d-flex justify-content-center">
-                            <div class="row w-100">
-                                <button class="btn btn-primary" type="submit">Cadastrar</button>
+                            <div class="mt-2 d-flex justify-content-center">
+                                <div class="row w-100">
+                                    <button class="btn btn-primary" type="submit">Cadastrar</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
-<script>
-
+<script th:inline="javascript">
+    const {createApp, ref} = Vue;
+    const app = createApp({
+        setup(){
+            const vueHello = ref('O Vue3 está rodando');
+            return {
+                vueHello
+            };
+        }
+    });
+    app.mount('#app');
 </script>
 </body>
 </html>

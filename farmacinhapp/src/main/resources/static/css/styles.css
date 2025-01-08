@@ -4,9 +4,20 @@
     justify-content: center;
 }
 
+.fs-08rem {
+    font-size: 0.8rem;
+}
+
 .card-md {
     min-width: 22rem;
     max-width: 50rem;
+}
+
+@media(max-width: 767px){
+
+    [class*="col-"] {
+          width: 100%;
+    }
 }
 
 @media(min-width: 768px) {
