@@ -20,6 +20,8 @@
                                         <input id="nome-remedio" th:field="*{nome}"
                                                class="form-control"
                                                type="text"
+                                               v-model="nomeRemedioBusca"
+                                               @keyup="buscarNomesRemedio"
                                                placeholder="Dorflex, Cataflam, etc" />
                                         <label for="nome-remedio">Nome do remédio</label>
                                         <span th:if="${#fields.hasErrors('nome')}" class="text-danger fs-08rem"
@@ -53,16 +55,50 @@
     </div>
 </main>
 <script th:inline="javascript">
-    const {createApp, ref} = Vue;
+    /*<![CDATA[*/
+    const {createApp, ref, watch } = Vue;
+
+    const serverData = {
+        farmacia_id: /*[[${farmaciaId}]]*/ null
+    };
+
     const app = createApp({
         setup(){
-            const vueHello = ref('O Vue3 está rodando');
+            const nomeRemedioBusca = ref('');
+            const resultadoNomes = ref([]);
+            const debouncedNomeRemedioBusca = ref('');
+
+            const buscarNomesRemedio = () => {
+                debouncedNomeRemedioBusca.value = nomeRemedioBusca.value;
+            }
+
+            const farmacia_id = serverData.farmacia_id;
+
+            watch(debouncedNomeRemedioBusca, async (novaBusca) => {
+                if(novaBusca.length < 3){
+                    resultadoNomes.value = [];
+                    return;
+                }
+
+                try {
+                    const response = await fetch(/*[[@{/api/remedios/{farmacia_id}(farmacia_id=${__${farmacia_id}__})}]]*/ `/api/remedios/${farmacia_id}?nome=` + novaBusca);
+                    if(!response.ok) throw new Error(`Erro HTTP! Status: ${response.status}`);
+                    const data = await response.json();
+                    console.log(data);
+                } catch (error){
+                    console.error('Erro ao buscar informações sobre o nome de remédios', error);
+                }
+            });
+
             return {
-                vueHello
+                nomeRemedioBusca,
+                resultadoNomes,
+                buscarNomesRemedio
             };
         }
     });
     app.mount('#app');
+    /*]]>*/
 </script>
 </body>
 </html>

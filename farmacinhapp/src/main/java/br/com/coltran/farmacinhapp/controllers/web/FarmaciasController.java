@@ -1,5 +1,6 @@
-package br.com.coltran.farmacinhapp.controllers;
+package br.com.coltran.farmacinhapp.controllers.web;
 
+import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.services.FarmaciaService;

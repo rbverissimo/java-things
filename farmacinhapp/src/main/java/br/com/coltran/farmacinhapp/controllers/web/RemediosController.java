@@ -1,5 +1,6 @@
-package br.com.coltran.farmacinhapp.controllers;
+package br.com.coltran.farmacinhapp.controllers.web;
 
+import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.domain.Remedio;
 import br.com.coltran.farmacinhapp.repositories.MedidaRepository;
 import br.com.coltran.farmacinhapp.repositories.TipoRemedioRepository;

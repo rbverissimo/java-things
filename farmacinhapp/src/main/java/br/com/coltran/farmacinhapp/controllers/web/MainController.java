@@ -1,4 +1,4 @@
-package br.com.coltran.farmacinhapp.controllers;
+package br.com.coltran.farmacinhapp.controllers.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
