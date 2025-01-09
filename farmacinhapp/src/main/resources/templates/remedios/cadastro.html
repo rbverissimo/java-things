@@ -41,6 +41,31 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-7">
+                                    <div class="form-floating py-1">
+                                        <select id="tipo-remedio" class="form-select" th:field="*{tipoRemedio}">
+                                            <option value="">Selecione um tipo</option>
+                                            <option th:each="tpRemedio : ${tiposRemedio}" th:value="${tpRemedio.id}" th:text="${tpRemedio.tipo}"
+                                                    th:selected="${tpRemedio.id == selectedValue}"></option>
+                                        </select>
+                                        <label for="tipo-remedio">Tipo</label>
+                                        <span th:if="${#fields.hasErrors('tipoRemedio')}"
+                                              th:errors="*{tipoRemedio}" class="text-danger fs-08rem "></span>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="form-floating py-1">
+                                        <input id="doses" th:field="*{doses}"
+                                               type="number"
+                                               class="form-control"
+                                        >
+                                        <label for="doses">Doses segundo a bula</label>
+                                        <span th:if="${#fields.hasErrors('doses')}"
+                                              th:errors="*{doses}" class="text-danger fs-08rem "></span>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="mt-2 d-flex justify-content-center">
                                 <div class="row w-100">
