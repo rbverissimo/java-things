@@ -38,6 +38,10 @@ public class RemedioService extends ServiceWorker<Remedio> implements Repository
         return remedioRepository.findAllByFarmacia(farmaciaId, pageable);
     }
 
+    public Page<Remedio> getRemediosByNome(Long farmaciaId, String nome, Pageable pageable){
+        return remedioRepository.findByNome(farmaciaId, nome, pageable);
+    }
+
     private void calcularDoses(Remedio remedio){
 
     }
