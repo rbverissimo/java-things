@@ -66,7 +66,17 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-floating py-1">
+                                        <input id="data-inicio-tratamento"
+                                               th:field="*{dataInicioTratamento}" type="date" class="form-control"/>
+                                        <label for="data-inicio-tratamento">Início do tratamento:</label>
+                                        <span th:if="${#fields.hasErrors('dataInicioTratamento')}" style="font-size: 0.8rem"
+                                              th:errors="*{dataInicioTratamento}" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="mt-2 d-flex justify-content-center">
                                 <div class="row w-100">
                                     <button class="btn btn-primary" type="submit">Cadastrar</button>

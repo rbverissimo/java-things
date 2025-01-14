@@ -29,6 +29,9 @@ public class TipoRemedio implements TableEntity {
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime dataAlteracao;
 
+    public TipoRemedio() {
+    }
+
     @Override
     public long getId() {
         return id;
