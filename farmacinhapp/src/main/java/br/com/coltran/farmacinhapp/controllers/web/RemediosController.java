@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -51,8 +52,9 @@ public class RemediosController extends ControllerCommons {
 
     @PostMapping("/cadastro/{farmacia_id}")
     @PreAuthorize("@farmaciaService.isResourceOwner(#farmacia_id)")
-    public String cadastroPOST(@PathVariable("farmacia_id") long farmaciaId, @Valid @ModelAttribute Remedio remedio){
-
+    public String cadastroPOST(@PathVariable("farmacia_id") long farmaciaId, BindingResult bindingResult, @Valid @ModelAttribute Remedio remedio){
+        if(bindingResult.hasErrors()) return "/cadastros/"+farmaciaId+"/";
+        remedioService.save(remedio);
         return "";
     }
 }

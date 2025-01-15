@@ -4,6 +4,10 @@ import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Positive;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
@@ -18,10 +22,17 @@ public class Remedio implements TableEntity {
 
     @Nullable
     private String informacoesAdicionais;
+
+    @NotNull(message = "Informe o número de doses")
+    @Positive(message = "O número de doses deve ser um valor acima de 0")
     private Integer doses;
+
+    @NotNull(message = "Informe o consumo diário das doses")
+    @Positive(message = "O consumo diário deve ser um valor acima de 0")
     private Integer consumoDiario;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Past(message = "A data de início de tratamento deve ser anterior à data de hoje")
     private ZonedDateTime dataInicioTratamento;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
@@ -37,6 +48,7 @@ public class Remedio implements TableEntity {
     )
     private Set<Gramatura> gramaturas;
 
+    @NotNull(message = "Informe um tipo válido")
     @ManyToOne(targetEntity = TipoRemedio.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private TipoRemedio tipoRemedio;
 
