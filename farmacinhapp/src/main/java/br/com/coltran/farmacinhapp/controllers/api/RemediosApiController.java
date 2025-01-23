@@ -7,6 +7,7 @@ import br.com.coltran.farmacinhapp.services.RemedioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,10 +27,9 @@ public class RemediosApiController extends ControllerCommons {
     @GetMapping("/{farmacia_id}")
     @PreAuthorize("@farmaciaService.isResourceOwner(#farmaciaId)")
     public ResponseEntity<Page<Remedio>> index(@PathVariable("farmacia_id") long farmaciaId,
-                                @RequestParam(required = false) String nome,
-                                @RequestParam(defaultValue = "0") int page,
-                                @RequestParam(defaultValue = "12") int size){
-        Page<Remedio> remedios = remedioService.getRemediosByNome(farmaciaId, nome, Pageable.ofSize(size).withPage(page));
+                                               @RequestParam(required = false) String nome,
+                                               @PageableDefault(size = 12, page = 0) Pageable pageable){
+        Page<Remedio> remedios = remedioService.getRemediosByNome(farmaciaId, nome, pageable);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(remedios);
     }
 
