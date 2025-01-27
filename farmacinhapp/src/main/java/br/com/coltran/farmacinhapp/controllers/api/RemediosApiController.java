@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,7 +31,7 @@ public class RemediosApiController extends ControllerCommons {
                                                @RequestParam(required = false) String nome,
                                                @PageableDefault(size = 12, page = 0) Pageable pageable){
         Page<Remedio> remedios = remedioService.getRemediosByNome(farmaciaId, nome, pageable);
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(remedios);
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(remedios);
     }
 
 

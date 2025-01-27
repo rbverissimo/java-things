@@ -17,8 +17,8 @@ public class PacienteService extends ServiceWorker<Paciente> implements Reposito
     PacienteRepository pacienteRepository;
 
     @Override
-    public Paciente findResourceById(int pacienteId) {
-        return pacienteRepository.findById((long) pacienteId).orElse(null);
+    public Paciente findResourceById(long pacienteId) {
+        return pacienteRepository.findById(pacienteId).orElse(null);
     }
 
     @Override

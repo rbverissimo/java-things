@@ -16,8 +16,8 @@ public class FarmaciaService extends ServiceWorker<Farmacia> implements Reposito
     @Autowired
     private FarmaciaRepository farmaciaRepository;
 
-    public Farmacia findResourceById(int farmaciaId){
-        return farmaciaRepository.findById((long) farmaciaId).orElse(null);
+    public Farmacia findResourceById(long farmaciaId){
+        return farmaciaRepository.findById(farmaciaId).orElse(null);
     }
 
     public boolean isResourceOwner(long farmaciaId){

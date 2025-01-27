@@ -18,8 +18,8 @@ public class RemedioService extends ServiceWorker<Remedio> implements Repository
     @Autowired
     private RemedioRepository remedioRepository;
 
-    public Remedio findResourceById(int remedioId){
-        return remedioRepository.findById((long) remedioId).orElse(null);
+    public Remedio findResourceById(long remedioId){
+        return remedioRepository.findById(remedioId).orElse(null);
     }
 
     public boolean isResourceOwner(long remedioId){

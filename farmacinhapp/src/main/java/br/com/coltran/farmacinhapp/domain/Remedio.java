@@ -4,16 +4,14 @@ import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Entity
 @Table(name = "remedios")
-public class Remedio implements TableEntity {
+public class Remedio implements TableEntity, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,7 +30,7 @@ public class Remedio implements TableEntity {
     private Integer consumoDiario;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    @Past(message = "A data de início de tratamento deve ser anterior à data de hoje")
+    @PastOrPresent(message = "A data de início de tratamento deve ser anterior à data de hoje")
     private ZonedDateTime dataInicioTratamento;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")

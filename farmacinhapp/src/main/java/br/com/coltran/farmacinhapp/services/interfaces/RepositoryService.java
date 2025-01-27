@@ -4,6 +4,6 @@ import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 
 public interface RepositoryService {
 
-    public TableEntity findResourceById(int resourceId);
+    public TableEntity findResourceById(long resourceId);
     public boolean isResourceOwner(long resourceId);
 }

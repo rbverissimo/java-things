@@ -1,6 +1,7 @@
 package br.com.coltran.farmacinhapp.controllers.web;
 
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
+import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.Remedio;
 import br.com.coltran.farmacinhapp.repositories.MedidaRepository;
 import br.com.coltran.farmacinhapp.repositories.TipoRemedioRepository;
@@ -51,10 +52,14 @@ public class RemediosController extends ControllerCommons {
     }
 
     @PostMapping("/cadastro/{farmacia_id}")
-    @PreAuthorize("@farmaciaService.isResourceOwner(#farmacia_id)")
-    public String cadastroPOST(@PathVariable("farmacia_id") long farmaciaId, BindingResult bindingResult, @Valid @ModelAttribute Remedio remedio){
-        if(bindingResult.hasErrors()) return "/cadastros/"+farmaciaId+"/";
+    @PreAuthorize("@farmaciaService.isResourceOwner(#farmaciaId)")
+    public String cadastroPOST(@PathVariable("farmacia_id") long farmaciaId, @Valid @ModelAttribute Remedio remedio, BindingResult bindingResult){
+        if(bindingResult.hasErrors()) return "/remedios/cadastro";
+
+        Farmacia farmacia = farmaciaService.findResourceById(farmaciaId);
+        if(farmacia != null) remedio.setFarmacia(farmacia);
+
         remedioService.save(remedio);
-        return "";
+        return "redirect:/remedios/i/"+farmaciaId;
     }
 }
