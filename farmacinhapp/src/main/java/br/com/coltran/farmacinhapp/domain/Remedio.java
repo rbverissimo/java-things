@@ -1,6 +1,7 @@
 package br.com.coltran.farmacinhapp.domain;
 
 import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -31,6 +32,7 @@ public class Remedio implements TableEntity, Serializable {
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @PastOrPresent(message = "A data de início de tratamento deve ser anterior à data de hoje")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "America/Sao_Paulo")
     private ZonedDateTime dataInicioTratamento;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
