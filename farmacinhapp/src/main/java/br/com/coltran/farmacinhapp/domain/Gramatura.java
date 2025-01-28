@@ -1,15 +1,19 @@
 package br.com.coltran.farmacinhapp.domain;
 
 import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Entity
 @Table(name = "gramaturas")
-public class Gramatura implements TableEntity {
+public class Gramatura implements TableEntity, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,15 +25,19 @@ public class Gramatura implements TableEntity {
     private Double valorGramatura;
 
     @ManyToMany(targetEntity = Medida.class, mappedBy = "gramaturas")
+    @JsonManagedReference
     private Set<Medida> medidas;
 
     @ManyToMany(targetEntity = Remedio.class, mappedBy = "gramaturas", fetch = FetchType.LAZY)
+    @JsonBackReference
     private Set<Remedio> remedios;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "America/Sao_Paulo")
     private ZonedDateTime dataCriacao;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "America/Sao_Paulo")
     private ZonedDateTime dataAlteracao;
 
     public Gramatura() {

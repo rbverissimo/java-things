@@ -2,16 +2,19 @@ package br.com.coltran.farmacinhapp.domain;
 
 import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import br.com.coltran.farmacinhapp.security.domain.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Entity
 @Table(name = "farmacias")
-public class Farmacia implements TableEntity {
+public class Farmacia implements TableEntity, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,9 +27,11 @@ public class Farmacia implements TableEntity {
     private String bio;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "America/Sao_Paulo")
     private ZonedDateTime dataCriacao;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "America/Sao_Paulo")
     private ZonedDateTime  dataAlteracao;
 
     @Valid
@@ -34,6 +39,7 @@ public class Farmacia implements TableEntity {
     private Paciente paciente;
 
     @OneToMany(targetEntity = Remedio.class, mappedBy = "farmacia", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<Remedio> remedios;
 
     @OneToMany(targetEntity = Lembrete.class, mappedBy = "farmacia", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

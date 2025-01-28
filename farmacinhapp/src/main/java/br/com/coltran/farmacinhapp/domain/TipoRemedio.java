@@ -1,6 +1,7 @@
 package br.com.coltran.farmacinhapp.domain;
 
 import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -21,6 +22,7 @@ public class TipoRemedio implements TableEntity {
     private String descricao;
 
     @OneToMany(targetEntity = Remedio.class, mappedBy = "tipoRemedio", fetch = FetchType.LAZY)
+    @JsonBackReference
     private List<Remedio> remedios;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")

@@ -1,8 +1,11 @@
 package br.com.coltran.farmacinhapp.domain;
 
 import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
@@ -12,7 +15,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "medidas")
-public class Medida implements TableEntity {
+public class Medida implements TableEntity, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,12 +30,15 @@ public class Medida implements TableEntity {
             joinColumns = @JoinColumn(name = "medida_id"),
             inverseJoinColumns = @JoinColumn(name = "gramatura_id")
     )
+    @JsonBackReference
     private Set<Gramatura> gramaturas;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "America/Sao_Paulo")
     private ZonedDateTime dataCriacao;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "America/Sao_Paulo")
     private ZonedDateTime dataAlteracao;
 
     public Medida() {

@@ -116,14 +116,11 @@
                 }
 
                 try {
-
                     const baseUrl = /*[[@{/api/remedios/{farmacia_id}(farmacia_id=${__${farmacia_id}__})}]]*/ '';
                     const queryUrl = `${baseUrl}?nome=${novaBusca}`;
-
                     const response = await fetch(queryUrl);
                     if(!response.ok) throw new Error(`Erro HTTP! Status: ${response.status}`);
                     const data = await response.json();
-                    console.log(data);
                 } catch (error){
                     console.error('Erro ao buscar informações sobre o nome de remédios', error);
                 }
