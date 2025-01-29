@@ -8,6 +8,7 @@ import br.com.coltran.farmacinhapp.repositories.TipoRemedioRepository;
 import br.com.coltran.farmacinhapp.services.FarmaciaService;
 import br.com.coltran.farmacinhapp.services.RemedioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -36,9 +37,10 @@ public class RemediosController extends ControllerCommons {
 
     @GetMapping("/i/{farmacia_id}")
     @PreAuthorize("@farmaciaService.isResourceOwner(#farmaciaId)")
-    public String indexByFarmacia(@PathVariable("farmacia_id") long farmaciaId, Pageable pageable, Model model){
-        remedioService.getRemediosByFarmacia(farmaciaId, pageable);
+    public String indexByFarmacia(@PathVariable("farmacia_id") long farmaciaId, Model model){
+        Page<Remedio> remediosPage = remedioService.getRemediosByFarmacia(farmaciaId, Pageable.ofSize(12).withPage(0));
         model.addAttribute("farmaciaId", farmaciaId);
+        model.addAttribute("remedios", remediosPage.getContent());
         return "remedios/index";
     }
 
