@@ -4,6 +4,14 @@
     justify-content: center;
 }
 
+.toolbar {
+    border-radius: 2px;
+    background-color: #ebf7fd;
+}
+
+a {
+    all: unset;
+}
 .fs-08rem {
     font-size: 0.8rem;
 }
@@ -16,7 +24,8 @@
 @media(max-width: 767px){
 
     [class*="col-"] {
-          width: 100%;
+        width: 100%;
+        padding: 10px;
     }
 }
 

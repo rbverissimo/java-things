@@ -84,7 +84,7 @@ public class RemediosApiControllerTest {
         given(remedioService.getRemediosByNome(farmaciaId, "Dorflex", pageable))
                 .willReturn(pageImpl);
 
-        MockHttpServletResponse response = mvc.perform(get("/api/remedios/1")).andReturn().getResponse();
+        MockHttpServletResponse response = mvc.perform(get("/api/remedios/"+farmaciaId)).andReturn().getResponse();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentAsString()).isEqualTo(jsonPageRemedio.write(pageImpl).getJson());
     }
