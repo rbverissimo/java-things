@@ -10,8 +10,13 @@
 }
 
 a {
-    all: unset;
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-decoration: none !important;
+    background-color: transparent;
 }
+
 .fs-08rem {
     font-size: 0.8rem;
 }
@@ -19,6 +24,10 @@ a {
 .card-md {
     min-width: 22rem;
     max-width: 50rem;
+}
+
+.container-list-spacing {
+    margin-bottom: 0;
 }
 
 @media(max-width: 767px){
@@ -32,6 +41,10 @@ a {
 @media(min-width: 768px) {
     .main-container {
         width: 80%;
+    }
+
+    .container-list-spacing {
+        margin-bottom: 1.5%;
     }
 }
 

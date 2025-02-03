@@ -19,6 +19,8 @@ public class Remedio implements TableEntity, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @NotBlank(message = "Informe o nome do remédio")
     private String nome;
 
     @Nullable
@@ -35,6 +37,7 @@ public class Remedio implements TableEntity, Serializable {
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @PastOrPresent(message = "A data de início de tratamento deve ser anterior à data de hoje")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "America/Sao_Paulo")
+    @NotNull(message = "Informe a data de início do tratamento")
     private ZonedDateTime dataInicioTratamento;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")

@@ -20,23 +20,21 @@
                                 </div>
                                 <div class="col-6">
                                     <form role="search" class="d-flex">
-                                        <input type="search" placeholder="Busque por nome" class="form-control me-2">
+                                        <input type="search" placeholder="Digite o nome do remédio" class="form-control me-2">
                                         <button class="btn btn-sm btn-outline-success" type="submit">Buscar</button>
                                     </form>
                                 </div>
                             </div>
                         </nav>
-                        <div th:each="remedio : ${remedios}">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-header d-inline-flex align-items-center flex-wrap">
-                                            <span class="material-symbols-outlined">medication</span>
-                                            <span th:text="${remedio.nome}"></span>
-                                        </div>
-                                        <div class="card-body">
+                        <div class="row container-list-spacing" th:each="remedio : ${remedios}">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header d-inline-flex align-items-center flex-wrap">
+                                        <span class="material-symbols-outlined">medication</span>
+                                        <span th:text="${remedio.nome}"></span>
+                                    </div>
+                                    <div class="card-body">
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>

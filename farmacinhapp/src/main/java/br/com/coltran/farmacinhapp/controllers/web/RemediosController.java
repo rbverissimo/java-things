@@ -55,13 +55,24 @@ public class RemediosController extends ControllerCommons {
 
     @PostMapping("/cadastro/{farmacia_id}")
     @PreAuthorize("@farmaciaService.isResourceOwner(#farmaciaId)")
-    public String cadastroPOST(@PathVariable("farmacia_id") long farmaciaId, @Valid @ModelAttribute Remedio remedio, BindingResult bindingResult){
-        if(bindingResult.hasErrors()) return "/remedios/cadastro";
+    public String cadastroPOST(@PathVariable("farmacia_id") long farmaciaId, @Valid @ModelAttribute Remedio remedio, BindingResult bindingResult, Model model){
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("tiposRemedio", tipoRemedioRepository.findAll());
+            model.addAttribute("medidas", medidaRepository.findAll());
+            return "/remedios/cadastro";
+        }
 
         Farmacia farmacia = farmaciaService.findResourceById(farmaciaId);
         if(farmacia != null) remedio.setFarmacia(farmacia);
 
         remedioService.save(remedio);
         return "redirect:/remedios/i/"+farmaciaId;
+    }
+
+    @GetMapping("/cadastro/{remedio_id}")
+    @PreAuthorize("@farmaciaService.isResourceOwner(#farmaciaId)")
+    public String show(){
+        return "/remedios/cadastro";
     }
 }
