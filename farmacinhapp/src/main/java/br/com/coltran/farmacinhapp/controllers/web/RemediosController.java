@@ -76,4 +76,14 @@ public class RemediosController extends ControllerCommons {
         model.addAttribute("remedio", remedioService.findResourceById(id));
         return "/remedios/cadastro";
     }
+
+    @DeleteMapping("/deletar/{id}")
+    @PreAuthorize("@remedioService.isResourceOwner(#id)")
+    public String destroy(@PathVariable("id") long id){
+
+        Remedio remedio = remedioService.findResourceById(id);
+        if(remedio != null) remedioService.deleteResourceById(id);
+
+        return "redirect:/remedios/i/"+remedio.getFarmacia().getId();
+    }
 }

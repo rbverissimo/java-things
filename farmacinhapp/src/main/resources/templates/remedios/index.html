@@ -29,9 +29,19 @@
                         <div class="row container-list-spacing" th:each="remedio : ${remedios}">
                             <div class="col-12">
                                 <div class="card">
-                                    <div class="card-header d-inline-flex align-items-center flex-wrap">
-                                        <span class="material-symbols-outlined">medication</span>
-                                        <span th:text="${remedio.nome}"></span>
+                                    <div class="card-header d-inline-flex flex-wrap justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <span class="material-symbols-outlined">medication</span>
+                                            <span th:text="${remedio.nome}"></span>
+                                        </div>
+                                        <div>
+                                            <form th:action="@{'/remedios/deletar/{id}'(id=${remedio.id})}" th:method="delete">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger d-flex align-items-center">
+                                                    <i class="material-symbols-outlined me-1">delete</i>Deletar
+                                                </button>
+                                            </form>
+                                        </div>
+
                                     </div>
                                     <div class="card-body">
 
@@ -52,7 +62,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 

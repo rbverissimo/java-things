@@ -22,6 +22,10 @@ public class RemedioService extends ServiceWorker<Remedio> implements Repository
         return remedioRepository.findById(remedioId).orElse(null);
     }
 
+    public void deleteResourceById(long remedioId){
+        remedioRepository.deleteById(remedioId);
+    }
+
     public boolean isResourceOwner(long remedioId){
         User usuario = authService.usuarioLogado();
         return usuario.getFarmacias().stream()
