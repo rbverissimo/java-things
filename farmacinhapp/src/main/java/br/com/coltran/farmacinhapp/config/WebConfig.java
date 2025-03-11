@@ -24,7 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
         FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new HiddenHttpMethodFilter());
         registrationBean.setName("hiddenHttpMethodFilter");
-        registrationBean.setOrder(1);
+        registrationBean.setOrder(Integer.MAX_VALUE);
         return registrationBean;
     }
 
