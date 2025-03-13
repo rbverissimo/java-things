@@ -80,10 +80,8 @@ public class RemediosController extends ControllerCommons {
     @DeleteMapping("/deletar/{id}")
     @PreAuthorize("@remedioService.isResourceOwner(#id)")
     public String destroy(@PathVariable("id") long id){
-
         Remedio remedio = remedioService.findResourceById(id);
-        if(remedio != null) remedioService.deleteResourceById(id);
-
+        if(remedio != null) remedioService.deleteResource(remedio);
         return "redirect:/remedios/i/"+remedio.getFarmacia().getId();
     }
 }
