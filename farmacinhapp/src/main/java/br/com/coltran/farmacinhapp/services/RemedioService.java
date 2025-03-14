@@ -24,7 +24,8 @@ public class RemedioService extends ServiceWorker<Remedio> implements Repository
 
     public void deleteResource(Remedio remedio){
         try{
-            remedioRepository.delete(remedio);
+            Remedio mergedRemedio = remedioRepository.save(remedio);
+            remedioRepository.delete(mergedRemedio);
         }catch (Exception ex){
             ex.printStackTrace(System.err);
         }
