@@ -81,7 +81,8 @@ public class RemediosController extends ControllerCommons {
     @PreAuthorize("@remedioService.isResourceOwner(#id)")
     public String destroy(@PathVariable("id") long id){
         Remedio remedio = remedioService.findResourceById(id);
-        if(remedio != null) remedioService.deleteResource(remedio);
-        return "redirect:/remedios/i/"+remedio.getFarmacia().getId();
+        long farmaciaId = remedio.getFarmacia().getId();
+        remedioService.deleteResourceById(remedio.getId());
+        return "redirect:/remedios/i/"+farmaciaId;
     }
 }

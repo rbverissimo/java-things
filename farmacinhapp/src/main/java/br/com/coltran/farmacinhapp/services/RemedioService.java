@@ -22,10 +22,9 @@ public class RemedioService extends ServiceWorker<Remedio> implements Repository
         return remedioRepository.findById(remedioId).orElse(null);
     }
 
-    public void deleteResource(Remedio remedio){
+    public void deleteResourceById(long id){
         try{
-            Remedio mergedRemedio = remedioRepository.save(remedio);
-            remedioRepository.delete(mergedRemedio);
+            remedioRepository.delete(id);
         }catch (Exception ex){
             ex.printStackTrace(System.err);
         }
