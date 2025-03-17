@@ -85,4 +85,10 @@ public class RemediosController extends ControllerCommons {
         remedioService.deleteResourceById(remedio.getId());
         return "redirect:/remedios/i/"+farmaciaId;
     }
+
+    @PutMapping("/editar/{id}")
+    @PreAuthorize("@remediosService.isResourceOwner(#id)")
+    public String edit(@PathVariable("id") long id){
+        return "";
+    }
 }
