@@ -70,10 +70,12 @@ public class RemediosController extends ControllerCommons {
         return "redirect:/remedios/i/"+farmaciaId;
     }
 
-    @GetMapping("/cadastro/show/{id}")
-    @PreAuthorize("@remedioService.isResourceOwner(#id)")
-    public String show(@PathVariable("id") long id, Model model){
-        model.addAttribute("remedio", remedioService.findResourceById(id));
+    @GetMapping("/show/{remedio_id}")
+    @PreAuthorize("@remedioService.isResourceOwner(#remedioId)")
+    public String show(@PathVariable("remedio_id") long remedioId, Model model){
+        model.addAttribute("remedio", remedioService.findResourceById(remedioId));
+        model.addAttribute("tiposRemedio", tipoRemedioRepository.findAll());
+        model.addAttribute("medidas", medidaRepository.findAll());
         return "/remedios/cadastro";
     }
 
