@@ -88,9 +88,8 @@
         </div>
     </div>
 </main>
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    const {createApp, ref, watch } = Vue;
+<script type="module" th:inline="javascript">
+     import { createApp, ref } from '/webjars/vue/dist/vue.esm-browser.prod.js';
 
     const serverData = {
         farmacia_id: /*[[${farmaciaId}]]*/ null
@@ -98,21 +97,12 @@
 
     const app = createApp({
         setup(){
-            const nomeRemedioBusca = ref('');
             const resultadoNomes = ref([]);
-            const debouncedNomeRemedioBusca = ref('');
-
-            const buscarNomesRemedio = () => {
-                debouncedNomeRemedioBusca.value = nomeRemedioBusca.value;
-            }
-
             const farmacia_id = serverData.farmacia_id;
 
-            watch(debouncedNomeRemedioBusca, async (novaBusca) => {
-                if(novaBusca.length < 3){
-                    resultadoNomes.value = [];
-                    return;
-                }
+            const buscarNomesRemedio = async (e) => {
+                const novaBusca = e.target.value;
+                if(novaBusca.length < 3 || farmacia_id === null) return;
 
                 try {
                     const baseUrl = /*[[@{/api/remedios/{farmacia_id}(farmacia_id=${__${farmacia_id}__})}]]*/ '';
@@ -123,17 +113,16 @@
                 } catch (error){
                     console.error('Erro ao buscar informações sobre o nome de remédios', error);
                 }
-            });
+            }
+
 
             return {
-                nomeRemedioBusca,
                 resultadoNomes,
                 buscarNomesRemedio
             };
         }
     });
     app.mount('#app');
-    /*]]>*/
 </script>
 </body>
 </html>
