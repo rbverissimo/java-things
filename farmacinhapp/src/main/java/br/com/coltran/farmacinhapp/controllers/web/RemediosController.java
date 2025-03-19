@@ -88,9 +88,12 @@ public class RemediosController extends ControllerCommons {
         return "redirect:/remedios/i/"+farmaciaId;
     }
 
-    @PutMapping("/editar/{id}")
-    @PreAuthorize("@remediosService.isResourceOwner(#id)")
-    public String edit(@PathVariable("id") long id){
-        return "";
+    @PutMapping("/update/{id}")
+    @PreAuthorize("@remedioService.isResourceOwner(#id)")
+    public String edit(@PathVariable("id") long id, @Valid @ModelAttribute Remedio remedio, BindingResult bindingResult, Model model){
+        if(bindingResult.hasErrors()) return "/remedios/show/"+id;
+        Remedio managedRemedio = remedioService.findResourceById(id);
+        if(managedRemedio != null) remedioService.update(managedRemedio, remedio);
+        return "redirect:/remedios/show/"+id;
     }
 }

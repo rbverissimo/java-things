@@ -12,8 +12,9 @@
             <div class="main-container">
                 <div id="app">
                     <div class="mt-5 w-100" >
-                        <form th:action="@{'/remedios/cadastro/{farmacia_id}'(farmacia_id=${farmaciaId})}" th:object="${remedio}" method="POST">
-
+                        <form th:object="${remedio}"
+                              th:action="${remedio.id == null ? '/remedios/cadastro/'+farmaciaId : '/remedios/update/'+remedio.id}"
+                              th:method="${remedio.id == null ? 'POST' : 'PUT'}">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-floating py-1">

@@ -42,6 +42,16 @@ public class RemedioService extends ServiceWorker<Remedio> implements Repository
         return remedioRepository.save(remedio);
     }
 
+    public Remedio update(Remedio managedRemedio, Remedio formRemedio){
+        updateTimestamp(managedRemedio);
+        managedRemedio.setNome(formRemedio.getNome());
+        managedRemedio.setDataInicioTratamento(formRemedio.getDataInicioTratamento());
+        managedRemedio.setDoses(formRemedio.getDoses());
+        managedRemedio.setConsumoDiario(formRemedio.getConsumoDiario());
+        managedRemedio.setTipoRemedio(formRemedio.getTipoRemedio());
+        return remedioRepository.save(managedRemedio);
+    }
+
     public Page<Remedio> getRemediosByFarmacia(Long farmaciaId, Pageable pageable){
         return remedioRepository.findAllByFarmacia(farmaciaId, pageable);
     }
