@@ -90,6 +90,7 @@
 </main>
 <script type="module" th:inline="javascript">
      import { createApp, ref } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+     import { debounce } from '/js/reactive.js';
 
     const serverData = {
         farmacia_id: /*[[${farmaciaId}]]*/ null
@@ -100,7 +101,7 @@
             const resultadoNomes = ref([]);
             const farmacia_id = serverData.farmacia_id;
 
-            const buscarNomesRemedio = async (e) => {
+            const buscarNomesRemedio = debounce(async (e) => {
                 const novaBusca = e.target.value;
                 if(novaBusca.length < 3 || farmacia_id === null) return;
 
@@ -113,7 +114,7 @@
                 } catch (error){
                     console.error('Erro ao buscar informações sobre o nome de remédios', error);
                 }
-            }
+            }, 400);
 
 
             return {
