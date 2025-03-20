@@ -1,14 +1,15 @@
-<!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/vue-container-layout}"
 >
-<head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Cadastro do usuário')"></head>
-    <div layout:fragment="content">
-
+    <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Dados do paciente')"></head>
+    <div class="" layout:fragment="content">
     </div>
     <script th:inline="javascript" type="module" layout:fragment="vue-app">
         import { createApp } from '/webjars/vue/dist/vue.esm-browser.prod.js';
 
         const app = createApp({
+            mounted(){
+                console.log("Vue initialized!!!");
+            }
         });
 
         app.mount('#app');

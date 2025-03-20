@@ -3,22 +3,24 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 <head th:replace="fragments/bootstrap :: bootstrap"></head>
-<head th:insert="fragments/css :: styles"></head>
-<head th:insert="fragments/title :: title(title = 'Farmacinha - cadastro de usuário')"></head>
+<head layout:fragment="custom-css" th:insert="fragments/css :: styles"></head>
+<head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Controle de medicamentos')"></head>
     <body>
         <header th:insert="fragments/navheader :: navheader"></header>
         <main>
-            <section layout:fragment="vue-container-layout">
+            <section>
                 <div class="container-fluid">
                     <div class="d-flex justify-content-center">
                         <div class="main-container">
                             <div id="app">
+                                <div layout:fragment="content"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
         </main>
+        <script type="module" th:inline="javascript" layout:fragment="vue-app"></script>
     </body>
 </html>
 
