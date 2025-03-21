@@ -30,6 +30,9 @@ public class Paciente implements TableEntity {
     @Past(message = "A data de nascimento deve ser uma data anterior à data de hoje")
     private LocalDate dataNascimento;
 
+    @Column(name = "desc_tratamento", length = 65535)
+    private String descTratamento;
+
     @OneToMany(targetEntity = Farmacia.class, mappedBy = "paciente", fetch = FetchType.EAGER)
     private List<Farmacia> farmacias;
 
@@ -105,5 +108,13 @@ public class Paciente implements TableEntity {
 
     public void setDataAlteracao(ZonedDateTime dataAlteracao) {
         this.dataAlteracao = dataAlteracao;
+    }
+
+    public String getDescTratamento() {
+        return descTratamento;
+    }
+
+    public void setDescTratamento(String descTratamento) {
+        this.descTratamento = descTratamento;
     }
 }
