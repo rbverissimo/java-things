@@ -1,6 +1,7 @@
 package br.com.coltran.farmacinhapp.services;
 
 import br.com.coltran.farmacinhapp.domain.Remedio;
+import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import br.com.coltran.farmacinhapp.repositories.RemedioRepository;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.services.interfaces.RepositoryService;

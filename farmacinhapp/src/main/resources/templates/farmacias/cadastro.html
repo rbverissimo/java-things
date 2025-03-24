@@ -86,6 +86,16 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-floating py-1">
+                                                        <textarea class="form-control" th:field="*{paciente.descTratamento}" id="desc-tratamento" rows="6"></textarea>
+                                                        <label for="desc-tratamento">O que o paciente está tratando?</label>
+                                                        <span style="font-size: 0.8rem" th:if="${#fields.hasErrors('paciente.descTratamento')}"
+                                                              th:errors="*{paciente.descTratamento}" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

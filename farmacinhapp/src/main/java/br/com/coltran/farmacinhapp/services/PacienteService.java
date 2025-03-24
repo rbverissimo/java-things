@@ -1,6 +1,7 @@
 package br.com.coltran.farmacinhapp.services;
 
 import br.com.coltran.farmacinhapp.domain.Paciente;
+import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import br.com.coltran.farmacinhapp.repositories.PacienteRepository;
 import br.com.coltran.farmacinhapp.services.interfaces.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,13 @@ public class PacienteService extends ServiceWorker<Paciente> implements Reposito
     public Paciente save(Paciente paciente){
         timestamps(paciente);
         return pacienteRepository.save(paciente);
+    }
+
+    public Paciente update(Paciente managed, Paciente formUpdated){
+        updateTimestamp(managed);
+        managed.setNome(formUpdated.getNome());
+        managed.setDataNascimento(formUpdated.getDataNascimento());
+        managed.setDescTratamento(formUpdated.getDescTratamento());
+        return pacienteRepository.save(managed);
     }
 }
