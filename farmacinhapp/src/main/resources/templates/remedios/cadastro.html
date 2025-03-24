@@ -13,8 +13,8 @@
                 <div id="app">
                     <div class="mt-5 w-100" >
                         <form th:object="${remedio}"
-                              th:action="${remedio.id == null ? '/remedios/cadastro/'+farmaciaId : '/remedios/update/'+remedio.id}"
-                              th:method="${remedio.id == null ? 'POST' : 'PUT'}">
+                              th:action="${remedio.id == 0 ? '/remedios/cadastro/'+farmaciaId : '/remedios/update/'+remedio.id}"
+                              th:method="${remedio.id == 0 ? 'POST' : 'PUT'}">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-floating py-1">
