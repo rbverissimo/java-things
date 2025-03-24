@@ -1,22 +1,18 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="fragments/bootstrap :: bootstrap">
-</head>
-<head th:insert="fragments/title :: title(title = 'Farmacinha - Páginal Inicial')"></head>
-<body>
-    <header th:insert="fragments/navheader :: navheader">
-    </header>
-    <main>
-        <div class="container mt-5">
-            <div class="card">
-                <div class="card-body">
-                    <p>
-                        Olá,
-                        <span th:text="${usuario.username}"></span>.
-                    </p>
-                </div>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/vue-container-layout}"
+>
+<head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Página inicial ')"></head>
+<div  layout:fragment="content">
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <p>
+                    Olá,
+                    <span th:text="${usuario.username}"></span>.
+                    <br>
+                    Confira as principais informações das suas farmácias:
+                </p>
             </div>
         </div>
-    </main>
-</body>
+    </div>
+</div>
 </html>
