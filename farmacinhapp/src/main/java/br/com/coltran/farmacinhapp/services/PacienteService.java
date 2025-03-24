@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
-public class PacienteService extends ServiceWorker<Paciente> implements RepositoryService {
+public class PacienteService extends ServiceWorker implements RepositoryService<Paciente> {
 
 
     @Autowired

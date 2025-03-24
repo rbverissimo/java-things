@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class FarmaciaService extends ServiceWorker<Farmacia> implements RepositoryService {
+public class FarmaciaService extends ServiceWorker implements RepositoryService<Farmacia> {
 
     @Autowired
     private FarmaciaRepository farmaciaRepository;
@@ -28,6 +28,13 @@ public class FarmaciaService extends ServiceWorker<Farmacia> implements Reposito
         Optional.ofNullable(farmacia.getPaciente()).ifPresent(this::timestamps);
         timestamps(farmacia);
         return farmaciaRepository.save(farmacia);
+    }
+
+    public Farmacia update(Farmacia managed, Farmacia formUpdated){
+        updateTimestamp(managed);
+        managed.setNome(formUpdated.getNome());
+        managed.setBio(formUpdated.getBio());
+        return farmaciaRepository.save(managed);
     }
 
 }

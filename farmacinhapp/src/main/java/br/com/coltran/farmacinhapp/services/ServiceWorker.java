@@ -6,7 +6,7 @@ import br.com.coltran.farmacinhapp.security.services.AuthService;
 import br.com.coltran.farmacinhapp.utils.ZonedBrasilTime;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class ServiceWorker<T extends TableEntity> {
+public abstract class ServiceWorker {
 
     @Autowired
     protected ZonedBrasilTime zonedBrasilTime;

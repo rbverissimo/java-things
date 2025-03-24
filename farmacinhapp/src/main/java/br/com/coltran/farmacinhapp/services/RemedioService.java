@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
-public class RemedioService extends ServiceWorker<Remedio> implements RepositoryService {
+public class RemedioService extends ServiceWorker implements RepositoryService<Remedio> {
 
     @Autowired
     private RemedioRepository remedioRepository;
