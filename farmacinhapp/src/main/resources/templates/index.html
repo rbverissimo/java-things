@@ -1,18 +1,45 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/vue-container-layout}"
 >
-<head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Página inicial ')"></head>
-<div  layout:fragment="content">
-    <div class="container mt-5">
-        <div class="card">
-            <div class="card-body">
-                <p>
-                    Olá,
-                    <span th:text="${usuario.username}"></span>.
-                    <br>
-                    Confira as principais informações das suas farmácias:
-                </p>
+    <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Página inicial ')"></head>
+    <div layout:fragment="content">
+        <div class="container mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <p>
+                        {{cumprimento}},
+                        <span th:text="${usuario.username}"></span>.
+                        <br>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    <script type="module" layout:fragment="vue-app">
+        import { createApp } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+
+        const app = createApp({
+            data(){
+                return {
+                    cumprimento: this.getCumprimento()
+                };
+            },
+            methods: {
+                getCumprimento(){
+                    const now = new Date();
+                    const hora = now.getHours();
+
+                    if(hora < 12){
+                        return "Bom dia";
+                    } else if(hora < 18){
+                        return "Boa tarde";
+                    } else {
+                        return "Boa noite";
+                    }
+                }
+            }
+        });
+
+        app.mount('#app');
+
+    </script>
 </html>
