@@ -19,7 +19,7 @@
                                             <p th:text="${farmacia.nome}"></p>
                                         </div>
                                         <div class="card-body">
-                                            <p>Paciente: <span th:text="${farmacia.paciente.nome}"></span></p>
+                                            <p>Paciente: <span th:text="${farmacia.paciente.nome} + ' ' + ${farmacia.paciente.sobrenome}" ></span></p>
                                             <p th:text="${farmacia.bio}"></p>
                                         </div>
                                         <div class="card-footer">

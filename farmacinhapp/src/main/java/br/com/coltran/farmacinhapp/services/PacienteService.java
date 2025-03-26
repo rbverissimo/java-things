@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -36,6 +38,7 @@ public class PacienteService extends ServiceWorker implements RepositoryService<
     public Paciente update(Paciente managed, Paciente formUpdated){
         updateTimestamp(managed);
         managed.setNome(formUpdated.getNome());
+        managed.setSobrenome(formUpdated.getSobrenome());
         managed.setDataNascimento(formUpdated.getDataNascimento());
         managed.setDescTratamento(formUpdated.getDescTratamento());
         return pacienteRepository.save(managed);

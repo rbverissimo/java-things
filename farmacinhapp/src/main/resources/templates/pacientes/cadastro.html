@@ -3,7 +3,7 @@
           th:action="${'/pacientes/update/'+paciente.id}"
           th:method="${'PUT'}">
         <div class="row">
-            <div class="col-12">
+            <div class="col-6">
                 <div class="form-floating py-1">
                     <input id="nome" th:field="*{nome}"
                            class="form-control"
@@ -11,6 +11,17 @@
                     <label for="nome">Nome do paciente</label>
                     <span th:if="${#fields.hasErrors('nome')}" class="text-danger fs-08rem"
                           th:errors="*{nome}"></span>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-floating py-1">
+                    <input type="text"
+                           th:field="*{sobrenome}"
+                           id="sobrenome"
+                           class="form-control" />
+                    <label for="sobrenome">Sobrenome</label>
+                    <span th:if="${#fields.hasErrors('sobrenome')}" class="text-danger fs-08rem"
+                          th:errors="*{sobrenome}"></span>
                 </div>
             </div>
         </div>
