@@ -3,6 +3,7 @@ package br.com.coltran.farmacinhapp.controllers.web;
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.Remedio;
+import br.com.coltran.farmacinhapp.domain.valueobjects.RemedioIndexVO;
 import br.com.coltran.farmacinhapp.repositories.MedidaRepository;
 import br.com.coltran.farmacinhapp.repositories.TipoRemedioRepository;
 import br.com.coltran.farmacinhapp.services.FarmaciaService;
@@ -17,6 +18,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/remedios")
@@ -39,8 +42,13 @@ public class RemediosController extends ControllerCommons {
     @PreAuthorize("@farmaciaService.isResourceOwner(#farmaciaId)")
     public String indexByFarmacia(@PathVariable("farmacia_id") long farmaciaId, Model model){
         Page<Remedio> remediosPage = remedioService.getRemediosByFarmacia(farmaciaId, Pageable.ofSize(12).withPage(0));
+
+        List<RemedioIndexVO> content = remediosPage.stream()
+                        .map(p -> { return new RemedioIndexVO.Builder().buildFromModel(p); })
+                                .collect(Collectors.toList());
+
         model.addAttribute("farmaciaId", farmaciaId);
-        model.addAttribute("remedios", remediosPage.getContent());
+        model.addAttribute("remedios", content);
         return "remedios/index";
     }
 

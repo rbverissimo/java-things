@@ -16,7 +16,7 @@
                               th:action="${remedio.id == 0 ? '/remedios/cadastro/'+farmaciaId : '/remedios/update/'+remedio.id}"
                               th:method="${remedio.id == 0 ? 'POST' : 'PUT'}">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <div class="form-floating py-1">
                                         <input id="nome" th:field="*{nome}"
                                                class="form-control"
@@ -28,12 +28,14 @@
                                               th:errors="*{nome}"></span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-6">
                                     <div class="form-floating py-1">
                                         <input id="consumo-diario" th:field="*{consumoDiario}"
                                                type="number"
                                                class="form-control"
-                                               placeholder="Defina um número para o consumo diário de doses"
+                                               placeholder="Defina um número para o consumo diário doses"
                                         >
                                         <label for="consumo-diario">Consumo diário</label>
                                         <span th:if="${#fields.hasErrors('consumoDiario')}"
@@ -59,6 +61,7 @@
                                         <input id="doses" th:field="*{doses}"
                                                type="number"
                                                class="form-control"
+                                               placeholder=""
                                         >
                                         <label for="doses">Doses (total):</label>
                                         <span th:if="${#fields.hasErrors('doses')}"

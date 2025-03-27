@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @Component
@@ -12,5 +13,6 @@ public class Datas {
     public int calcularIdade(LocalDate dtNascto){
         return Period.between(LocalDate.now(), dtNascto).getYears();
     }
+    public ZonedDateTime getDataAgora(ZoneId zone) { return ZonedDateTime.now(zone); }
 }
 
