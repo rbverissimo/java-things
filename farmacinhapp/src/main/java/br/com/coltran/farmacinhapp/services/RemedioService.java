@@ -1,7 +1,8 @@
 package br.com.coltran.farmacinhapp.services;
 
+import br.com.coltran.farmacinhapp.config.constants.Business;
+import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.Remedio;
-import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import br.com.coltran.farmacinhapp.repositories.RemedioRepository;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.services.interfaces.RepositoryService;
@@ -61,8 +62,12 @@ public class RemedioService extends ServiceWorker implements RepositoryService<R
         return remedioRepository.findByNome(farmaciaId, nome, pageable);
     }
 
-    private void calcularDoses(Remedio remedio){
-
+    public boolean canSaveRemedio(){
+        long remediosTotal = authService.usuarioLogado().getFarmacias()
+                .stream()
+                .mapToLong(f -> { return f.getRemedios().size(); })
+                .sum();
+        return remediosTotal < Business.MAX_FREE_REMEDIOS;
     }
 
 }

@@ -47,8 +47,12 @@ public class RemediosController extends ControllerCommons {
                         .map(p -> { return new RemedioIndexVO.Builder().buildFromModel(p); })
                                 .collect(Collectors.toList());
 
+        boolean canSave = remedioService.canSaveRemedio();
+
         model.addAttribute("farmaciaId", farmaciaId);
         model.addAttribute("remedios", content);
+        model.addAttribute("canSave", canSave);
+
         return "remedios/index";
     }
 
