@@ -1,73 +1,61 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="fragments/bootstrap :: bootstrap"></head>
-<head th:insert="fragments/css :: styles"></head>
-<head th:insert="fragments/title :: title(title = 'Farmacinha - Lista de farmácias')"></head>
-<body>
-    <header th:insert="fragments/navheader :: navheader"></header>
-    <main>
-        <div class="container-fluid mt-5">
-            <div class="d-flex justify-content-center">
-                <div class="main-container">
-                    <div class="w-100" th:if="${remedios != null and !remedios.isEmpty()}">
-                        <nav class="navbar navbar-light toolbar mb-2">
-                            <div class="container-fluid">
-                                <div class="col-3">
-                                    <a class="btn btn-sm btn-outline-primary w-100"
-                                       th:classappend="${canSave} ? '' : 'disabled'"
-                                       th:href="${canSave} ? '/remedios/cadastro/'+${farmaciaId} : '#' ">
-                                        Cadastrar remédio
-                                    </a>
-                                </div>
-                                <div class="col-6">
-                                    <form role="search" class="d-flex">
-                                        <input type="search" placeholder="Digite o nome do remédio" class="form-control me-2">
-                                        <button class="btn btn-sm btn-outline-success" type="submit">Buscar</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </nav>
-                        <div class="row container-list-spacing" th:each="remedio : ${remedios}">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header d-inline-flex flex-wrap justify-content-between">
-                                        <div class="d-flex">
-                                            <a class="d-flex align-items-center" style="cursor:pointer" th:href="@{'/remedios/show/{id}'(id=${remedio.id})}">
-                                                <span class="material-symbols-outlined">medication</span>
-                                                <span th:text="${remedio.nome}"></span>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <form th:action="@{'/remedios/deletar/{id}'(id=${remedio.id})}" th:method="delete">
-                                                <button type="submit" class="btn btn-sm btn-outline-danger d-flex align-items-center">
-                                                    <i class="material-symbols-outlined me-1">delete</i>Deletar
-                                                </button>
-                                            </form>
-                                        </div>
 
-                                    </div>
-                                    <div class="card-body">
-                                        <span th:text=" 'Doses restantes: ' + ${remedio.dosesRestantes} "></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/vue-container-layout}">
+    <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Listas de farmácias')"></head>
+    <div class="mt-5" layout:fragment="content">
+        <div class="w-100" th:if="${remedios != null and !remedios.isEmpty()}">
+            <nav class="navbar navbar-light toolbar mb-2">
+                <div class="container-fluid">
+                    <div class="col-3">
+                        <a class="btn btn-sm btn-outline-primary w-100"
+                           th:classappend="${canSave} ? '' : 'disabled'"
+                           th:href="${canSave} ? '/remedios/cadastro/'+${farmaciaId} : '#' ">
+                            Cadastrar remédio
+                        </a>
                     </div>
-                    <div class="w-100" th:unless="${remedios != null and !remedios.isEmpty()}">
-                        <div class="card">
-                            <div class="card-header">
-                                Nenhum remédio nesta farmácia
+                    <div class="col-6">
+                        <form role="search" class="d-flex">
+                            <input type="search" placeholder="Digite o nome do remédio" class="form-control me-2">
+                            <button class="btn btn-sm btn-outline-success" type="submit">Buscar</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+            <div class="row container-list-spacing" th:each="remedio : ${remedios}">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-inline-flex flex-wrap justify-content-between">
+                            <div class="d-flex">
+                                <a class="d-flex align-items-center" style="cursor:pointer" th:href="@{'/remedios/show/{id}'(id=${remedio.id})}">
+                                    <span class="material-symbols-outlined">medication</span>
+                                    <span th:text="${remedio.nome}"></span>
+                                </a>
                             </div>
-                            <div class="card-body">
-                                <p class="card-text">Para cadastrar um remédio, clique no botão logo abaixo.</p>
-                                <a th:href="@{'/remedios/cadastro/{farmacia_id}'(farmacia_id=${farmaciaId})}" class="btn btn-primary">Cadastrar remédio</a>
+                            <div>
+                                <form th:action="@{'/remedios/deletar/{id}'(id=${remedio.id})}" th:method="delete">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger d-flex align-items-center">
+                                        <i class="material-symbols-outlined me-1">delete</i>Deletar
+                                    </button>
+                                </form>
                             </div>
+
+                        </div>
+                        <div class="card-body">
+                            <span th:text=" 'Doses restantes: ' + ${remedio.dosesRestantes} "></span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-    </main>
-</body>
+        <div class="w-100" th:unless="${remedios != null and !remedios.isEmpty()}">
+            <div class="card">
+                <div class="card-header">
+                    Nenhum remédio nesta farmácia
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Para cadastrar um remédio, clique no botão logo abaixo.</p>
+                    <a th:href="@{'/remedios/cadastro/{farmacia_id}'(farmacia_id=${farmaciaId})}" class="btn btn-primary">Cadastrar remédio</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </html>
