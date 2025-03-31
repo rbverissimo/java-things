@@ -50,6 +50,10 @@ public class Remedio implements TableEntity, Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "America/Sao_Paulo")
     private ZonedDateTime dataAlteracao;
 
+    @Column(name = "expired_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "America/Sao_Paulo")
+    private ZonedDateTime expiredAt;
+
     @ManyToMany(targetEntity = Gramatura.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "remedios_gramaturas",
         joinColumns = @JoinColumn(name = "remedio_id"),
@@ -132,6 +136,14 @@ public class Remedio implements TableEntity, Serializable {
 
     public void setDataAlteracao(ZonedDateTime dataAlteracao) {
         this.dataAlteracao = dataAlteracao;
+    }
+
+    public ZonedDateTime getExpiredAt() {
+        return expiredAt;
+    }
+
+    public void setExpiredAt(ZonedDateTime expiredAt) {
+        this.expiredAt = expiredAt;
     }
 
     public Set<Gramatura> getGramaturas() {
