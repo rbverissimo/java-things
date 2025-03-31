@@ -1,7 +1,7 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/vue-container-layout}"
 >
     <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Cadastrar uma nova farmácia')"></head>
-    <div  layout:fragment="content">
+    <div layout:fragment="content">
         <div class="mt-5 w-100" >
             <form th:action="@{/farmacias/cadastro}" th:object="${farmacia}" method="POST">
                 <div class="accordion" id="cf-form">

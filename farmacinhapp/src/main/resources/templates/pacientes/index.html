@@ -1,7 +1,7 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/vue-container-layout}"
 >
     <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Dados do paciente')"></head>
-    <div  layout:fragment="content">
+    <div layout:fragment="content">
         <div th:insert="pacientes/cadastro :: form"> </div>
     </div>
 </html>

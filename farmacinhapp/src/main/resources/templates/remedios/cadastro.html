@@ -1,133 +1,126 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="fragments/bootstrap :: bootstrap"></head>
-<head th:insert="fragments/css :: styles"></head>
-<head th:insert="fragments/title :: title(title = 'Farmacinha - Cadastro de remédios')"></head>
-<body>
-<header th:insert="fragments/navheader :: navheader">
-</header>
-<main>
-    <div class="container-fluid">
-        <div class="d-flex justify-content-center">
-            <div class="main-container">
-                <div id="app">
-                    <div class="mt-5 w-100" >
-                        <form th:object="${remedio}"
-                              th:action="${remedio.id == 0 ? '/remedios/cadastro/'+farmaciaId : '/remedios/update/'+remedio.id}"
-                              th:method="${remedio.id == 0 ? 'POST' : 'PUT'}">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-floating py-1">
-                                        <input id="nome" th:field="*{nome}"
-                                               class="form-control"
-                                               type="text"
-                                               @keyup="buscarNomesRemedio"
-                                               placeholder="Dorflex, Cataflam, etc" />
-                                        <label for="nome">Nome do remédio</label>
-                                        <span th:if="${#fields.hasErrors('nome')}" class="text-danger fs-08rem"
-                                              th:errors="*{nome}"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-floating py-1">
-                                        <input id="consumo-diario" th:field="*{consumoDiario}"
-                                               type="number"
-                                               class="form-control"
-                                               placeholder="Defina um número para o consumo diário doses"
-                                        >
-                                        <label for="consumo-diario">Consumo diário</label>
-                                        <span th:if="${#fields.hasErrors('consumoDiario')}"
-                                              th:errors="*{consumoDiario}" class="text-danger fs-08rem "></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-7">
-                                    <div class="form-floating py-1">
-                                        <select id="tipo-remedio" class="form-select" th:field="*{tipoRemedio}">
-                                            <option value="">Selecione um tipo</option>
-                                            <option th:each="tpRemedio : ${tiposRemedio}" th:value="${tpRemedio.id}" th:text="${tpRemedio.tipo}"
-                                                    th:selected="${tpRemedio.id == selectedValue}"></option>
-                                        </select>
-                                        <label for="tipo-remedio">Tipo</label>
-                                        <span th:if="${#fields.hasErrors('tipoRemedio')}"
-                                              th:errors="*{tipoRemedio}" class="text-danger fs-08rem "></span>
-                                    </div>
-                                </div>
-                                <div class="col-5">
-                                    <div class="form-floating py-1">
-                                        <input id="doses" th:field="*{doses}"
-                                               type="number"
-                                               class="form-control"
-                                               placeholder=""
-                                        >
-                                        <label for="doses">Doses (total):</label>
-                                        <span th:if="${#fields.hasErrors('doses')}"
-                                              th:errors="*{doses}" class="text-danger fs-08rem "></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-floating py-1">
-                                        <input id="data-inicio-tratamento"
-                                               th:field="*{dataInicioTratamento}" type="date" class="form-control"/>
-                                        <label for="data-inicio-tratamento">Início do tratamento:</label>
-                                        <span th:if="${#fields.hasErrors('dataInicioTratamento')}" style="font-size: 0.8rem"
-                                              th:errors="*{dataInicioTratamento}" class="text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-2 d-flex justify-content-center">
-                                <div class="row w-100">
-                                    <button class="btn btn-primary" type="submit">Cadastrar</button>
-                                </div>
-                            </div>
-                        </form>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/vue-container-layout}"
+>
+    <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Cadastro de remédio')"></head>
+    <div layout:fragment="content">
+        <div class="mt-5 w-100" >
+            <form th:object="${remedio}"
+                  th:action="${remedio.id == 0 ? '/remedios/cadastro/'+farmaciaId : '/remedios/update/'+remedio.id}"
+                  th:method="${remedio.id == 0 ? 'POST' : 'PUT'}">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-floating py-1">
+                            <input id="nome" th:field="*{nome}"
+                                   class="form-control"
+                                   type="text"
+                                   @keyup="buscarNomesRemedio"
+                                   placeholder="Dorflex, Cataflam, etc" />
+                            <label for="nome">Nome do remédio</label>
+                            <span th:if="${#fields.hasErrors('nome')}" class="text-danger fs-08rem"
+                                  th:errors="*{nome}"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-floating py-1">
+                            <input id="consumo-diario" th:field="*{consumoDiario}"
+                                   type="number"
+                                   class="form-control"
+                                   placeholder="Defina um número para o consumo diário doses"
+                            >
+                            <label for="consumo-diario">Consumo diário</label>
+                            <span th:if="${#fields.hasErrors('consumoDiario')}"
+                                  th:errors="*{consumoDiario}" class="text-danger fs-08rem "></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-7">
+                        <div class="form-floating py-1">
+                            <select id="tipo-remedio" class="form-select" th:field="*{tipoRemedio}">
+                                <option value="">Selecione um tipo</option>
+                                <option th:each="tpRemedio : ${tiposRemedio}" th:value="${tpRemedio.id}" th:text="${tpRemedio.tipo}"
+                                        th:selected="${tpRemedio.id == selectedValue}"></option>
+                            </select>
+                            <label for="tipo-remedio">Tipo</label>
+                            <span th:if="${#fields.hasErrors('tipoRemedio')}"
+                                  th:errors="*{tipoRemedio}" class="text-danger fs-08rem "></span>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-floating py-1">
+                            <input id="doses" th:field="*{doses}"
+                                   type="number"
+                                   class="form-control"
+                                   placeholder=""
+                            >
+                            <label for="doses">Doses (total):</label>
+                            <span th:if="${#fields.hasErrors('doses')}"
+                                  th:errors="*{doses}" class="text-danger fs-08rem "></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating py-1">
+                            <input id="data-inicio-tratamento"
+                                   th:field="*{dataInicioTratamento}" type="date" class="form-control"/>
+                            <label for="data-inicio-tratamento">Início do tratamento:</label>
+                            <span th:if="${#fields.hasErrors('dataInicioTratamento')}" style="font-size: 0.8rem"
+                                  th:errors="*{dataInicioTratamento}" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 d-flex justify-content-center">
+                    <div class="row w-100">
+                        <button class="btn btn-primary" type="submit">Cadastrar</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-</main>
-<script type="module" th:inline="javascript">
-     import { createApp, ref } from '/webjars/vue/dist/vue.esm-browser.prod.js';
-     import { debounce } from '/js/reactive.js';
+    <script type="module" th:inline="javascript" layout:fragment="vue-app">
+        import { createApp, ref } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+        import { debounce } from '/js/reactive.js';
 
-    const serverData = {
-        farmacia_id: /*[[${farmaciaId}]]*/ null
-    };
+        const serverData = {
+            farmacia_id: /*[[${farmaciaId}]]*/ null
+        };
 
-    const app = createApp({
-        setup(){
-            const resultadoNomes = ref([]);
-            const farmacia_id = serverData.farmacia_id;
+        const app = createApp({
+            setup(){
+                const resultadoNomes = ref([]);
+                const farmacia_id = serverData.farmacia_id;
 
-            const buscarNomesRemedio = debounce(async (e) => {
-                const novaBusca = e.target.value;
-                if(novaBusca.length < 3 || farmacia_id === null) return;
+                const buscarNomesRemedio = debounce(async (e) => {
+                    const novaBusca = e.target.value;
+                    if(novaBusca.length < 3 || farmacia_id === null) return;
 
-                try {
-                    const baseUrl = /*[[@{/api/remedios/{farmacia_id}(farmacia_id=${__${farmacia_id}__})}]]*/ '';
-                    const queryUrl = `${baseUrl}?nome=${novaBusca}`;
-                    const response = await fetch(queryUrl);
-                    if(!response.ok) throw new Error(`Erro HTTP! Status: ${response.status}`);
-                    const data = await response.json();
-                } catch (error){
-                    console.error('Erro ao buscar informações sobre o nome de remédios', error);
-                }
-            }, 400);
+                    try {
+                        const baseUrl = /*[[@{/api/remedios/{farmacia_id}(farmacia_id=${__${farmacia_id}__})}]]*/ '';
+                        const queryUrl = `${baseUrl}?nome=${novaBusca}`;
+                        const response = await fetch(queryUrl);
+                        if(!response.ok) throw new Error(`Erro HTTP! Status: ${response.status}`);
+                        const data = await response.json();
+                    } catch (error){
+                        console.error('Erro ao buscar informações sobre o nome de remédios', error);
+                    }
+                }, 400);
 
 
-            return {
-                resultadoNomes,
-                buscarNomesRemedio
-            };
-        }
-    });
-    app.mount('#app');
-</script>
-</body>
+                return {
+                    resultadoNomes,
+                    buscarNomesRemedio
+                };
+            }
+        });
+        app.mount('#app');
+    </script>
 </html>
+
+
+
+
+
+
+
