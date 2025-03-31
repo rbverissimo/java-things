@@ -45,6 +45,7 @@ public class RemediosController extends ControllerCommons {
 
         List<RemedioIndexVO> content = remediosPage.stream()
                         .map(p -> { return new RemedioIndexVO.Builder().buildFromModel(p); })
+                        .filter(vo -> vo.getDosesRestantes() > 0)
                                 .collect(Collectors.toList());
 
         boolean canSave = remedioService.canSaveRemedio();
