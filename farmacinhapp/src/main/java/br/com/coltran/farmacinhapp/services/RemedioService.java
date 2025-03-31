@@ -27,7 +27,7 @@ public class RemedioService extends ServiceWorker implements RepositoryService<R
     public void deleteResourceById(long id){
         try{
             remedioRepository.delete(id);
-        }catch (Exception ex){
+        } catch (Exception ex){
             ex.printStackTrace(System.err);
         }
     }

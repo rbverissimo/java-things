@@ -1,59 +1,48 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="fragments/bootstrap :: bootstrap"></head>
-<head th:insert="fragments/css :: styles"></head>
-<head th:insert="fragments/title :: title(title = 'Farmacinha - Lista de farmácias')"></head>
-<body>
-    <header th:insert="fragments/navheader :: navheader">
-    </header>
-    <main>
-        <div class="container-fluid">
-            <div class="d-flex justify-content-center">
-                <div class="main-container">
-                    <div class="mt-5 w-100" th:if="${farmacias != null and !farmacias.isEmpty()}">
-                        <div th:each="farmacia : ${farmacias}">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <p th:text="${farmacia.nome}"></p>
-                                        </div>
-                                        <div class="card-body">
-                                            <p>Paciente: <span th:text="${farmacia.paciente.nome} + ' ' + ${farmacia.paciente.sobrenome}" ></span></p>
-                                            <p th:text="${farmacia.bio}"></p>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="row d-flex w-100 justify-content-end">
-                                                <div class="col-4">
-                                                    <a th:href="@{'/remedios/i/{farmacia_id}'(farmacia_id=${farmacia.id})}" class="btn btn-primary w-100">Remédios</a>
-                                                </div>
-                                                <div class="col-4">
-                                                    <a th:href="@{'/pacientes/{id}'(id=${farmacia.paciente.id})}" class="btn btn-primary w-100">Paciente</a>
-                                                </div>
-                                            </div>
-                                        </div>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/vue-container-layout}"
+>
+    <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Lista das farmácias cadastradas')"></head>
+    <div  layout:fragment="content">
+        <div class="mt-5 w-100" th:if="${farmacias != null and !farmacias.isEmpty()}">
+            <div th:each="farmacia : ${farmacias}">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <p th:text="${farmacia.nome}"></p>
+                            </div>
+                            <div class="card-body">
+                                <p>Paciente: <span th:text="${farmacia.paciente.nome} + ' ' + ${farmacia.paciente.sobrenome}" ></span></p>
+                                <p th:text="${farmacia.bio}"></p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row d-flex w-100 justify-content-end">
+                                    <div class="col-4">
+                                        <a th:href="@{'/remedios/i/{farmacia_id}'(farmacia_id=${farmacia.id})}" class="btn btn-primary w-100">Remédios</a>
+                                    </div>
+                                    <div class="col-4">
+                                        <a th:href="@{'/pacientes/{id}'(id=${farmacia.paciente.id})}" class="btn btn-primary w-100">Paciente</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div th:unless="${farmacias != null and !farmacias.isEmpty()}">
-                        <div class="mt-5 w-100">
-                            <div class="card">
-                                <div class="card-header">
-                                    Nenhuma farmácia cadastrada
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text">Para cadastrar uma farmácia, clique no botão logo abaixo.</p>
-                                    <a th:href="@{/farmacias/cadastro}" class="btn btn-primary">Cadastrar farmácia</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
             </div>
         </div>
-    </main>
-</body>
+        <div th:unless="${farmacias != null and !farmacias.isEmpty()}">
+            <div class="mt-5 w-100">
+                <div class="card">
+                    <div class="card-header">
+                        Nenhuma farmácia cadastrada
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Para cadastrar uma farmácia, clique no botão logo abaixo.</p>
+                        <a th:href="@{/farmacias/cadastro}" class="btn btn-primary">Cadastrar farmácia</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </html>
+
+
