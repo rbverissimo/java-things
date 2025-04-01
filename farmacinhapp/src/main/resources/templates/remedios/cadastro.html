@@ -3,6 +3,15 @@
     <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Cadastro de remédio')"></head>
     <div layout:fragment="content">
         <div class="mt-5 w-100" >
+            <div th:if="${remedio.id != 0}" th:insert="components/toolbar :: lightToolbar(~{::#toolbar-remedios})">
+                <div class="w-100" id="toolbar-remedios" th:fragment="toolbarRemedios">
+                    <div class="row">
+                        <div class="col-3">
+                            <a href="#" class="btn btn-sm btn-outline-primary w-100">Cadastrar gramatura</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <form th:object="${remedio}"
                   th:action="${remedio.id == 0 ? '/remedios/cadastro/'+farmaciaId : '/remedios/update/'+remedio.id}"
                   th:method="${remedio.id == 0 ? 'POST' : 'PUT'}">
