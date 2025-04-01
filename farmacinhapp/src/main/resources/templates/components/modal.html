@@ -1,0 +1,16 @@
+<div th:fragment="simpleModal(toggleId, modalTitle)" tabindex="-1" th:id="${toggleId}"  class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">[[${modalTitle != null ? modalTitle : 'Informações'}]]</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <th:block layout:fragment="modal-body-content"></th:block>
+            </div>
+            <div class="modal-footer" layout:fragment="modal-footer-content">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
