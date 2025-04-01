@@ -7,7 +7,7 @@
                 <div class="w-100" id="toolbar-remedios" th:fragment="toolbarRemedios">
                     <div class="row">
                         <div class="col-3">
-                            <a href="#" class="btn btn-sm btn-outline-primary w-100">Cadastrar gramatura</a>
+                            <a th:href="${'/gramaturas/cadastro/'+remedio.id}" class="btn btn-sm btn-outline-primary w-100">Cadastrar gramatura</a>
                         </div>
                         <div th:if="${not #sets.isEmpty(remedio.gramaturas)}" class="col-3">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#gramaturas-modal" class="btn btn-sm btn-outline-primary w-100">Ver gramaturas</a>
