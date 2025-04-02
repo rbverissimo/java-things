@@ -7,4 +7,5 @@ public interface RepositoryService<T> {
     public T findResourceById(long resourceId);
     public boolean isResourceOwner(long resourceId);
     public T update(T managed, T formUpdated);
+    public T save(T entity);
 }

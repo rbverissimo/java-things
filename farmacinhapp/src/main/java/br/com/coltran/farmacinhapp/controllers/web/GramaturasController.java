@@ -2,6 +2,7 @@ package br.com.coltran.farmacinhapp.controllers.web;
 
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.domain.Gramatura;
+import br.com.coltran.farmacinhapp.domain.Remedio;
 import br.com.coltran.farmacinhapp.repositories.MedidaRepository;
 import br.com.coltran.farmacinhapp.services.GramaturaService;
 import br.com.coltran.farmacinhapp.services.RemedioService;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashSet;
 
 @Controller
 @RequestMapping("/gramaturas")
@@ -38,8 +40,25 @@ public class GramaturasController extends ControllerCommons {
 
     @PostMapping("/cadastro/{remedio_id}")
     @PreAuthorize("@remedioService.isResourceOwner(#remedioId)")
-    public String cadastroPOST(@PathVariable("remedio_id") long remedioId){
-        return "";
+    public String cadastroPOST(@PathVariable("remedio_id") long remedioId, @Valid @ModelAttribute Gramatura gramatura, BindingResult bindingResult, Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("remedioId", remedioId);
+            model.addAttribute("medidas", medidaRepository.findAll());
+            return "gramaturas/cadastro";
+        }
+        Remedio remedio = remedioService.findResourceById(remedioId);
+        gramatura.setRemedios(new HashSet<>(){{add(remedio);}});
+        gramaturaService.save(gramatura);
+
+        return "gramaturas/cadastro";
+    }
+
+    @GetMapping("/show/{id}")
+    @PreAuthorize("@gramaturaService.isResourceOwner(#gramaturaId)")
+    public String show(@PathVariable("id") long gramaturaId, Model model){
+        model.addAttribute("gramatura", gramaturaService.findResourceById(gramaturaId));
+        model.addAttribute("medidas", medidaRepository.findAll());
+        return "gramaturas/cadastro";
     }
 
     @PutMapping("/update/{id}")

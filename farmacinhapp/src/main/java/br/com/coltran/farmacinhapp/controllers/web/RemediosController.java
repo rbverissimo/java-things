@@ -70,6 +70,7 @@ public class RemediosController extends ControllerCommons {
     public String cadastroPOST(@PathVariable("farmacia_id") long farmaciaId, @Valid @ModelAttribute Remedio remedio, BindingResult bindingResult, Model model){
 
         if(bindingResult.hasErrors()){
+            model.addAttribute("farmaciaId", farmaciaId);
             model.addAttribute("tiposRemedio", tipoRemedioRepository.findAll());
             return "/remedios/cadastro";
         }

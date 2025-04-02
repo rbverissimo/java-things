@@ -1,7 +1,9 @@
 package br.com.coltran.farmacinhapp.services;
 
 import br.com.coltran.farmacinhapp.domain.Gramatura;
+import br.com.coltran.farmacinhapp.repositories.GramaturaRepository;
 import br.com.coltran.farmacinhapp.services.interfaces.RepositoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -9,6 +11,9 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class GramaturaService extends ServiceWorker implements RepositoryService<Gramatura> {
+
+    @Autowired
+    private GramaturaRepository gramaturaRepository;
 
     @Override
     public Gramatura findResourceById(long resourceId) {
@@ -23,5 +28,10 @@ public class GramaturaService extends ServiceWorker implements RepositoryService
     @Override
     public Gramatura update(Gramatura managed, Gramatura formUpdated) {
         return null;
+    }
+
+    public Gramatura save(Gramatura gramatura){
+        timestamps(gramatura);
+        return gramaturaRepository.save(gramatura);
     }
 }
