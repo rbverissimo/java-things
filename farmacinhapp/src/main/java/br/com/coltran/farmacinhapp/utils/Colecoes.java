@@ -1,5 +1,6 @@
 package br.com.coltran.farmacinhapp.utils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -11,6 +12,12 @@ public class Colecoes {
 
         public void adicionar(Set<T> set, T t){
             set.add(t);
+        }
+
+        public Set<T> addIfNull(Set<T> set, T t){
+            if(CollectionUtils.isEmpty(set)) return new HashSet<T>(){{add(t);}};
+            set.add(t);
+            return set;
         }
     }
 }

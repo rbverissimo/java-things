@@ -2,10 +2,12 @@ package br.com.coltran.farmacinhapp.services;
 
 import br.com.coltran.farmacinhapp.config.constants.Business;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
+import br.com.coltran.farmacinhapp.domain.Gramatura;
 import br.com.coltran.farmacinhapp.domain.Remedio;
 import br.com.coltran.farmacinhapp.repositories.RemedioRepository;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.services.interfaces.RepositoryService;
+import br.com.coltran.farmacinhapp.utils.Colecoes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +21,9 @@ public class RemedioService extends ServiceWorker implements RepositoryService<R
 
     @Autowired
     private RemedioRepository remedioRepository;
+
+    @Autowired
+    private Colecoes.SET<Gramatura> colecoes;
 
     public Remedio findResourceById(long remedioId){
         return remedioRepository.findById(remedioId).orElse(null);
@@ -68,6 +73,11 @@ public class RemedioService extends ServiceWorker implements RepositoryService<R
                 .mapToLong(f -> { return f.getRemedios().size(); })
                 .sum();
         return remediosTotal < Business.MAX_FREE_REMEDIOS;
+    }
+
+    public Remedio addGramatura(Remedio remedio, Gramatura gramatura){
+        remedio.setGramaturas(colecoes.addIfNull(remedio.getGramaturas(), gramatura));
+        return remedioRepository.save(remedio);
     }
 
 }

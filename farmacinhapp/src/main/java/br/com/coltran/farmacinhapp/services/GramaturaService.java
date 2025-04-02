@@ -17,7 +17,7 @@ public class GramaturaService extends ServiceWorker implements RepositoryService
 
     @Override
     public Gramatura findResourceById(long resourceId) {
-        return null;
+        return gramaturaRepository.findById(resourceId).orElse(null);
     }
 
     @Override

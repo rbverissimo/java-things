@@ -48,9 +48,11 @@ public class GramaturasController extends ControllerCommons {
         }
         Remedio remedio = remedioService.findResourceById(remedioId);
         gramatura.setRemedios(new HashSet<>(){{add(remedio);}});
-        gramaturaService.save(gramatura);
 
-        return "gramaturas/cadastro";
+        gramaturaService.save(gramatura);
+        remedioService.addGramatura(remedio, gramatura);
+
+        return "redirect:/gramaturas/show/"+gramatura.getId();
     }
 
     @GetMapping("/show/{id}")
