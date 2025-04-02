@@ -62,7 +62,6 @@ public class RemediosController extends ControllerCommons {
     public String cadastroGET(@PathVariable("farmacia_id") long farmaciaId, @ModelAttribute Remedio remedio, Model model){
         model.addAttribute("farmaciaId", farmaciaId);
         model.addAttribute("tiposRemedio", tipoRemedioRepository.findAll());
-        model.addAttribute("medidas", medidaRepository.findAll());
         return "remedios/cadastro";
     }
 
@@ -72,7 +71,6 @@ public class RemediosController extends ControllerCommons {
 
         if(bindingResult.hasErrors()){
             model.addAttribute("tiposRemedio", tipoRemedioRepository.findAll());
-            model.addAttribute("medidas", medidaRepository.findAll());
             return "/remedios/cadastro";
         }
 
@@ -88,7 +86,6 @@ public class RemediosController extends ControllerCommons {
     public String show(@PathVariable("remedio_id") long remedioId, Model model){
         model.addAttribute("remedio", remedioService.findResourceById(remedioId));
         model.addAttribute("tiposRemedio", tipoRemedioRepository.findAll());
-        model.addAttribute("medidas", medidaRepository.findAll());
         return "/remedios/cadastro";
     }
 

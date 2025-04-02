@@ -1,0 +1,41 @@
+<div th:fragment="form-data">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-floating py-1">
+                <input id="principio-ativo" th:field="*{principioAtivo}"
+                       class="form-control"
+                       type="text"
+                       placeholder="Dipirona, Paracetamol, etc" />
+                <label for="principio-ativo">Princípio ativo</label>
+                <span th:if="${#fields.hasErrors('principioAtivo')}" class="text-danger fs-08rem"
+                      th:errors="*{principioAtivo}"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-floating py-1">
+                <input id="valor-gramatura" th:field="*{valorGramatura}"
+                       type="number"
+                       class="form-control"
+                       placeholder="Um número que indique a qtde do princípio ativo "
+                >
+                <label for="valor-gramatura">Quantidade</label>
+                <span th:if="${#fields.hasErrors('valorGramatura')}"
+                      th:errors="*{valorGramatura}" class="text-danger fs-08rem "></span>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-floating py-1">
+                <select id="medida-gramatura" class="form-select" th:field="*{medida}">
+                    <option value="">Selecione a medida</option>
+                    <option th:each="m : ${medidas}" th:value="${m.id}" th:text="${m.abreviacao}"
+                            th:selected="${m.id == selectedValue}"></option>
+                </select>
+                <label for="medida-gramatura">Unidade de medida</label>
+                <span th:if="${#fields.hasErrors('medida')}"
+                      th:errors="*{medida}" class="text-danger fs-08rem "></span>
+            </div>
+        </div>
+    </div>
+</div>

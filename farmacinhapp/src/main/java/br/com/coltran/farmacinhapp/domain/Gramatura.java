@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Set;
@@ -24,9 +25,10 @@ public class Gramatura implements TableEntity, Serializable {
 
     private Double valorGramatura;
 
-    @ManyToMany(targetEntity = Medida.class, mappedBy = "gramaturas")
+    @NotNull(message = "Informe uma medida válida")
+    @ManyToOne(targetEntity = Medida.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<Medida> medidas;
+    private Medida medida;
 
     @ManyToMany(targetEntity = Remedio.class, mappedBy = "gramaturas", fetch = FetchType.LAZY)
     @JsonBackReference
@@ -67,12 +69,12 @@ public class Gramatura implements TableEntity, Serializable {
         this.valorGramatura = valorGramatura;
     }
 
-    public Set<Medida> getMedidas() {
-        return medidas;
+    public @NotNull(message = "Informe uma medida válida") Medida getMedida() {
+        return medida;
     }
 
-    public void setMedidas(Set<Medida> medidas) {
-        this.medidas = medidas;
+    public void setMedida(@NotNull(message = "Informe uma medida válida") Medida medida) {
+        this.medida = medida;
     }
 
     public Set<Remedio> getRemedios() {

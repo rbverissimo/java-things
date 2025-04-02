@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,13 +26,9 @@ public class Medida implements TableEntity, Serializable {
 
     private String abreviacao;
 
-    @ManyToMany(targetEntity = Gramatura.class, cascade = CascadeType.ALL)
-    @JoinTable(name = "medidas_gramaturas",
-            joinColumns = @JoinColumn(name = "medida_id"),
-            inverseJoinColumns = @JoinColumn(name = "gramatura_id")
-    )
+    @OneToMany(targetEntity = Gramatura.class, mappedBy = "medida", fetch = FetchType.LAZY)
     @JsonBackReference
-    private Set<Gramatura> gramaturas;
+    private List<Gramatura> gramaturas;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "America/Sao_Paulo")
@@ -68,11 +65,11 @@ public class Medida implements TableEntity, Serializable {
         this.abreviacao = abreviacao;
     }
 
-    public Set<Gramatura> getGramaturas() {
+    public List<Gramatura> getGramaturas() {
         return gramaturas;
     }
 
-    public void setGramaturas(Set<Gramatura> gramaturas) {
+    public void setGramaturas(List<Gramatura> gramaturas) {
         this.gramaturas = gramaturas;
     }
 

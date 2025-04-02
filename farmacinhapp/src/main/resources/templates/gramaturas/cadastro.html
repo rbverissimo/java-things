@@ -2,6 +2,17 @@
 >
 <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Cadastro de gramatura')"></head>
 <div layout:fragment="content">
-
+    <div class="mt-5 w-100">
+        <form th:object="${gramatura}"
+              th:action="${gramatura.id == 0 ? '/gramaturas/cadastro/'+remedioId : '/gramaturas/deletar'+gramatura.id}"
+              th:method="${gramatura.id == 0 ? 'POST' : 'PUT'}" >
+            <th:block th:insert="gramaturas/data :: form-data"></th:block>
+            <div class="mt-2 d-flex justify-content-center">
+                <div class="row w-100">
+                    <button class="btn btn-primary" type="submit">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 </html>
