@@ -79,7 +79,7 @@ public class RemediosController extends ControllerCommons {
         if(farmacia != null) remedio.setFarmacia(farmacia);
 
         remedioService.save(remedio);
-        return "redirect:/remedios/i/"+farmaciaId;
+        return "redirect:/remedios/show/"+remedio.getId();
     }
 
     @GetMapping("/show/{remedio_id}")
