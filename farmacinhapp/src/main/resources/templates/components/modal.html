@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <th:block layout:fragment="modal-body-content"></th:block>
+                <th:block th:replace="gramaturas/lists :: index"></th:block>
             </div>
             <div class="modal-footer" layout:fragment="modal-footer-content">
                 <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Fechar</button>

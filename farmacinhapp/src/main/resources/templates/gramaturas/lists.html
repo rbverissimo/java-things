@@ -1,0 +1,32 @@
+<div th:fragment="index">
+    <div class="row container-list-spacing" th:each="gramatura : ${gramaturas}">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-inline-flex flex-wrap justify-content-between">
+                    <div class="d-flex">
+                        <a class="d-flex align-items-center" style="cursor:pointer" th:href="@{'/gramaturas/show/{id}'(id=${gramatura.id})}">
+                            <span class="material-symbols-outlined">prescriptions</span>
+                            <span th:text="${gramatura.principioAtivo}"></span>
+                        </a>
+                    </div>
+                    <div>
+                        <form th:action="@{'/gramaturas/deletar/{id}'(id=${gramatura.id})}" th:method="delete">
+                            <button type="submit" class="btn btn-sm btn-outline-danger d-flex align-items-center">
+                                <i class="material-symbols-outlined me-1">delete</i>Deletar
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <span th:text="${gramatura.valorGramatura+''+gramatura.medida.abreviacao}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:fragment="vue-index">
+
+</div>
