@@ -28,30 +28,26 @@
 
 
 <div th:fragment="vue-index">
-    <div v-for="gramatura in gramaturas" :key="gramatura.id">
-        <div class="row container-list-spacing">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header d-inline-flex flex-wrap justify-content-between">
-                        <div class="d-flex">
-                            <a class="d-flex align-items-center" style="cursor:pointer" :href="`/gramaturas/show/${gramatura.id}`">
-                                <span class="material-symbols-outlined">prescriptions</span>
-                                <span>{{gramatura.principioAtivo}}</span>
-                            </a>
-                        </div>
-                        <div>
-                            <button type="button" class="btn btn-sm btn-outline-danger d-flex align-items-center">
-                                <i class="material-symbols-outlined me-1">delete</i>Deletar
-                            </button>
-                        </div>
-
+    <div v-for="gramatura in gramaturas" :key="gramatura.id" class="row container-list-spacing">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-inline-flex flex-wrap justify-content-between">
+                    <div class="d-flex">
+                        <a class="d-flex align-items-center" style="cursor:pointer" :href="`/gramaturas/show/${gramatura.id}`">
+                            <span class="material-symbols-outlined">prescriptions</span>
+                            <span>{{gramatura.principioAtivo}}</span>
+                        </a>
                     </div>
-                    <div class="card-body">
-                        <span>{{gramatura.valorGramatura+gramatura.medida.abreviacao}}</span>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-outline-danger d-flex align-items-center">
+                            <i class="material-symbols-outlined me-1">delete</i>Deletar
+                        </button>
                     </div>
+                </div>
+                <div class="card-body">
+                    <span>{{gramatura.valorGramatura+gramatura.medida.abreviacao}}</span>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
