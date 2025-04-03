@@ -102,7 +102,8 @@
 
         const serverData = {
             farmacia_id: /*[[${farmaciaId}]]*/ null,
-            remedio_id: /*[[${remedioId}]]*/ null
+            remedio_id: /*[[${remedioId}]]*/ null,
+            gramaturas: /*[[${gramaturas}]]*/
         };
 
         const app = createApp({
@@ -111,14 +112,8 @@
                 const gramaturas = ref([]);
                 const farmacia_id = serverData.farmacia_id;
 
-                onMounted(async () => {
-                    if(serverData.remedio_id !== null){
-                        console.log(serverData.remedio_id);
-                        const response = await fetch(`/api/gramaturas/${serverData.remedio_id}`);
-                        if(!response.ok) throw new Error(`Erro HTTP!Status: ${response.status}`);
-                        const data = await response.json();
-                        gramaturas.value = data.content;
-                    }
+                onMounted(() => {
+                   gramaturas.value = serverData.gramaturas;
                 });
 
                 const buscarNomesRemedio = debounce(async (e) => {

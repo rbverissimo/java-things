@@ -87,6 +87,7 @@ public class RemediosController extends ControllerCommons {
     public String show(@PathVariable("remedio_id") long remedioId, Model model){
         Remedio remedio = remedioService.findResourceById(remedioId);
         model.addAttribute("remedio", remedio);
+        model.addAttribute("gramaturas", remedio.getGramaturas());
         model.addAttribute("farmaciaId", remedio.getFarmacia().getId());
         model.addAttribute("remedioId", remedio.getId());
         model.addAttribute("tiposRemedio", tipoRemedioRepository.findAll());
