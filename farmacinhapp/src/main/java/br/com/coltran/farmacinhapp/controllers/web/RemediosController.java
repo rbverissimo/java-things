@@ -85,7 +85,10 @@ public class RemediosController extends ControllerCommons {
     @GetMapping("/show/{remedio_id}")
     @PreAuthorize("@remedioService.isResourceOwner(#remedioId)")
     public String show(@PathVariable("remedio_id") long remedioId, Model model){
-        model.addAttribute("remedio", remedioService.findResourceById(remedioId));
+        Remedio remedio = remedioService.findResourceById(remedioId);
+        model.addAttribute("remedio", remedio);
+        model.addAttribute("farmaciaId", remedio.getFarmacia().getId());
+        model.addAttribute("remedioId", remedio.getId());
         model.addAttribute("tiposRemedio", tipoRemedioRepository.findAll());
         return "/remedios/cadastro";
     }

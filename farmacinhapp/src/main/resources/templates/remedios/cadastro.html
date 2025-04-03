@@ -97,17 +97,28 @@
         </div>
     </div>
     <script type="module" th:inline="javascript" layout:fragment="vue-app">
-        import { createApp, ref } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+        import { createApp, ref, onMounted } from '/webjars/vue/dist/vue.esm-browser.prod.js';
         import { debounce } from '/js/reactive.js';
 
         const serverData = {
-            farmacia_id: /*[[${farmaciaId}]]*/ null
+            farmacia_id: /*[[${farmaciaId}]]*/ null,
+            remedio_id: /*[[${remedioId}]]*/ null
         };
 
         const app = createApp({
             setup(){
                 const resultadoNomes = ref([]);
                 const farmacia_id = serverData.farmacia_id;
+
+                onMounted(async () => {
+                    if(serverData.remedio_id !== null){
+                        console.log(serverData.remedio_id);
+                        const response = await fetch(`/api/gramaturas/${serverData.remedio_id}`);
+                        if(!response.ok) throw new Error(`Erro HTTP!Status: ${response.status}`);
+                        const data = await response.json();
+                        console.log(data);
+                    }
+                });
 
                 const buscarNomesRemedio = debounce(async (e) => {
                     const novaBusca = e.target.value;
