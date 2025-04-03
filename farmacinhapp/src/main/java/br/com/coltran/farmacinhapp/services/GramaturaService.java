@@ -34,7 +34,7 @@ public class GramaturaService extends ServiceWorker implements RepositoryService
     }
 
     public Page<Gramatura> findByRemedioId(long remedioId, Pageable pageable){
-        return null;
+        return gramaturaRepository.findByRemedioId(remedioId, pageable);
     }
 
     public Page<Gramatura> findByPrincipioAtivo(String princioAtivo, long remedioId, Pageable pageable){
