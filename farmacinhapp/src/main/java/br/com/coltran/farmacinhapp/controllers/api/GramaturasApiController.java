@@ -53,4 +53,13 @@ public class GramaturasApiController extends ControllerCommons {
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(gramaturas);
     }
 
+    @DeleteMapping("/delete/{gramatura_id}/{remedio_id}")
+    @PreAuthorize("@gramaturaService.isResourceOwner(#gramaturaId)")
+    public ResponseEntity<Gramatura> destroy(@PathVariable("gramatura_id") long gramaturaId, @PathVariable("remedio_id") long remedioId){
+        gramaturaService.deleteFromRemedio(gramaturaId, remedioId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).contentType(MediaType.APPLICATION_JSON).body(null);
+    }
+
+
+
 }

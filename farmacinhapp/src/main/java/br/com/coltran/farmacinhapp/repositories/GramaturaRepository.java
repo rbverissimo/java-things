@@ -14,5 +14,8 @@ public interface GramaturaRepository extends JpaRepository<Gramatura, Long> {
     @Query("SELECT g FROM Gramatura g JOIN g.remedios r WHERE r.id=:remedioId")
     Page<Gramatura> findByRemedioId(@Param("remedioId") Long remedioId, Pageable pageable);
 
+    @Query("DELETE FROM Gramatura g JOIN g.remedios r WHERE g.id=:gramaturaId AND r.id=:remedioId")
+    void deleteGramaturaFromRemedio(@Param("gramaturaId") long gramaturaId, @Param("remedioId") long remedioId);
+
 
 }

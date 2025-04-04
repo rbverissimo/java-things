@@ -55,4 +55,12 @@ public class GramaturaService extends ServiceWorker implements RepositoryService
         timestamps(gramatura);
         return gramaturaRepository.save(gramatura);
     }
+
+    public void deleteFromRemedio(long gramaturaId, long remedioId){
+        try{
+            gramaturaRepository.deleteGramaturaFromRemedio(gramaturaId, remedioId);
+        } catch (Exception ex){
+            ex.printStackTrace(System.err);
+        }
+    }
 }
