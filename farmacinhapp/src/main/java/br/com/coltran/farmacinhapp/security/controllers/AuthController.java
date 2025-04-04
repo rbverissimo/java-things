@@ -1,6 +1,7 @@
 package br.com.coltran.farmacinhapp.security.controllers;
 
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
+import br.com.coltran.farmacinhapp.email.EmailServiceImpl;
 import br.com.coltran.farmacinhapp.security.dto.UserRegDTO;
 import br.com.coltran.farmacinhapp.security.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class AuthController extends ControllerCommons {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private EmailServiceImpl emailService;
+
     @GetMapping("/login")
     public String login(){
         return "login";
@@ -37,6 +41,7 @@ public class AuthController extends ControllerCommons {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "register";
         }
+
         authService.salvar(userRegDTO);
 
         return "redirect:/login";
