@@ -19,8 +19,13 @@
                 </div>
             </div>
 
+            <div th:if="${emailRegistradoMsg != null}"  class="alert alert-info alert-dismissible fade show" role="alert">
+                <span style="font-size: 0.8rem" th:text="${emailRegistradoMsg}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
             <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" name="email" placeholder="user@email.com.br">
+                <input type="email" class="form-control" id="floatingInput" name="email" placeholder="usuario@email.com.br" th:value="${emailRegistrado}">
                 <label for="floatingInput">E-mail:</label>
             </div>
             <div class="form-floating">

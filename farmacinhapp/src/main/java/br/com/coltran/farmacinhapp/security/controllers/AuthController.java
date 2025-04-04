@@ -42,6 +42,12 @@ public class AuthController extends ControllerCommons {
             return "register";
         }
 
+        if(authService.usuarioByEmail(userRegDTO.getEmail()).isPresent()){
+            model.addAttribute("emailRegistrado", userRegDTO.getEmail());
+            model.addAttribute("emailRegistradoMsg", "Já existe um usuário associado a este e-mail!");
+            return "login";
+        }
+
         authService.salvar(userRegDTO);
 
         return "redirect:/login";

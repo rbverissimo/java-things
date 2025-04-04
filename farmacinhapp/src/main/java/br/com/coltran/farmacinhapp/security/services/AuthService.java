@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class AuthService {
 
@@ -28,6 +30,10 @@ public class AuthService {
 
         UserDetails userDetails = (UserDetails)  authentication.getPrincipal();
         return userRepository.findByEmail(userDetails.getUsername()).get();
+    }
+
+    public Optional<User> usuarioByEmail(String email){
+        return userRepository.findByEmail(email);
     }
 
     public User salvar(UserRegDTO userRegDTO){
