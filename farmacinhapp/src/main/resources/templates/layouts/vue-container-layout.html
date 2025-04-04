@@ -12,7 +12,7 @@
                 <div class="container-fluid">
                     <div class="d-flex justify-content-center">
                         <div class="main-container">
-                            <div class="w-100" id="app">
+                            <div class="w-100" id="app" th:attr="data-csrf-token=${_csrf.token}, data-csrf-header=${_csrf.headerName}">
                                 <div layout:fragment="content"></div>
                             </div>
                         </div>

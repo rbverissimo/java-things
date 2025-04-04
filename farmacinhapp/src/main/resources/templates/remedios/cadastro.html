@@ -95,52 +95,82 @@
                 </div>
             </form>
         </div>
-    </div>
-    <script type="module" th:inline="javascript" layout:fragment="vue-app">
-        import { createApp, ref, onMounted } from '/webjars/vue/dist/vue.esm-browser.prod.js';
-        import { debounce } from '/js/reactive.js';
+        <script type="module" th:inline="javascript" layout:fragment="vue-app">
+            import { createApp, ref, onMounted } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+            import { debounce, throttle } from '/js/reactive.js';
+            import { csrftoken, csrfheader } from '/js/token.js';
 
-        const serverData = {
-            farmacia_id: /*[[${farmaciaId}]]*/ null,
-            remedio_id: /*[[${remedioId}]]*/ null,
-            gramaturas: /*[[${gramaturas}]]*/
-        };
+            const serverData = {
+                farmacia_id: /*[[${farmaciaId}]]*/ null,
+                remedio_id: /*[[${remedioId}]]*/ null,
+                gramaturas: /*[[${gramaturas}]]*/
+            };
 
-        const app = createApp({
-            setup(){
-                const resultadoNomes = ref([]);
-                const gramaturas = ref([]);
-                const farmacia_id = serverData.farmacia_id;
+            const app = createApp({
+                setup(){
+                    const resultadoNomes = ref([]);
+                    const gramaturas = ref([]);
+                    const farmacia_id = serverData.farmacia_id;
 
-                onMounted(() => {
-                   gramaturas.value = serverData.gramaturas;
-                });
+                    onMounted(() => {
+                        gramaturas.value = serverData.gramaturas;
+                    });
 
-                const buscarNomesRemedio = debounce(async (e) => {
-                    const novaBusca = e.target.value;
-                    if(novaBusca.length < 3 || farmacia_id === null) return;
+                    const deletarGramatura = throttle(async (gramaturaId) => {
+                        const url = `/api/gramaturas/delete/${gramaturaId}/${serverData.remedio_id}`;
+                        const config = {
+                            method: 'DELETE',
+                            headers: {
+                                [csrfheader]: csrftoken
+                            }
+                        };
+                        const response = await fetch(url, config);
+                        if(response.ok){
+                            refreshGramaturas();
+                        } else {
+                            throw new Error(`Erro HTTP! Status: ${response.status}`);
+                        }
+                    }, 600);
 
-                    try {
-                        const baseUrl = /*[[@{/api/remedios/{farmacia_id}(farmacia_id=${__${farmacia_id}__})}]]*/ '';
-                        const queryUrl = `${baseUrl}?nome=${novaBusca}`;
-                        const response = await fetch(queryUrl);
-                        if(!response.ok) throw new Error(`Erro HTTP! Status: ${response.status}`);
+                    const refreshGramaturas = async () => {
+                        const url = `/api/gramaturas/${serverData.remedio_id}`;
+                        const response = await fetch(url);
+                        if(!response.ok){
+                            throw new Error(`Erro HTTP! Status: ${response.status}`);
+                            return;
+                        }
                         const data = await response.json();
-                    } catch (error){
-                        console.error('Erro ao buscar informações sobre o nome de remédios', error);
-                    }
-                }, 400);
+                        gramaturas.value = data.content;
+                    };
+
+                    const buscarNomesRemedio = debounce(async (e) => {
+                        const novaBusca = e.target.value;
+                        if(novaBusca.length < 3 || farmacia_id === null) return;
+
+                        try {
+                            const baseUrl = /*[[@{/api/remedios/{farmacia_id}(farmacia_id=${__${farmacia_id}__})}]]*/ '';
+                            const queryUrl = `${baseUrl}?nome=${novaBusca}`;
+                            const response = await fetch(queryUrl);
+                            if(!response.ok) throw new Error(`Erro HTTP! Status: ${response.status}`);
+                            const data = await response.json();
+                        } catch (error){
+                            console.error('Erro ao buscar informações sobre o nome de remédios', error);
+                        }
+                    }, 400);
 
 
-                return {
-                    resultadoNomes,
-                    buscarNomesRemedio,
-                    gramaturas
-                };
-            }
-        });
-        app.mount('#app');
-    </script>
+                    return {
+                        resultadoNomes,
+                        buscarNomesRemedio,
+                        gramaturas,
+                        deletarGramatura,
+                        refreshGramaturas
+                    };
+                }
+            });
+            app.mount('#app');
+        </script>
+    </div>
 </html>
 
 
