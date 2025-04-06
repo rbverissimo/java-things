@@ -1,7 +1,6 @@
 package br.com.coltran.farmacinhapp.security.services;
 
 import br.com.coltran.farmacinhapp.security.domain.User;
-import br.com.coltran.farmacinhapp.security.domain.VerificationToken;
 import br.com.coltran.farmacinhapp.security.dto.UserRegDTO;
 import br.com.coltran.farmacinhapp.security.repositories.UserRepository;
 import br.com.coltran.farmacinhapp.utils.ZonedBrasilTime;
@@ -12,9 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 @Component
 public class AuthService {
