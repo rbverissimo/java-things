@@ -35,6 +35,9 @@ public class User implements TableEntity {
         inverseJoinColumns = @JoinColumn(name = "farmacia_id"))
     public Set<Farmacia> farmacias;
 
+    @OneToMany(targetEntity = VerificationToken.class, mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public Set<VerificationToken> verificationTokens;
+
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     public ZonedDateTime dataCriacao;
 
@@ -99,6 +102,14 @@ public class User implements TableEntity {
 
     public void setFarmacias(Set<Farmacia> farmacias) {
         this.farmacias = farmacias;
+    }
+
+    public Set<VerificationToken> getVerificationTokens() {
+        return verificationTokens;
+    }
+
+    public void setVerificationTokens(Set<VerificationToken> verificationTokens) {
+        this.verificationTokens = verificationTokens;
     }
 
     public LocalDate getDataNascimento() {
