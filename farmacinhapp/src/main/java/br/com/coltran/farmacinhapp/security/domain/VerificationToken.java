@@ -18,6 +18,7 @@ public class VerificationToken {
     @NotNull
     private String token;
 
+    @NotNull
     private ZonedDateTime expiredAt;
 
     private ZonedDateTime verifiedAt;

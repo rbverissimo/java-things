@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -51,6 +52,12 @@ public class AuthController extends ControllerCommons {
         authService.salvar(userRegDTO);
 
         return "redirect:/login";
+    }
+
+    @GetMapping("/verify")
+    public String verifyEmail(@RequestParam(name = "u", required = true) long userId, @RequestParam(name = "verifier", required = true) String UuidToken){
+
+        return "";
     }
 
 }

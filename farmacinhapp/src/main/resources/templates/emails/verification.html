@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title th:remove="all">Confirmação de cadastro Farmacinhapp</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="main-background">
+        <div class="main-container">
+            <h1>Verificação no app Farmacinha</h1>
+            <p>Olá, <strong th:text="${username}"></strong>!</p>
+            <p>Obrigado por se cadastrar no Farmacinha. Esperamos que você aproveite bastante a experiência para cuidar melhor da sua saúde e da saúde de quem você ama.</p>
+            <p>Para verificar seu cadastro, basta clicar no botão abaixo:</p>
+            <a th:href="${urlVerify}" class="button">Confirmar e-mail</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,8 +1,10 @@
 package br.com.coltran.farmacinhapp.security.services;
 
 import br.com.coltran.farmacinhapp.security.domain.User;
+import br.com.coltran.farmacinhapp.security.domain.VerificationToken;
 import br.com.coltran.farmacinhapp.security.dto.UserRegDTO;
 import br.com.coltran.farmacinhapp.security.repositories.UserRepository;
+import br.com.coltran.farmacinhapp.security.repositories.VerificationTokenRepository;
 import br.com.coltran.farmacinhapp.utils.ZonedBrasilTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -12,12 +14,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class AuthService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private VerificationTokenRepository verificationTokenRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -37,13 +43,24 @@ public class AuthService {
     }
 
     public User salvar(UserRegDTO userRegDTO){
+
+        UUID token = UUID.randomUUID();
+
         User user = new User();
         user.setEmail(userRegDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userRegDTO.getPassword()));
         user.setUsername(userRegDTO.getUsername());
         user.setDataCriacao(zonedBrasilTime.dataHora());
         user.setDataAlteracao(zonedBrasilTime.dataHora());
-        return userRepository.save(user);
+        User managedUser = userRepository.save(user);
+
+        VerificationToken verificationToken = new VerificationToken();
+        verificationToken.setUser(managedUser);
+        verificationToken.setToken(token.toString());
+        verificationToken.setExpiredAt(zonedBrasilTime.dataHora().plusHours(24));
+        verificationTokenRepository.save(verificationToken);
+
+        return managedUser;
     }
 
     public void alterarUsuario(User user) {
