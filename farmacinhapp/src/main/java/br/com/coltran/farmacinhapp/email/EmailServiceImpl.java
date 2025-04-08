@@ -2,9 +2,15 @@ package br.com.coltran.farmacinhapp.email;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
+import javax.mail.internet.MimeMessage;
+import java.util.Map;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -12,26 +18,62 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    @Autowired
+    private TemplateEngine templateEngine;
+
     @Value("${spring.mail.from")
     private String sender;
+
+    /**
+     * Este método recebe o path para o template de email e um mapa com as variáveis que comporão o email
+     * @param templatePath path baseado em resources/templates/
+     * @param variables um map no qual a chave é o nome da variável que será que passada ao template
+     * @return um template processado pela engine do Thymeleaf
+     */
+    private String processEmailTemplate(String templatePath, Map<String, Object> variables){
+        Context thymeleafContext = new Context();
+        if(!CollectionUtils.isEmpty(variables)) thymeleafContext.setVariables(variables);
+        return templateEngine.process(templatePath, thymeleafContext);
+    }
+
+    public void sendEmailVerification(String recipientEmail, String recipientName, String urlToVerify){
+        Map<String, Object> variables = Map.of(
+                "username", recipientName,
+                "urlVerify", urlToVerify
+        );
+
+        String htmlBody = processEmailTemplate("emails/verification", variables);
+
+        EmailDetails emailDetails = new EmailDetails();
+        emailDetails.setRecipient(recipientEmail);
+        emailDetails.setMsgBody(htmlBody);
+        emailDetails.setSubject("Confirmação de email Farmacinhapp");
+
+        sendMail(emailDetails);
+
+    }
 
     @Override
     public void sendMail(EmailDetails details) {
 
         try {
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
 
-            mailMessage.setFrom(sender);
-            mailMessage.setTo(details.getRecipient());
-            mailMessage.setText(details.getMsgBody());
-            mailMessage.setSubject(details.getSubject());
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-            javaMailSender.send(mailMessage);
+            helper.setTo(details.getRecipient());
+            helper.setFrom(sender);
+            helper.setSubject(details.getSubject());
+            helper.setText(details.getMsgBody(), details.isHtml());
+
+            javaMailSender.send(mimeMessage);
         }
         catch (Exception e) {
             e.printStackTrace(System.err);
         }
     }
+
+
 
     @Override
     public String sendMailWithAttachment(EmailDetails emailDetails) {

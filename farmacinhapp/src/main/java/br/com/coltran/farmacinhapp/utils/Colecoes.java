@@ -20,4 +20,13 @@ public class Colecoes {
             return set;
         }
     }
+
+    @Component
+    public static class LIST<T> {
+        public List<T> addIfNull(List<T> l, T t){
+            if(CollectionUtils.isEmpty(l)) return new ArrayList<>(){{add(t);}};
+            l.add(t);
+            return l;
+        }
+    }
 }

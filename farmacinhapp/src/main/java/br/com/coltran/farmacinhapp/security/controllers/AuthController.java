@@ -2,6 +2,8 @@ package br.com.coltran.farmacinhapp.security.controllers;
 
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.email.EmailServiceImpl;
+import br.com.coltran.farmacinhapp.security.domain.User;
+import br.com.coltran.farmacinhapp.security.domain.VerificationToken;
 import br.com.coltran.farmacinhapp.security.dto.UserRegDTO;
 import br.com.coltran.farmacinhapp.security.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 @Controller
@@ -49,7 +52,14 @@ public class AuthController extends ControllerCommons {
             return "login";
         }
 
-        authService.salvar(userRegDTO);
+        User registeredUser = authService.salvar(userRegDTO);
+
+        try{
+            emailService.sendEmailVerification(registeredUser.getEmail(), registeredUser.getUsername(), authService.generateVerificationUrl(registeredUser));
+        } catch (IllegalArgumentException e){
+            e.printStackTrace(System.err);
+        }
+
 
         return "redirect:/login";
     }

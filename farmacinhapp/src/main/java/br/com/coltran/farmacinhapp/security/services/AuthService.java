@@ -4,7 +4,7 @@ import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.security.domain.VerificationToken;
 import br.com.coltran.farmacinhapp.security.dto.UserRegDTO;
 import br.com.coltran.farmacinhapp.security.repositories.UserRepository;
-import br.com.coltran.farmacinhapp.security.repositories.VerificationTokenRepository;
+import br.com.coltran.farmacinhapp.utils.Colecoes;
 import br.com.coltran.farmacinhapp.utils.ZonedBrasilTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,13 +25,15 @@ public class AuthService {
     private UserRepository userRepository;
 
     @Autowired
-    private VerificationTokenRepository verificationTokenRepository;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private ZonedBrasilTime zonedBrasilTime;
+
+    @Autowired
+    private Colecoes.SET<VerificationToken> colecoes;
+
+    private final String EMAIL_VERIFICATION_URL = "/verify";
 
     public User usuarioLogado()  {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -42,6 +46,7 @@ public class AuthService {
         return userRepository.findByEmail(email);
     }
 
+    @Transactional
     public User salvar(UserRegDTO userRegDTO){
 
         UUID token = UUID.randomUUID();
@@ -52,15 +57,14 @@ public class AuthService {
         user.setUsername(userRegDTO.getUsername());
         user.setDataCriacao(zonedBrasilTime.dataHora());
         user.setDataAlteracao(zonedBrasilTime.dataHora());
-        User managedUser = userRepository.save(user);
 
         VerificationToken verificationToken = new VerificationToken();
-        verificationToken.setUser(managedUser);
         verificationToken.setToken(token.toString());
         verificationToken.setExpiredAt(zonedBrasilTime.dataHora().plusHours(24));
-        verificationTokenRepository.save(verificationToken);
 
-        return managedUser;
+        user.setVerificationTokens(colecoes.addIfNull(user.getVerificationTokens(), verificationToken));
+
+        return userRepository.save(user);
     }
 
     public void alterarUsuario(User user) {
@@ -77,6 +81,12 @@ public class AuthService {
                 .stream()
                 .anyMatch(verificationToken -> verificationToken.getVerifiedAt() != null
                         && verificationToken.getVerifiedAt().isBefore(zonedBrasilTime.dataHora()));
+    }
+
+    public String generateVerificationUrl(User user) throws IllegalArgumentException{
+         String token = user.getVerificationTokens().stream().max(Comparator.comparing(VerificationToken::getId))
+                 .orElseThrow(() -> new IllegalArgumentException("Token de verificação de email não encontrado")).getToken();
+        return String.format("%s?u=%d&token=%s", EMAIL_VERIFICATION_URL, user.getId(), token);
     }
 
 }

@@ -6,6 +6,7 @@ public class EmailDetails {
     private String msgBody;
     private String subject;
     private String attachment;
+    private boolean isHtml = true;
 
     public String getRecipient() {
         return recipient;
@@ -37,5 +38,13 @@ public class EmailDetails {
 
     public void setAttachment(String attachment) {
         this.attachment = attachment;
+    }
+
+    public boolean isHtml() {
+        return isHtml;
+    }
+
+    public void setHtml(boolean html) {
+        isHtml = html;
     }
 }
