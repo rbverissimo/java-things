@@ -1,6 +1,7 @@
 package br.com.coltran.farmacinhapp.security;
 
 
+import br.com.coltran.farmacinhapp.security.handlers.CustomAuthenticationFailureHandler;
 import br.com.coltran.farmacinhapp.security.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +27,9 @@ public class SecurityConfig  {
     @Autowired
     private UserServiceImpl userServiceImpl;
 
+    @Autowired
+    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -36,10 +40,13 @@ public class SecurityConfig  {
 
         http
                 .authorizeRequests()
-                .antMatchers("/login", "/register", "/verify", "/css/**", "/js/**").permitAll()
+                .antMatchers("/login", "/register", "/verify", "/resend","/css/**", "/js/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin(form -> form.loginPage("/login").usernameParameter("email").defaultSuccessUrl("/", true))
+                .formLogin(form -> form.loginPage("/login").usernameParameter("email")
+                        .defaultSuccessUrl("/", true)
+                        .failureHandler(customAuthenticationFailureHandler)
+                )
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")

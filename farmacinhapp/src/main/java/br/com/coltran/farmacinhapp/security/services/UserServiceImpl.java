@@ -37,6 +37,12 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toSet());
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getEmail())
+                .password(user.getPassword())
+                .authorities(authorities)
+                .disabled(!user.isVerificado())
+                .build();
     }
 }

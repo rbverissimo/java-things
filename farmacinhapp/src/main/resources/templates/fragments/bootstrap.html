@@ -4,9 +4,15 @@
     <meta name="_csrf" th:attr="content=${_csrf.token}">
     <meta name="_csrf_header" th:attr="content=${_csrf.headerName}">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <script type="importmap">
+        {
+          "imports": {
+            "@popperjs/core": "[[@{/webjars/popperjs__core/2.11.8/dist/esm/popper.js}]]",
+             "bootstrap": "[[@{/webjars/bootstrap/5.3.3/dist/js/bootstrap.esm.min.js}]]"
+          }
+        }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script th:replace="fragments/vue :: vue3"></script>
     <script th:replace="fragments/lodash :: lodash"></script>
 </head>

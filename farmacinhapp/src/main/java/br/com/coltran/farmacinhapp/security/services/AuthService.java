@@ -1,6 +1,6 @@
 package br.com.coltran.farmacinhapp.security.services;
 
-import br.com.coltran.farmacinhapp.exceptions.VerificationTokenNotFoundException;
+import br.com.coltran.farmacinhapp.security.exceptions.VerificationTokenNotFoundException;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.security.domain.VerificationToken;
 import br.com.coltran.farmacinhapp.security.dto.UserRegDTO;
@@ -40,6 +40,7 @@ public class AuthService {
     private Colecoes.SET<VerificationToken> colecoes;
 
     private final String EMAIL_VERIFICATION_URL = "/verify";
+    private final Integer EXPIRATION_LIMIT = 24;
 
     public User usuarioLogado()  {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -63,11 +64,12 @@ public class AuthService {
         user.setUsername(userRegDTO.getUsername());
         user.setDataCriacao(zonedBrasilTime.dataHora());
         user.setDataAlteracao(zonedBrasilTime.dataHora());
+        user.setVerificado(false);
 
         VerificationToken verificationToken = new VerificationToken();
         verificationToken.setToken(token.toString());
         verificationToken.setUser(user);
-        verificationToken.setExpiredAt(zonedBrasilTime.dataHora().plusHours(24));
+        verificationToken.setExpiredAt(zonedBrasilTime.dataHora().plusHours(EXPIRATION_LIMIT));
 
         user.setVerificationTokens(colecoes.addIfNull(user.getVerificationTokens(), verificationToken));
 
@@ -113,6 +115,11 @@ public class AuthService {
         verificationToken.ifPresent(v -> {
             v.setVerifiedAt(verifiedAt);
             verificationTokenRepository.save(v);
+
+            User managedUser = v.getUser();
+            managedUser.setVerificado(true);
+            userRepository.save(managedUser);
+
         });
         return verificationToken.orElseThrow(() -> new VerificationTokenNotFoundException("Token de verificação de email não encontrado"));
     }

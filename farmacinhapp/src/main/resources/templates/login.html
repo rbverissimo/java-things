@@ -12,12 +12,6 @@
         <form th:action="@{/login}" method="post">
             <h1 class="h3 mb-3 fw-normal">Olá, seja bem-vindo(a)</h1>
 
-            <div th:if="${param.error}">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <span style="font-size: 0.8rem">Credenciais inválidas</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
 
             <div th:if="${infoSucc != null}"  class="alert alert-success alert-dismissible fade show" role="alert">
                 <span style="font-size: 0.8rem" th:text="${infoSucc}"></span>
@@ -33,6 +27,8 @@
                 <span style="font-size: 0.8rem" th:text="${infoErr}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+
+
 
             <div class="form-floating">
                 <input type="email" class="form-control" id="floatingInput" name="email" placeholder="usuario@email.com.br" th:value="${emailRegistrado}">
@@ -55,7 +51,22 @@
             <button class="w-100 btn btn-lg btn-primary" type="submit">Entrar</button>
             <p class="mt-5 mb-3 text-muted">Coltran© Soluções <span id="ano-atual-footer"></span></p>
         </form>
+        <div class="mt-6" th:if="${param.unverified}">
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Reenviar confirmação</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <span>
+                        <a style="font-size: 0.75rem; text-decoration: none; color: inherit" th:href="@{/resend}">
+                            Clique aqui se você não recebeu o e-mail de confirmação</a>
+                    </span>
+                </div>
+            </div>
+        </div>
     </main>
 </body>
 <script type="module" th:src="@{/js/basics.js}"></script>
+<script type="module" th:src="@{/js/bsToasts.js}"></script>
 </html>

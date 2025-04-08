@@ -33,16 +33,18 @@ public class User implements TableEntity {
     @JoinTable(name = "users_farmacias",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "farmacia_id"))
-    public Set<Farmacia> farmacias;
+    private Set<Farmacia> farmacias;
 
     @OneToMany(targetEntity = VerificationToken.class, mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    public Set<VerificationToken> verificationTokens;
+    private Set<VerificationToken> verificationTokens;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    public ZonedDateTime dataCriacao;
+    private ZonedDateTime dataCriacao;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    public ZonedDateTime dataAlteracao;
+    private ZonedDateTime dataAlteracao;
+
+    private boolean verificado;
 
     public User() {
     }
@@ -136,5 +138,13 @@ public class User implements TableEntity {
 
     public void setDataAlteracao(ZonedDateTime dataAlteracao) {
         this.dataAlteracao = dataAlteracao;
+    }
+
+    public boolean isVerificado() {
+        return verificado;
+    }
+
+    public void setVerificado(boolean verificado) {
+        this.verificado = verificado;
     }
 }

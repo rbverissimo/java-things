@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/bootstrap :: bootstrap">
+</head>
+<head th:insert="fragments/css :: login-css"></head>
+<head th:insert="fragments/title :: title(title = 'Farmacinha - Seja bem-vindo(a)!')"></head>
+<body class="d-flex align-items-center py-4 bg-body-tertiary">
+
+    <main class="form-signin w-100 m-auto">
+        <p class="mb-1">Digite seu e-mail cadastrado para reenviarmos um link de confirmação</p>
+        <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInput" name="email" placeholder="usuario@email.com.br" th:value="${emailRegistrado}">
+            <label for="floatingInput">E-mail:</label>
+        </div>
+        <div class="mt-2 mb-2">
+            <a id="dynamicLink" class="w-100 btn btn-lg btn-primary" th:href="@{/resend}" type="button">Reenviar</a>
+        </div>
+        <p class="mt-5 mb-3 text-muted">Coltran© Soluções <span id="ano-atual-footer"></span></p>
+    </main>
+</body>
+<script type="module" th:src="@{/js/basics.js}"></script>
+<script type="module" th:src="@{/js/resend.js}"></script>
+</html>

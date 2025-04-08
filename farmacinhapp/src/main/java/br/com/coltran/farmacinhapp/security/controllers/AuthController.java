@@ -2,12 +2,14 @@ package br.com.coltran.farmacinhapp.security.controllers;
 
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.email.EmailServiceImpl;
-import br.com.coltran.farmacinhapp.exceptions.VerificationTokenNotFoundException;
+import br.com.coltran.farmacinhapp.security.exceptions.VerificationTokenNotFoundException;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.security.domain.VerificationToken;
 import br.com.coltran.farmacinhapp.security.dto.UserRegDTO;
 import br.com.coltran.farmacinhapp.security.services.AuthService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 @Controller
@@ -30,7 +31,7 @@ public class AuthController extends ControllerCommons {
     private EmailServiceImpl emailService;
 
     @GetMapping("/login")
-    public String login(){ return "login"; }
+    public String login(Model model){ return "login"; }
 
     @GetMapping("/register")
     public String register(@ModelAttribute("userRegDto") UserRegDTO userRegDTO){
@@ -55,7 +56,7 @@ public class AuthController extends ControllerCommons {
 
         try{
             emailService.sendEmailVerification(registeredUser.getEmail(), registeredUser.getUsername(), authService.generateVerificationUrl(registeredUser));
-            model.addAttribute("infoMsg", "Um e-mail de confirmação foi enviado ao seu e-mail. Confirme seu e-mail para acessar a aplicação.");
+            model.addAttribute("infoMsg", "Um e-mail de confirmação foi enviado ao seu e-mail. Confirme-o para acessar a aplicação.");
 
         } catch (VerificationTokenNotFoundException e){
             e.printStackTrace(System.err);
@@ -79,6 +80,27 @@ public class AuthController extends ControllerCommons {
             e.printStackTrace(System.err);
             model.addAttribute("infoErr", "Um erro foi encontrado.");
         }
+        return "login";
+    }
+
+    @GetMapping("/resend")
+    public String resendVerificationEmail(@RequestParam(name = "email", required = false) String email, Model model){
+
+        if(StringUtils.isBlank(email)) return "resend-verification";
+
+        authService.usuarioByEmail(email).ifPresentOrElse(u -> {
+                try{
+                    emailService.sendEmailVerification(u.getEmail(), u.getUsername(), authService.generateVerificationUrl(u));
+                    model.addAttribute("infoMsg", "O e-mail de confirmação foi reenviado");
+
+                } catch (VerificationTokenNotFoundException e){
+                    e.printStackTrace(System.err);
+                    model.addAttribute("infoErr", "Não foi possível re-enviar o e-mail de confirmação");
+                }},
+                () -> { model.addAttribute("infoErr", "Usuário não cadastrado");
+        });
+
+
         return "login";
     }
 
