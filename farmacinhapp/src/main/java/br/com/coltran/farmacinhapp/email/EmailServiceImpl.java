@@ -23,8 +23,12 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     private TemplateEngine templateEngine;
 
-    @Value("${spring.mail.from")
+    @Value("${spring.mail.from}")
     private String sender;
+
+    @Value("${app.verification.base-url}")
+    private String envUrl;
+
 
     /**
      * Este método recebe o path para o template de email e um mapa com as variáveis que comporão o email
@@ -41,7 +45,7 @@ public class EmailServiceImpl implements EmailService {
     public void sendEmailVerification(String recipientEmail, String recipientName, String urlToVerify){
         Map<String, Object> variables = Map.of(
                 "username", recipientName,
-                "urlVerify", urlToVerify
+                "urlVerify", envUrl+urlToVerify
         );
 
         String htmlBody = processEmailTemplate("emails/verification", variables);

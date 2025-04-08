@@ -66,6 +66,7 @@ public class AuthService {
 
         VerificationToken verificationToken = new VerificationToken();
         verificationToken.setToken(token.toString());
+        verificationToken.setUser(user);
         verificationToken.setExpiredAt(zonedBrasilTime.dataHora().plusHours(24));
 
         user.setVerificationTokens(colecoes.addIfNull(user.getVerificationTokens(), verificationToken));
@@ -101,7 +102,7 @@ public class AuthService {
     public String generateVerificationUrl(User user) throws VerificationTokenNotFoundException{
          String token = user.getVerificationTokens().stream().max(Comparator.comparing(VerificationToken::getId))
                  .orElseThrow(() -> new VerificationTokenNotFoundException("Token de verificação de email não encontrado")).getToken();
-        return String.format("%s?u=%d&token=%s", EMAIL_VERIFICATION_URL, user.getId(), token);
+        return String.format("%s?u=%d&verifier=%s", EMAIL_VERIFICATION_URL, user.getId(), token);
     }
 
     @Transactional

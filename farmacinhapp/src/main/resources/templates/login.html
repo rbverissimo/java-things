@@ -19,6 +19,11 @@
                 </div>
             </div>
 
+            <div th:if="${infoSucc != null}"  class="alert alert-success alert-dismissible fade show" role="alert">
+                <span style="font-size: 0.8rem" th:text="${infoSucc}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
             <div th:if="${infoMsg != null}"  class="alert alert-info alert-dismissible fade show" role="alert">
                 <span style="font-size: 0.8rem" th:text="${infoMsg}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
