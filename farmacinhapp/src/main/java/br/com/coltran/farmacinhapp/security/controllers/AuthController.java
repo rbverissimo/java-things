@@ -2,6 +2,7 @@ package br.com.coltran.farmacinhapp.security.controllers;
 
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.email.EmailServiceImpl;
+import br.com.coltran.farmacinhapp.exceptions.VerificationTokenNotFoundException;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.security.domain.VerificationToken;
 import br.com.coltran.farmacinhapp.security.dto.UserRegDTO;
@@ -29,9 +30,7 @@ public class AuthController extends ControllerCommons {
     private EmailServiceImpl emailService;
 
     @GetMapping("/login")
-    public String login(){
-        return "login";
-    }
+    public String login(){ return "login"; }
 
     @GetMapping("/register")
     public String register(@ModelAttribute("userRegDto") UserRegDTO userRegDTO){
@@ -48,7 +47,7 @@ public class AuthController extends ControllerCommons {
 
         if(authService.usuarioByEmail(userRegDTO.getEmail()).isPresent()){
             model.addAttribute("emailRegistrado", userRegDTO.getEmail());
-            model.addAttribute("emailRegistradoMsg", "Já existe um usuário associado a este e-mail!");
+            model.addAttribute("infoMsg", "Já existe um usuário associado a este e-mail!");
             return "login";
         }
 
@@ -56,18 +55,31 @@ public class AuthController extends ControllerCommons {
 
         try{
             emailService.sendEmailVerification(registeredUser.getEmail(), registeredUser.getUsername(), authService.generateVerificationUrl(registeredUser));
-        } catch (IllegalArgumentException e){
+            model.addAttribute("infoMsg", "Um e-mail de confirmação foi enviado ao seu e-mail. Confirme seu e-mail para acessar a aplicação.");
+
+        } catch (VerificationTokenNotFoundException e){
             e.printStackTrace(System.err);
+            model.addAttribute("infoErr", "Um erro foi encontrado ao realizar o seu registro. Tente novamente mais tarde");
         }
 
-
-        return "redirect:/login";
+        return "login";
     }
 
     @GetMapping("/verify")
-    public String verifyEmail(@RequestParam(name = "u", required = true) long userId, @RequestParam(name = "verifier", required = true) String UuidToken){
+    public String verifyEmail(@RequestParam(name = "u", required = true) long userId, @RequestParam(name = "verifier", required = true) String uuidToken, Model model){
+        try{
+            boolean isTokenValido = authService.isVerificationTokenValido(userId, uuidToken);
 
-        return "";
+            if(isTokenValido) {
+                VerificationToken verificationToken = authService.updateVerifiedDate(userId, uuidToken);
+                model.addAttribute("infoSucc", "O seu e-mail foi validado com sucesso!");
+                model.addAttribute("emailRegistrado", verificationToken.getUser().getEmail());
+            }
+        } catch(VerificationTokenNotFoundException e){
+            e.printStackTrace(System.err);
+            model.addAttribute("infoErr", "Um erro foi encontrado.");
+        }
+        return "login";
     }
 
 }

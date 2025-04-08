@@ -1,9 +1,11 @@
 package br.com.coltran.farmacinhapp.security.services;
 
+import br.com.coltran.farmacinhapp.exceptions.VerificationTokenNotFoundException;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.security.domain.VerificationToken;
 import br.com.coltran.farmacinhapp.security.dto.UserRegDTO;
 import br.com.coltran.farmacinhapp.security.repositories.UserRepository;
+import br.com.coltran.farmacinhapp.security.repositories.VerificationTokenRepository;
 import br.com.coltran.farmacinhapp.utils.Colecoes;
 import br.com.coltran.farmacinhapp.utils.ZonedBrasilTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,6 +26,9 @@ public class AuthService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private VerificationTokenRepository verificationTokenRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -83,10 +89,31 @@ public class AuthService {
                         && verificationToken.getVerifiedAt().isBefore(zonedBrasilTime.dataHora()));
     }
 
-    public String generateVerificationUrl(User user) throws IllegalArgumentException{
+    public boolean isVerificationTokenValido(long userId, String token){
+        return userRepository.findById(userId)
+                .stream()
+                .map(User::getVerificationTokens)
+                .anyMatch(verificationTokens -> verificationTokens.stream()
+                        .filter(verificationToken -> verificationToken.getExpiredAt().isAfter(zonedBrasilTime.dataHora()))
+                        .anyMatch(verificationToken -> token.equals(verificationToken.getToken())));
+    }
+
+    public String generateVerificationUrl(User user) throws VerificationTokenNotFoundException{
          String token = user.getVerificationTokens().stream().max(Comparator.comparing(VerificationToken::getId))
-                 .orElseThrow(() -> new IllegalArgumentException("Token de verificação de email não encontrado")).getToken();
+                 .orElseThrow(() -> new VerificationTokenNotFoundException("Token de verificação de email não encontrado")).getToken();
         return String.format("%s?u=%d&token=%s", EMAIL_VERIFICATION_URL, user.getId(), token);
+    }
+
+    @Transactional
+    public VerificationToken updateVerifiedDate(long userId, String uuidToken) throws VerificationTokenNotFoundException{
+
+        Optional<VerificationToken> verificationToken = verificationTokenRepository.findByUserAndToken(userId, uuidToken);
+        ZonedDateTime verifiedAt = zonedBrasilTime.dataHora();
+        verificationToken.ifPresent(v -> {
+            v.setVerifiedAt(verifiedAt);
+            verificationTokenRepository.save(v);
+        });
+        return verificationToken.orElseThrow(() -> new VerificationTokenNotFoundException("Token de verificação de email não encontrado"));
     }
 
 }

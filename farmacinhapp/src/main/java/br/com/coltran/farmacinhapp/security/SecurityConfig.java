@@ -36,7 +36,7 @@ public class SecurityConfig  {
 
         http
                 .authorizeRequests()
-                .antMatchers("/login", "/register", "/page", "/css/**", "/js/**").permitAll()
+                .antMatchers("/login", "/register", "/verify", "/css/**", "/js/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin(form -> form.loginPage("/login").usernameParameter("email").defaultSuccessUrl("/", true))

@@ -19,8 +19,13 @@
                 </div>
             </div>
 
-            <div th:if="${emailRegistradoMsg != null}"  class="alert alert-info alert-dismissible fade show" role="alert">
-                <span style="font-size: 0.8rem" th:text="${emailRegistradoMsg}"></span>
+            <div th:if="${infoMsg != null}"  class="alert alert-info alert-dismissible fade show" role="alert">
+                <span style="font-size: 0.8rem" th:text="${infoMsg}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <div th:if="${infoErr != null}"  class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span style="font-size: 0.8rem" th:text="${infoErr}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
