@@ -1,0 +1,15 @@
+<div th:fragment="form-data">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-floating py-1">
+                <input id="username" th:field="*{username}"
+                       class="form-control"
+                       type="text"
+                       placeholder="" />
+                <label for="username">Nome de usuário</label>
+                <span th:if="${#fields.hasErrors('username')}" class="text-danger fs-08rem"
+                      th:errors="*{username}"></span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,7 +3,36 @@
 >
 <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Cadastro do usuário')"></head>
     <div layout:fragment="content">
+        <div class="card mt-3">
+            <div class="card-header">
+                Compartilhar farmácia com usuário
+            </div>
+            <div class="card-body">
+                <p class="card-text">Você pode compartilhar uma de suas farmácias com outro usuário do app.
+                    Basta informar o nome da farmácia e o e-mail do usuário o qual receberá sua farmácia.</p>
 
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-floating py-1">
+                            <input type="text" class="form-control" id="nome-farmacia" placeholder="">
+                            <label for="nome-farmacia">Nome da farmácia</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating py-1">
+                            <input type="text" class="form-control" id="email-usuario" placeholder="">
+                            <label for="email-usuario">E-mail do usuário</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-end">
+                <div class="col-4">
+                    <button class="btn btn-primary w-100" type="button">Compartilhar</button>
+                </div>
+            </div>
+        </div>
     </div>
     <script th:inline="javascript" type="module" layout:fragment="vue-app">
         import { createApp } from '/webjars/vue/dist/vue.esm-browser.prod.js';
