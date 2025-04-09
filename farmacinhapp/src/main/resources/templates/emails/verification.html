@@ -70,16 +70,16 @@
 <body>
     <div class="main-background">
         <div class="main-container">
-            <h1>Verificação no app Farmacinha</h1>
+            <h1>Verificação</h1>
             <p>Olá, <strong th:text="${username}"></strong>!</p>
             <p>Obrigado por se cadastrar no Farmacinha. Esperamos que você aproveite bastante a experiência para cuidar melhor da sua saúde e da saúde de quem você ama.</p>
             <p>Para verificar seu cadastro, basta clicar no botão abaixo:</p>
-            <a th:href="${urlVerify}" class="button">Confirmar seu e-mail</a>
+            <a th:href="${urlVerify}" role="button" class="button">Confirmar seu e-mail</a>
             <p>Caso você não consiga ver o botão, clique no link abaixo ou copie o mesmo na barra de endereços do seu
-                navegador</p>
+                navegador.</p>
             <p><a th:href="${urlVerify}" th:text="${urlVerify}"></a></p>
-            <p>Se você não reconhece seu cadastro no Farmacinhapp, ignore este e-mail</p>
-            <p>Agradecemos, time Farmacinha :)</p>
+            <p>Se você não reconhece seu cadastro no Farmacinhapp, por favor, ignore este e-mail.</p>
+            <p>Agradecemos, time Farmacinha ❤️</p>
         </div>
     </div>
 </body>
