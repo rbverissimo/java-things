@@ -53,6 +53,10 @@ public class AuthService {
         return userRepository.findByEmail(email);
     }
 
+    public Optional<User> usuarioByEmailNaoVerificado(String email){
+        return userRepository.findByEmailAndVerificadoFalse(email);
+    }
+
     @Transactional
     public User salvar(UserRegDTO userRegDTO){
 

@@ -88,7 +88,8 @@ public class AuthController extends ControllerCommons {
 
         if(StringUtils.isBlank(email)) return "resend-verification";
 
-        authService.usuarioByEmail(email).ifPresentOrElse(u -> {
+        authService.usuarioByEmailNaoVerificado(email).ifPresentOrElse(u -> {
+
                 try{
                     emailService.sendEmailVerification(u.getEmail(), u.getUsername(), authService.generateVerificationUrl(u));
                     model.addAttribute("infoMsg", "O e-mail de confirmação foi reenviado");
