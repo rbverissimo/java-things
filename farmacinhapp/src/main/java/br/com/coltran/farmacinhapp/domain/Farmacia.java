@@ -45,7 +45,7 @@ public class Farmacia implements TableEntity, Serializable {
     @OneToMany(targetEntity = Lembrete.class, mappedBy = "farmacia", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Lembrete> lembretes;
 
-    @ManyToMany(mappedBy = "farmacias")
+    @ManyToMany(mappedBy = "farmacias", fetch = FetchType.LAZY)
     private Set<User> users;
 
     public Farmacia() {
