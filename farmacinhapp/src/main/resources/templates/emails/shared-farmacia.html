@@ -1,0 +1,15 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{emails/basic-email-layout}"
+>
+<title layout:fragment="title">Compartilhamento de Farmácia</title>
+<div layout:fragment="content">
+    <h3>Uma farmácia foi compartilhada com você!</h3>
+    <p>Olá, <strong th:text="${username}"></strong>!</p>
+    <p><span th:text="${sharingUser}"></span> quer compartilhar uma farmácia com você!</p>
+    <p>Para aceitar a farmácia compartilhada basta clicar no botão logo abaixo:</p>
+    <a th:href="${urlShare}" class="button" role="button">Eu aceito!</a>
+    <p>Caso você não deseja aceitar este compartilhamento ou não o reconhece, ignore este e-mail</p>
+    <p>Se você tiver dificuldades para clicar no botão, você pode clicar ou copiar na barra de endereços o link abaixo:</p>
+    <a th:href="${urlShare}" th:text="${urlShare}"></a>
+
+</div>
+</html>
