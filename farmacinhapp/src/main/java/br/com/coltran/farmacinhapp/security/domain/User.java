@@ -2,6 +2,7 @@ package br.com.coltran.farmacinhapp.security.domain;
 
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -45,6 +46,11 @@ public class User implements TableEntity {
     private ZonedDateTime dataAlteracao;
 
     private boolean verificado;
+
+    @OneToMany(targetEntity = FarmaciaShareToken.class, mappedBy = "farmacia", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonBackReference
+    private Set<FarmaciaShareToken> farmaciaShareTokens;
+
 
     public User() {
     }
@@ -146,5 +152,13 @@ public class User implements TableEntity {
 
     public void setVerificado(boolean verificado) {
         this.verificado = verificado;
+    }
+
+    public Set<FarmaciaShareToken> getFarmaciaShareTokens() {
+        return farmaciaShareTokens;
+    }
+
+    public void setFarmaciaShareTokens(Set<FarmaciaShareToken> farmaciaShareTokens) {
+        this.farmaciaShareTokens = farmaciaShareTokens;
     }
 }

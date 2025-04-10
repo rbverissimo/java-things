@@ -6,14 +6,12 @@ import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.services.FarmaciaService;
 import br.com.coltran.farmacinhapp.utils.Colecoes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -61,6 +59,13 @@ public class FarmaciasController extends ControllerCommons {
     public String cadastroGET(@ModelAttribute Farmacia farmacia){
         if(!CollectionUtils.isEmpty(authService.usuarioLogado().getFarmacias()))  return "farmacias/index";
         return "farmacias/cadastro";
+    }
+
+    @GetMapping("/share-accepted")
+    public String shareFarmaciaAccept(@RequestParam(name = "t") String token, @RequestParam(name = "u") Long userId){
+        if(!authService.isFarmaciaShareTokenValid(token, userId)) return "fallbacks/share-farmacia";
+
+        return "Alguma coisa só pra teste";
     }
 
 }

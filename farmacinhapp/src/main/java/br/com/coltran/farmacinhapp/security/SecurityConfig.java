@@ -49,6 +49,7 @@ public class SecurityConfig  {
                                 new AntPathRequestMatcher("/register"),
                                 new AntPathRequestMatcher("/verify"),
                                 new AntPathRequestMatcher("/resend"),
+                                new AntPathRequestMatcher("/farmacias/share-accepted"),
                                 new AntPathRequestMatcher("/css/**"),
                                 new AntPathRequestMatcher("/js/**"),
                                 new AntPathRequestMatcher("/webjars/**")

@@ -44,8 +44,12 @@ public class FarmaciaService extends ServiceWorker implements RepositoryService<
         return farmaciaRepository.save(managed);
     }
 
+    public Optional<Farmacia> findByNomeAndUser(String nomeFarmacia){
+        return farmaciaRepository.findByNomeAndUsers(nomeFarmacia, authService.usuarioLogado());
+    }
+
     public void compartilharComUsuario(String nomeFarmacia, String email) throws FarmaciaException, UsernameNotFoundException {
-        farmaciaRepository.findByNome(nomeFarmacia).ifPresentOrElse(farmacia -> {
+        findByNomeAndUser(nomeFarmacia).ifPresentOrElse(farmacia -> {
             User user = authService.usuarioByEmail(email).orElseThrow(() -> {throw new UsernameNotFoundException("Usuário não encontrado");});
             farmacia.setUsers(colecoesUser.addIfNull(farmacia.getUsers(), user));
             farmaciaRepository.save(farmacia);

@@ -1,7 +1,9 @@
 package br.com.coltran.farmacinhapp.domain;
 
 import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
+import br.com.coltran.farmacinhapp.security.domain.FarmaciaShareToken;
 import br.com.coltran.farmacinhapp.security.domain.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -47,6 +49,10 @@ public class Farmacia implements TableEntity, Serializable {
 
     @ManyToMany(mappedBy = "farmacias", fetch = FetchType.LAZY)
     private Set<User> users;
+
+    @OneToMany(targetEntity = FarmaciaShareToken.class, mappedBy = "farmacia", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonBackReference
+    private Set<FarmaciaShareToken> farmaciaShareTokens;
 
     public Farmacia() {
     }
@@ -121,5 +127,13 @@ public class Farmacia implements TableEntity, Serializable {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public Set<FarmaciaShareToken> getFarmaciaShareTokens() {
+        return farmaciaShareTokens;
+    }
+
+    public void setFarmaciaShareTokens(Set<FarmaciaShareToken> farmaciaShareTokens) {
+        this.farmaciaShareTokens = farmaciaShareTokens;
     }
 }

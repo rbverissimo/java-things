@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/bootstrap :: bootstrap">
+</head>
+<head th:insert="fragments/css :: login-css"></head>
+<head th:insert="fragments/title :: title(title = 'Farmacinha - Compartilhamento recusado ')"></head>
+<body class="d-flex align-items-center py-4 bg-body-tertiary">
+    <main class="form-signin w-100 m-auto">
+        <div class="d-flex w-60">
+            <div class="card px-5 py-5">
+                <p>Infelizmente não foi possível processar o compartilhamento de farmácia entre usuários. Lamentamos :(</p>
+                <p>Se você clicou no link de e-mail enviado há mais de 24 horas, provavelmente o link de compartilhamento expirou.</p>
+            </div>
+        </div>
+
+    </main>
+</body>
+</html>
