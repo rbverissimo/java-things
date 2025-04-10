@@ -14,13 +14,13 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-floating py-1">
-                            <input type="text" class="form-control" id="nome-farmacia" placeholder="">
+                            <input type="text" v-model="nomeFarmacia" class="form-control" id="nome-farmacia" placeholder="">
                             <label for="nome-farmacia">Nome da farmácia</label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-floating py-1">
-                            <input type="text" class="form-control" id="email-usuario" placeholder="">
+                            <input v-model="emailUsuario" type="text" class="form-control" id="email-usuario" placeholder="">
                             <label for="email-usuario">E-mail do usuário</label>
                         </div>
                     </div>
@@ -29,15 +29,42 @@
             </div>
             <div class="card-footer d-flex justify-content-end">
                 <div class="col-4">
-                    <button class="btn btn-primary w-100" type="button">Compartilhar</button>
+                    <button class="btn btn-primary w-100" type="button" @click="compartilharFarmacia">Compartilhar</button>
                 </div>
             </div>
         </div>
     </div>
     <script th:inline="javascript" type="module" layout:fragment="vue-app">
-        import { createApp } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+        import { createApp, ref } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+        import { post } from '/js/requests.js';
+        import { throttle } from '/js/reactive.js';
 
         const app = createApp({
+            setup(){
+                const nomeFarmacia = ref('');
+                const emailUsuario = ref('');
+
+                async function compartilharFarmacia(){
+
+                    const payload = {
+                        nomeFarmacia: nomeFarmacia.value,
+                        emailUsuario: emailUsuario.value
+                    }
+
+                    const url = '/api/farmacias/share';
+                    try{
+                        const response = await post(url, payload);
+                        console.log(response);
+                    }catch (){}
+
+                }
+
+                return {
+                    nomeFarmacia,
+                    emailUsuario,
+                    compartilharFarmacia
+                }
+            }
         });
 
         app.mount('#app');
