@@ -11,5 +11,5 @@ import java.util.Optional;
 @Repository
 public interface FarmaciaShareTokenRepository extends JpaRepository<FarmaciaShareToken, Long> {
 
-    Optional<List<FarmaciaShareToken>> findByTokenAndUser(String token, User user);
+    Optional<FarmaciaShareToken> findByTokenAndUser(String token, User user);
 }

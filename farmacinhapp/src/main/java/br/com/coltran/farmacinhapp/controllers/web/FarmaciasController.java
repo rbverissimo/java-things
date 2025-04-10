@@ -64,6 +64,7 @@ public class FarmaciasController extends ControllerCommons {
     @GetMapping("/share-accepted")
     public String shareFarmaciaAccept(@RequestParam(name = "t") String token, @RequestParam(name = "u") Long userId){
         if(!authService.isFarmaciaShareTokenValid(token, userId)) return "fallbacks/share-farmacia";
+        authService.updateVerifiedDateAndUpdateUserFarmacia(token, userId);
 
         return "Alguma coisa só pra teste";
     }

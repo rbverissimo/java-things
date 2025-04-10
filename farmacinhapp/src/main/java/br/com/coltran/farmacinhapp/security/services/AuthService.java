@@ -2,6 +2,7 @@ package br.com.coltran.farmacinhapp.security.services;
 
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.security.domain.FarmaciaShareToken;
+import br.com.coltran.farmacinhapp.security.exceptions.FarmaciaShareTokenException;
 import br.com.coltran.farmacinhapp.security.exceptions.VerificationTokenNotFoundException;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.security.domain.VerificationToken;
@@ -45,6 +46,9 @@ public class AuthService {
 
     @Autowired
     private Colecoes.SET<VerificationToken> colecoes;
+
+    @Autowired
+    private Colecoes.SET<Farmacia> colecoesFarmacia;
 
     private final String EMAIL_VERIFICATION_URL = "/verify";
     private final String FARMACIA_SHARE_URL = "/share-accepted";
@@ -113,10 +117,9 @@ public class AuthService {
     public boolean isFarmaciaShareTokenValid(String token, long userId){
         User user = userRepository.findById(userId).orElse(null);
         return farmaciaShareTokenRepository.findByTokenAndUser(token, user).stream()
-                .anyMatch(farmaciaShareTokens -> farmaciaShareTokens.stream()
-                        .filter(farmaciaShareToken -> farmaciaShareToken.getExpiredAt().isAfter(zonedBrasilTime.dataHora()))
-                        .filter(farmaciaShareToken -> farmaciaShareToken.getVerifiedAt() == null)
-                        .anyMatch(farmaciaShareToken -> token.equals(farmaciaShareToken.getToken())));
+                .filter(farmaciaShareToken -> farmaciaShareToken.getExpiredAt().isAfter(zonedBrasilTime.dataHora()))
+                .filter(farmaciaShareToken -> farmaciaShareToken.getVerifiedAt() == null)
+                .anyMatch(farmaciaShareToken -> token.equals(farmaciaShareToken.getToken()));
     }
 
     public String generateVerificationUrl(User user) throws VerificationTokenNotFoundException{
@@ -144,6 +147,30 @@ public class AuthService {
 
         });
         return verificationToken.orElseThrow(() -> new VerificationTokenNotFoundException("Token de verificação de email não encontrado"));
+    }
+
+    @Transactional
+    public FarmaciaShareToken updateVerifiedDateAndUpdateUserFarmacia(String token, long userId) throws FarmaciaShareTokenException {
+        User user = userRepository.findById(userId).orElse(null);
+        ZonedDateTime verifiedAt = zonedBrasilTime.dataHora();
+        Optional<FarmaciaShareToken> farmaciaShareTokenOpt = farmaciaShareTokenRepository.findByTokenAndUser(token, user).stream()
+                .filter(farmaciaShareToken -> farmaciaShareToken.getExpiredAt().isAfter(zonedBrasilTime.dataHora()))
+                .filter(farmaciaShareToken -> farmaciaShareToken.getVerifiedAt() == null)
+                .findFirst();
+
+        farmaciaShareTokenOpt.ifPresentOrElse(t -> {
+            t.setVerifiedAt(verifiedAt);
+            farmaciaShareTokenRepository.save(t);
+
+            Farmacia managedFarmaciaCompartilhada = t.getFarmacia();
+            user.setFarmacias(colecoesFarmacia.addIfNull(user.getFarmacias(), managedFarmaciaCompartilhada));
+
+            userRepository.save(user);
+
+        }, () -> {
+            throw  new FarmaciaShareTokenException("Token inválido.");
+        });
+        return farmaciaShareTokenOpt.get();
     }
 
     public FarmaciaShareToken registrarTokenFarmaciaCompartilhada(String userEmail, Farmacia farmacia) throws UsernameNotFoundException {
