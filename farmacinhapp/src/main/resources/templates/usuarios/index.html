@@ -3,8 +3,8 @@
 >
 <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Cadastro do usuário')"></head>
     <div layout:fragment="content">
-        <div th:insert="components/alerts :: vue-alerts"></div>
-        <div class="card mt-3">
+
+        <div class="card mt-3 mb-2">
             <div class="card-header">
                 Compartilhar farmácia com usuário
             </div>
@@ -34,18 +34,19 @@
                 </div>
             </div>
         </div>
+        <th:block th:insert="components/alerts :: vue-alerts"></th:block>
     </div>
     <script th:inline="javascript" type="module" layout:fragment="vue-app">
         import { createApp, ref } from '/webjars/vue/dist/vue.esm-browser.prod.js';
         import { post } from '/js/requests.js';
         import { throttle } from '/js/reactive.js';
+        import { DangerAlert } from '/js/AlertMessage.js';
 
         const app = createApp({
             setup(){
                 const nomeFarmacia = ref('');
                 const emailUsuario = ref('');
                 const alerts = ref([]);
-                let alertId = 1090;
 
                 async function compartilharFarmacia(){
 
@@ -58,12 +59,7 @@
                     try{
                         const response = await post(url, payload);
                     }catch (error){
-                        console.log(error.response.data.mensagem);
-                        alerts.value.push({
-                            id: alertId++,
-                            bsType: 'danger',
-                            mensagem = error.response.data.mensagem
-                        });
+                        alerts.value.push(new DangerAlert(error.response.data.mensagem));
                     }
 
                 }
