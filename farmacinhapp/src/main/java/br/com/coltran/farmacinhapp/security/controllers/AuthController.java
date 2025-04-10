@@ -27,9 +27,6 @@ public class AuthController extends ControllerCommons {
     @Autowired
     private AuthService authService;
 
-    @Autowired
-    private EmailServiceImpl emailService;
-
     @GetMapping("/login")
     public String login(Model model){ return "login"; }
 

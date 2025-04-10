@@ -47,4 +47,42 @@ public class EmailDetails {
     public void setHtml(boolean html) {
         isHtml = html;
     }
+
+    public static class Builder {
+
+        private EmailDetails details;
+
+        public Builder() {
+            details = new EmailDetails();
+        }
+
+        public Builder recipient(String recipient){
+            this.details.setRecipient(recipient);
+            return this;
+        }
+
+        public Builder msgBody(String msgBody){
+            this.details.setMsgBody(msgBody);
+            return this;
+        }
+
+        public Builder subject(String subject){
+            this.details.setSubject(subject);
+            return this;
+        }
+
+        public Builder attachment(String attachment){
+            this.details.setAttachment(attachment);
+            return this;
+        }
+
+        public Builder isHtml(boolean html){
+            this.details.setHtml(html);
+            return this;
+        }
+
+        public EmailDetails build(){
+            return details;
+        }
+    }
 }

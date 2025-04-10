@@ -59,6 +59,24 @@ public class EmailServiceImpl implements EmailService {
 
     }
 
+    public void sendFarmaciaShare(String recipientEmail, String recipientName, String sharingUser, String urlShare){
+        Map<String, Object> variables = Map.of(
+                "username", recipientName,
+                "sharingUser", sharingUser,
+                "urlShare", envUrl+urlShare
+        );
+
+        String htmlBody = processEmailTemplate("emails/shared-farmacia", variables);
+
+        EmailDetails emailDetails = new EmailDetails.Builder()
+                .recipient(recipientEmail)
+                .msgBody(htmlBody)
+                .subject("Oba! Alguém compartilhou uma farmácia com você!")
+                .build();
+
+        sendMail(emailDetails);
+    }
+
     @Override
     public void sendMail(EmailDetails details) {
 

@@ -58,7 +58,7 @@
                     const url = '/api/farmacias/share';
                     try{
                         const response = await post(url, payload);
-                        alerts.value.push(new SuccessAlert(`Compartilhamento realizado com sucesso. Aguarde o usuário ${emailUsuario} aceitar o convite.`));
+                        alerts.value.push(new SuccessAlert(`Compartilhamento realizado com sucesso. Aguarde o usuário ${emailUsuario.value} aceitar o convite.`));
                     }catch (error){
                         alerts.value.push(new DangerAlert(error.response.data.mensagem));
                     }
