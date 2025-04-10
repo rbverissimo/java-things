@@ -3,6 +3,7 @@
 >
 <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Cadastro do usuário')"></head>
     <div layout:fragment="content">
+        <div th:insert="components/alerts :: vue-alerts"></div>
         <div class="card mt-3">
             <div class="card-header">
                 Compartilhar farmácia com usuário
@@ -43,25 +44,34 @@
             setup(){
                 const nomeFarmacia = ref('');
                 const emailUsuario = ref('');
+                const alerts = ref([]);
+                let alertId = 1090;
 
                 async function compartilharFarmacia(){
 
                     const payload = {
-                        nomeFarmacia: nomeFarmacia.value,
-                        emailUsuario: emailUsuario.value
+                        farmacia: nomeFarmacia.value,
+                        email: emailUsuario.value
                     }
 
                     const url = '/api/farmacias/share';
                     try{
                         const response = await post(url, payload);
-                        console.log(response);
-                    }catch (){}
+                    }catch (error){
+                        console.log(error.response.data.mensagem);
+                        alerts.value.push({
+                            id: alertId++,
+                            bsType: 'danger',
+                            mensagem = error.response.data.mensagem
+                        });
+                    }
 
                 }
 
                 return {
                     nomeFarmacia,
                     emailUsuario,
+                    alerts,
                     compartilharFarmacia
                 }
             }

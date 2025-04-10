@@ -1,0 +1,4 @@
+<div th:fragment="vue-alerts" v-for="alert in alerts" :key="alert.id" :class="['alert', 'alert-' + alert.bsType, 'alert-dismissible fade show']" role="alert">
+    <span style="font-size: 0.8rem">{{alert.mensagem}}</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>

@@ -6,11 +6,11 @@ export async function post(url, data){
     try {
         const response = await axios.post(url, data, {
             headers: {
+                'Content-Type': 'application/json',
                 [csrfheader]: csrftoken
             }
         });
         if(response.status >= 200 && response.status < 300) return response.data;
-        throw new Error(`Erro na requisição: ${response.status}`);
     } catch (error) {
         throw error;
     }
