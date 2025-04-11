@@ -2,13 +2,23 @@
 >
     <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Lista das farmácias cadastradas')"></head>
     <div  layout:fragment="content">
-        <div class="mt-5 w-100" th:if="${farmacias != null and !farmacias.isEmpty()}">
-            <div th:each="farmacia : ${farmacias}">
+
+        <div class="w-100 mt-5" th:if="${farmacias != null and !farmacias.isEmpty()}">
+            <th:block th:if="${farmacias.size > 0}" th:insert="components/toolbar :: lightToolbar(~{::#toolbar-farmacias})">
+                <div class="w-100" id="toolbar-farmacias" th:fragment="toolbarFarmacias">
+                    <div class="row">
+                        <div class="col-3">
+                            <a th:href="@{/farmacias/cadastro}" class="btn btn-sm btn-outline-primary w-100">Nova farmácia</a>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+            <div class="mt-2" th:each="farmacia : ${farmacias}">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <p th:text="${farmacia.nome}"></p>
+                                <span th:text="${farmacia.nome}"></span>
                             </div>
                             <div class="card-body">
                                 <p>Paciente: <span th:text="${farmacia.paciente.nome} + ' ' + ${farmacia.paciente.sobrenome}" ></span></p>

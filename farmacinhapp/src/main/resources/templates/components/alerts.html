@@ -4,3 +4,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 </div>
+
+<div th:fragment="alerts">
+    <div th:each="alert : ${mensagens}" class="alert alert-dismissible fade show" th:classappend="${'alert-'+alert.bsType}" role="alert">
+        <span style="font-size: 0.8rem" th:text="${alert.mensagem}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>

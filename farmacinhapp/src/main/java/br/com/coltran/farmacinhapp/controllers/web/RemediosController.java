@@ -5,6 +5,7 @@ import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.Remedio;
 import br.com.coltran.farmacinhapp.domain.valueobjects.ErroMsgVO;
 import br.com.coltran.farmacinhapp.domain.valueobjects.RemedioIndexVO;
+import br.com.coltran.farmacinhapp.domain.valueobjects.interfaces.Mensagem;
 import br.com.coltran.farmacinhapp.repositories.MedidaRepository;
 import br.com.coltran.farmacinhapp.repositories.TipoRemedioRepository;
 import br.com.coltran.farmacinhapp.services.FarmaciaService;
@@ -19,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -81,7 +83,7 @@ public class RemediosController extends ControllerCommons {
                 .count() > 19){
             model.addAttribute("farmaciaId", farmaciaId);
             model.addAttribute("tiposRemedio", tipoRemedioRepository.findAll());
-            model.addAttribute("mensagem", new ErroMsgVO("O número de remédios cadastrados foi excedido"));
+            model.addAttribute("mensagens", new ArrayList<Mensagem>(){{add(new ErroMsgVO("O número de remédios cadastrados foi excedido"));}});
             return "/remedios/cadastro";
         }
 

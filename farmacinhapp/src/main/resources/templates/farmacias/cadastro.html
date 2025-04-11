@@ -3,7 +3,8 @@
     <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Cadastrar uma nova farmácia')"></head>
     <div layout:fragment="content">
         <div class="mt-5 w-100" >
-            <form th:action="@{/farmacias/cadastro}" th:object="${farmacia}" method="POST">
+            <th:block th:insert="components/alerts :: alerts"></th:block>
+            <form class="mt-3" th:action="@{/farmacias/cadastro}" th:object="${farmacia}" method="POST">
                 <div class="accordion" id="cf-form">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="heading-one-f-form">

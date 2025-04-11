@@ -3,6 +3,7 @@ package br.com.coltran.farmacinhapp.controllers.web;
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.valueobjects.ErroMsgVO;
+import br.com.coltran.farmacinhapp.domain.valueobjects.interfaces.Mensagem;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.services.FarmaciaService;
 import br.com.coltran.farmacinhapp.utils.Colecoes;
@@ -14,8 +15,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -41,7 +44,7 @@ public class FarmaciasController extends ControllerCommons {
 
         User usuario = authService.usuarioLogado();
         if(usuario.getFarmacias().size() > 1){
-            model.addAttribute("mensagem", new ErroMsgVO("O seu limite de farmácias foi atingido."));
+            model.addAttribute("mensagens", new ArrayList<Mensagem>() {{ add(new ErroMsgVO("O seu limite de farmácias foi atingido."));}});
             return "/farmacias/cadastro";
         }
 
@@ -62,7 +65,7 @@ public class FarmaciasController extends ControllerCommons {
 
     @GetMapping("/cadastro")
     public String cadastroGET(@ModelAttribute Farmacia farmacia){
-        if(!CollectionUtils.isEmpty(authService.usuarioLogado().getFarmacias()))  return "farmacias/index";
+        Set<Farmacia> farmaciasUsuario = authService.usuarioLogado().getFarmacias();
         return "farmacias/cadastro";
     }
 

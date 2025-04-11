@@ -1,6 +1,8 @@
 package br.com.coltran.farmacinhapp.domain.valueobjects;
 
-public class ErroMsgVO {
+import br.com.coltran.farmacinhapp.domain.valueobjects.interfaces.Mensagem;
+
+public class ErroMsgVO implements Mensagem {
 
     private final String bsType = "danger";
     private final String mensagem;
