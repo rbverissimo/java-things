@@ -179,6 +179,5 @@ public class AuthService {
         token.issueTo(user, token, zonedBrasilTime.dataHora(), EXPIRATION_LIMIT);
         token.setFarmacia(farmacia);
         return farmaciaShareTokenRepository.save(token);
-
     }
 }

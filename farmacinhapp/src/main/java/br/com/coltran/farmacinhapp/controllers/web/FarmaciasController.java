@@ -2,12 +2,11 @@ package br.com.coltran.farmacinhapp.controllers.web;
 
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
-import br.com.coltran.farmacinhapp.security.domain.FarmaciaShareToken;
+import br.com.coltran.farmacinhapp.domain.valueobjects.ErroMsgVO;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.services.FarmaciaService;
 import br.com.coltran.farmacinhapp.utils.Colecoes;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
@@ -40,6 +39,12 @@ public class FarmaciasController extends ControllerCommons {
 
         if(bindingResult.hasErrors()) return "/farmacias/cadastro";
 
+        User usuario = authService.usuarioLogado();
+        if(usuario.getFarmacias().size() > 1){
+            model.addAttribute("mensagem", new ErroMsgVO("O seu limite de farmácias foi atingido."));
+            return "/farmacias/cadastro";
+        }
+
         Optional.ofNullable(farmacia.getPaciente()).ifPresent(p -> {
             String inputNome =  p.getNome();
             p.setNome(inputNome.split(" ")[0]);
@@ -49,7 +54,6 @@ public class FarmaciasController extends ControllerCommons {
 
         farmaciaService.save(farmacia);
 
-        User usuario = authService.usuarioLogado();
         colecoesSet.adicionar(usuario.getFarmacias(), farmacia);
         authService.alterarUsuario(usuario);
 

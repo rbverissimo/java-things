@@ -3,6 +3,7 @@ package br.com.coltran.farmacinhapp.controllers.web;
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.Remedio;
+import br.com.coltran.farmacinhapp.domain.valueobjects.ErroMsgVO;
 import br.com.coltran.farmacinhapp.domain.valueobjects.RemedioIndexVO;
 import br.com.coltran.farmacinhapp.repositories.MedidaRepository;
 import br.com.coltran.farmacinhapp.repositories.TipoRemedioRepository;
@@ -72,6 +73,15 @@ public class RemediosController extends ControllerCommons {
         if(bindingResult.hasErrors()){
             model.addAttribute("farmaciaId", farmaciaId);
             model.addAttribute("tiposRemedio", tipoRemedioRepository.findAll());
+            return "/remedios/cadastro";
+        }
+
+        if(authService.usuarioLogado().getFarmacias().stream()
+                .flatMap(farmacia -> farmacia.getRemedios().stream())
+                .count() > 19){
+            model.addAttribute("farmaciaId", farmaciaId);
+            model.addAttribute("tiposRemedio", tipoRemedioRepository.findAll());
+            model.addAttribute("mensagem", new ErroMsgVO("O número de remédios cadastrados foi excedido"));
             return "/remedios/cadastro";
         }
 
