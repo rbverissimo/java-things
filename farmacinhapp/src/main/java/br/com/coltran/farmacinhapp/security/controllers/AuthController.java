@@ -2,6 +2,7 @@ package br.com.coltran.farmacinhapp.security.controllers;
 
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.email.EmailServiceImpl;
+import br.com.coltran.farmacinhapp.security.domain.FarmaciaShareToken;
 import br.com.coltran.farmacinhapp.security.exceptions.VerificationTokenNotFoundException;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.security.domain.VerificationToken;
@@ -100,6 +101,17 @@ public class AuthController extends ControllerCommons {
 
 
         return "login";
+    }
+
+    @GetMapping("/share-accepted")
+    public String shareFarmaciaAccept(@RequestParam(name = "t") String token, @RequestParam(name = "u") Long userId, Model model){
+        if(!authService.isFarmaciaShareTokenValid(token, userId)) return "fallbacks/share-farmacia";
+        FarmaciaShareToken farmaciaShareToken = authService.updateVerifiedDateAndUpdateUserFarmacia(token, userId);
+
+        model.addAttribute("nomeFarmacia", farmaciaShareToken.getFarmacia().getNome());
+        model.addAttribute("farmaciaId", farmaciaShareToken.getFarmacia().getId());
+
+        return "farmacias/shared";
     }
 
 }

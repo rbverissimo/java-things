@@ -1,0 +1,23 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/vue-container-layout}"
+>
+<head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Farmácia compartilhada')"></head>
+    <div  layout:fragment="content">
+        <div class="mt-5 w-100">
+            <div class="card">
+                <div class="card-body">
+                    <p>
+                        <strong>Parabéns!</strong> Agora você pode contribuir na farmácia <span th:text="${nomeFarmacia}"></span>!
+                    </p>
+                    <div sec:authorize="isAuthenticated()"  class="d-flex justify-content-center">
+                        <a th:href="@{/remedios/i/{farmacia_id}(farmacia_id=${farmaciaId})}" class="btn btn-primary w-100">Ver farmácia</a>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()" class="d-flex justify-content-center">
+                        <a th:href="@{/login}" class="btn btn-primary w-100">Faça login para ver</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>
+
+

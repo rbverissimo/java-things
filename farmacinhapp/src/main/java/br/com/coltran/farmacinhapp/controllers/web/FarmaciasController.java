@@ -2,6 +2,7 @@ package br.com.coltran.farmacinhapp.controllers.web;
 
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
+import br.com.coltran.farmacinhapp.security.domain.FarmaciaShareToken;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.services.FarmaciaService;
 import br.com.coltran.farmacinhapp.utils.Colecoes;
@@ -59,14 +60,6 @@ public class FarmaciasController extends ControllerCommons {
     public String cadastroGET(@ModelAttribute Farmacia farmacia){
         if(!CollectionUtils.isEmpty(authService.usuarioLogado().getFarmacias()))  return "farmacias/index";
         return "farmacias/cadastro";
-    }
-
-    @GetMapping("/share-accepted")
-    public String shareFarmaciaAccept(@RequestParam(name = "t") String token, @RequestParam(name = "u") Long userId){
-        if(!authService.isFarmaciaShareTokenValid(token, userId)) return "fallbacks/share-farmacia";
-        authService.updateVerifiedDateAndUpdateUserFarmacia(token, userId);
-
-        return "Alguma coisa só pra teste";
     }
 
 }
