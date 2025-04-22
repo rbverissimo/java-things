@@ -1,14 +1,62 @@
 <div th:fragment="form-data">
-    <div class="row">
-        <div class="col-12">
-            <div class="form-floating py-1">
-                <input id="username" th:field="*{username}"
-                       class="form-control"
-                       type="text"
-                       placeholder="" />
-                <label for="username">Nome de usuário</label>
-                <span th:if="${#fields.hasErrors('username')}" class="text-danger fs-08rem"
-                      th:errors="*{username}"></span>
+    <div class="card">
+        <div class="card-header">Informações de cadastro</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-floating py-1">
+                        <input id="username" th:field="*{username}"
+                               class="form-control"
+                               type="text"
+                               placeholder="" />
+                        <label for="username">Nome de usuário</label>
+                        <span th:if="${#fields.hasErrors('username')}" class="text-danger fs-08rem"
+                              th:errors="*{username}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="change-password">
+    <div class="card">
+        <div class="card-header">Alterar senha de acesso ao app</div>
+        <div class="card-body">
+            <p>Digite a sua senha atual e a nova senha, seguida de confirmação da mesma, para alterar a sua senha</p>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-floating py-1">
+                        <input id="old-password"
+                               class="form-control"
+                               type="password"
+                               placeholder="" />
+                        <label for="old-password">Senha antiga</label>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-floating py-1">
+                        <input id="new-password"
+                               class="form-control"
+                               type="password"
+                               placeholder="" />
+                        <label for="new-password">Senha nova</label>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-floating py-1">
+                        <input id="new-password-confirm"
+                               class="form-control"
+                               type="password"
+                               placeholder="" />
+                        <label for="new-password-confirm">Confirme a senha nova</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <div class="col-4">
+                <button class="btn btn-sm btn-outline-primary w-100" role="button" type="button">Alterar</button>
             </div>
         </div>
     </div>
