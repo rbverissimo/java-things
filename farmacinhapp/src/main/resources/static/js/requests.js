@@ -15,3 +15,18 @@ export async function post(url, data){
         throw error;
     }
 }
+
+export async function put(url, data){
+
+    try {
+        const response = await axios.put(url, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfheader]: csrftoken
+            }
+        });
+        if(response.status >= 200 && response.status < 300) return response.data;
+    } catch (error) {
+        throw error;
+    }
+}

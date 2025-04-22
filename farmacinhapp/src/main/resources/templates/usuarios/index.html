@@ -44,7 +44,7 @@
     </div>
     <script th:inline="javascript" type="module" layout:fragment="vue-app">
         import { createApp, ref } from '/webjars/vue/dist/vue.esm-browser.prod.js';
-        import { post } from '/js/requests.js';
+        import { post, put } from '/js/requests.js';
         import { throttle } from '/js/reactive.js';
         import { DangerAlert, SuccessAlert } from '/js/AlertMessage.js';
 
@@ -52,6 +52,11 @@
             setup(){
                 const nomeFarmacia = ref('');
                 const emailUsuario = ref('');
+
+                const senhaAtual = ref('');
+                const novaSenha = ref('');
+                const novaSenhaConfirm = ref('');
+
                 const alerts = ref([]);
 
                 async function compartilharFarmacia(){
@@ -70,11 +75,31 @@
                     }
                 }
 
+                async function alterarSenha(){
+                    const payload = {
+                        senhaAtual: senhaAtual.value,
+                        novaSenha: novaSenha.value,
+                        novaSenhaConfirm: novaSenhaConfirm.value
+                    }
+                    const url = '/api/usuarios/change-password';
+                    try {
+                        const response = await put(url, payload);
+                        alerts.value.push(new SuccessAlert(`Senha alterada com sucesso!`));
+                    } catch (error){
+                        const errorMsg = error.response.data.mensagem ? error.response.data.mensagem : 'Um erro desconhecido aconteceu';
+                        alerts.value.push(new DangerAlert(errorMsg));
+                    }
+                }
+
                 return {
                     nomeFarmacia,
                     emailUsuario,
                     alerts,
-                    compartilharFarmacia
+                    compartilharFarmacia,
+                    senhaAtual,
+                    novaSenha,
+                    novaSenhaConfirm,
+                    alterarSenha
                 }
             }
         });
