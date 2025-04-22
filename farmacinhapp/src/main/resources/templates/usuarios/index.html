@@ -10,9 +10,9 @@
             <div class="mt-3 mb-2" th:insert="usuarios/data :: form-data"></div>
         </form>
         <div sec:authorize="isFullyAuthenticated()" class="mt-3 mb-2" th:insert="usuarios/data :: change-password"></div>
-        <div class="card mt-3 mb-2">
+        <div sec:authorize="isFullyAuthenticated()" class="card mt-3 mb-2">
             <div class="card-header">
-                Compartilhar farmácia com usuário
+                Compartilhar farmácia com outro usuário
             </div>
             <div class="card-body">
                 <p class="card-text">Você pode compartilhar uma de suas farmácias com outro usuário do app.
