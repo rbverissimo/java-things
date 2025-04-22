@@ -15,6 +15,22 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-floating py-1">
+                        <input id="data-nascimento"
+                               th:field="*{dataNascimento}" type="date" class="form-control"/>
+                        <label for="data-nascimento">Data de nascimento:</label>
+                        <span th:if="${#fields.hasErrors('dataNascimento')}" style="font-size: 0.8rem"
+                              th:errors="*{dataNascimento}" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <div class="col-4">
+                <button type="submit" role="button" class="btn btn-primary w-100">Atualizar informações</button>
+            </div>
         </div>
     </div>
 </div>
@@ -31,7 +47,7 @@
                                class="form-control"
                                type="password"
                                placeholder="" />
-                        <label for="old-password">Senha antiga</label>
+                        <label for="old-password">Senha atual</label>
                     </div>
                 </div>
                 <div class="col-4">

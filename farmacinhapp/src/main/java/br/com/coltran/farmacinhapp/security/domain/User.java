@@ -3,6 +3,7 @@ package br.com.coltran.farmacinhapp.security.domain;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ public class User implements TableEntity {
     private String password;
     private String passwordConfirm;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

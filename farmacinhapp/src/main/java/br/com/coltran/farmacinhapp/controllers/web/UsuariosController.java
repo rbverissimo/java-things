@@ -12,9 +12,7 @@ public class UsuariosController extends ControllerCommons {
 
     @GetMapping("/")
     public String index(Model model){
-
-        model.addAttribute("username", "Teste");
-
+        model.addAttribute("usuario", authService.usuarioLogado());
         return "usuarios/index";
     }
 }
