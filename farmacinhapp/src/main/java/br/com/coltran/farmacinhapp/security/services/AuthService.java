@@ -1,5 +1,6 @@
 package br.com.coltran.farmacinhapp.security.services;
 
+import br.com.coltran.farmacinhapp.controllers.web.dto.UpdateUserDto;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.security.domain.FarmaciaShareToken;
 import br.com.coltran.farmacinhapp.security.exceptions.FarmaciaShareTokenException;
@@ -21,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.Optional;
@@ -91,6 +93,14 @@ public class AuthService {
     public void alterarUsuario(User user) {
         user.setDataAlteracao(zonedBrasilTime.dataHora());
         userRepository.save(user);
+    }
+
+    public void alterarDadosUsuario(UpdateUserDto formData){
+        User managedUser = usuarioLogado();
+        managedUser.setUsername(formData.getUsername());
+        managedUser.setDataNascimento(formData.getDataNascimento());
+        managedUser.setBiografia(formData.getBiografia());
+        alterarUsuario(managedUser);
     }
 
     public Optional<User> usuarioVerificadoByEmail(String email){

@@ -5,8 +5,8 @@
     <div layout:fragment="content">
         <div class="mt-3 mb-2" th:insert="components/alerts :: vue-alerts"></div>
         <form th:object="${usuario}"
-              th:action="${'/usuarios/update/'+usuario.id}"
-              th:method="${ 'PUT'}">
+              th:action="${'/usuarios/update'}"
+              th:method="${'PUT'}">
             <div class="mt-3 mb-2" th:insert="usuarios/data :: form-data"></div>
         </form>
         <div sec:authorize="isFullyAuthenticated()" class="mt-3 mb-2" th:insert="usuarios/data :: change-password"></div>
