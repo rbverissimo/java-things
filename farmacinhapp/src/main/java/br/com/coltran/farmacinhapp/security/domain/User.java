@@ -53,6 +53,8 @@ public class User implements TableEntity {
     @JsonBackReference
     private Set<FarmaciaShareToken> farmaciaShareTokens;
 
+    private String biografia;
+
 
     public User() {
     }
@@ -162,5 +164,13 @@ public class User implements TableEntity {
 
     public void setFarmaciaShareTokens(Set<FarmaciaShareToken> farmaciaShareTokens) {
         this.farmaciaShareTokens = farmaciaShareTokens;
+    }
+
+    public String getBiografia() {
+        return biografia;
+    }
+
+    public void setBiografia(String biografia) {
+        this.biografia = biografia;
     }
 }

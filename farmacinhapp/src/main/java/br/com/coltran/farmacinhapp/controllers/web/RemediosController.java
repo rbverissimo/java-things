@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -122,5 +123,15 @@ public class RemediosController extends ControllerCommons {
         Remedio managedRemedio = remedioService.findResourceById(id);
         if(managedRemedio != null) remedioService.update(managedRemedio, remedio);
         return "redirect:/remedios/show/"+id;
+    }
+
+    @GetMapping("/catalogo/")
+    public String showCatalogo(Model model){
+
+        Set<Remedio> remedios = authService.usuarioLogado().getFarmacias()
+                .stream().flatMap(farmacia -> farmacia.getRemedios().stream()).collect(Collectors.toSet());
+        model.addAttribute("remedios", remedios);
+
+        return "";
     }
 }
