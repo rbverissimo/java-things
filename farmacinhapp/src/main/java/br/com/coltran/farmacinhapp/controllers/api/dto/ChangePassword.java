@@ -1,7 +1,10 @@
 package br.com.coltran.farmacinhapp.controllers.api.dto;
 
+import br.com.coltran.farmacinhapp.validators.abstractions.ChangePasswordMatch;
+
 import java.io.Serializable;
 
+@ChangePasswordMatch
 public class ChangePassword implements Serializable {
 
     private String senhaAtual;
