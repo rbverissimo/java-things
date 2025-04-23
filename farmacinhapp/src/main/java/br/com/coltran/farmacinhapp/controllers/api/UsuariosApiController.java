@@ -3,6 +3,7 @@ package br.com.coltran.farmacinhapp.controllers.api;
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.controllers.api.dto.ApiResponseDTO;
 import br.com.coltran.farmacinhapp.controllers.api.dto.ChangePassword;
+import br.com.coltran.farmacinhapp.security.domain.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,9 +21,19 @@ public class UsuariosApiController extends ControllerCommons {
     @PutMapping("/change-password")
     public ResponseEntity<?> alterarSenha(@Valid @RequestBody ChangePassword changePassword){
 
-        if(!changePassword.getSenhaAtual().equals(authService.usuarioLogado().getPassword())) return ResponseEntity
+        User managedUsuario = authService.usuarioLogado();
+
+        if(!authService.isMatchingPassword(changePassword.getSenhaAtual(), managedUsuario.getPassword())) return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST).body(new ApiResponseDTO.Builder().mensagem("A senha atual está incorreta").build());
 
-        return null;
+        if(changePassword.getSenhaAtual().equals(changePassword.getNovaSenha())) return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST).body(new ApiResponseDTO.Builder().mensagem("A nova senha não pode ser igual a senha atual").build());
+
+        managedUsuario.setPassword(changePassword.getNovaSenha());
+        managedUsuario.setPasswordConfirm(changePassword.getNovaSenhaConfirm());
+
+        authService.alterarUsuario(managedUsuario);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseDTO.Builder().mensagem("A senha foi alterada com sucesso!").build());
     }
 }

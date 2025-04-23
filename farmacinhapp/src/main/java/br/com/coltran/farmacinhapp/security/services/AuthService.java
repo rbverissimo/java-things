@@ -1,5 +1,6 @@
 package br.com.coltran.farmacinhapp.security.services;
 
+import br.com.coltran.farmacinhapp.controllers.api.dto.ChangePassword;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.security.domain.FarmaciaShareToken;
 import br.com.coltran.farmacinhapp.security.exceptions.FarmaciaShareTokenException;
@@ -179,5 +180,9 @@ public class AuthService {
         token.issueTo(user, token, zonedBrasilTime.dataHora(), EXPIRATION_LIMIT);
         token.setFarmacia(farmacia);
         return farmaciaShareTokenRepository.save(token);
+    }
+
+    public boolean isMatchingPassword(String raw, String encoded){
+        return passwordEncoder.matches(raw, encoded);
     }
 }
