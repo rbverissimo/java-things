@@ -1,6 +1,7 @@
 package br.com.coltran.farmacinhapp.security.dto;
 
 import br.com.coltran.farmacinhapp.security.validators.abstractions.PasswordMatch;
+import br.com.coltran.farmacinhapp.security.validators.abstractions.ValidPassword;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -18,7 +19,7 @@ public class UserRegDTO {
     @NotEmpty(message = "Digite um e-mail")
     private String email;
 
-    @NotEmpty(message = "Digite uma senha")
+    @ValidPassword
     private String password;
 
     private String passwordConfirm;

@@ -85,6 +85,11 @@
                     try {
                         const response = await put(url, payload);
                         alerts.value.push(new SuccessAlert(`Senha alterada com sucesso!`));
+
+                        senhaAtual.value = '';
+                        novaSenha.value = '';
+                        novaSenhaConfirm.value = '';
+
                     } catch (error){
                         const errorMsg = error.response.data.mensagem ? error.response.data.mensagem : 'Um erro desconhecido aconteceu';
                         alerts.value.push(new DangerAlert(errorMsg));

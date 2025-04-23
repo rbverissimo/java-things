@@ -1,6 +1,5 @@
 package br.com.coltran.farmacinhapp.security.services;
 
-import br.com.coltran.farmacinhapp.controllers.api.dto.ChangePassword;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.security.domain.FarmaciaShareToken;
 import br.com.coltran.farmacinhapp.security.exceptions.FarmaciaShareTokenException;
@@ -25,7 +24,6 @@ import javax.transaction.Transactional;
 import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.Optional;
-import java.util.UUID;
 
 @Component
 public class AuthService {
@@ -184,5 +182,10 @@ public class AuthService {
 
     public boolean isMatchingPassword(String raw, String encoded){
         return passwordEncoder.matches(raw, encoded);
+    }
+
+    public void encodeSenhaAlterada(User user, String raw){
+        user.setPassword(passwordEncoder.encode(raw));
+        user.setPasswordConfirm(passwordEncoder.encode(raw));
     }
 }

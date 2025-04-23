@@ -29,9 +29,7 @@ public class UsuariosApiController extends ControllerCommons {
         if(changePassword.getSenhaAtual().equals(changePassword.getNovaSenha())) return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST).body(new ApiResponseDTO.Builder().mensagem("A nova senha não pode ser igual a senha atual").build());
 
-        managedUsuario.setPassword(changePassword.getNovaSenha());
-        managedUsuario.setPasswordConfirm(changePassword.getNovaSenhaConfirm());
-
+        authService.encodeSenhaAlterada(managedUsuario, changePassword.getNovaSenha());
         authService.alterarUsuario(managedUsuario);
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseDTO.Builder().mensagem("A senha foi alterada com sucesso!").build());
