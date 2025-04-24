@@ -6,11 +6,33 @@
         <th:block th:if="${remedios.size > 0}" th:insert="components/toolbar :: lightToolbar(~{::#toolbar-catalogo})">
             <div class="w-100 d-flex justify-content-end" id="toolbar-catalogo" th:fragment="toolbarCatalogo">
                 <div class="col-6 d-inline-flex">
-                    <input type="search" placeholder="Digite o nome do remédio" class="form-control me-2">
+                    <input type="search" placeholder="Digite o nome do remédio" v-model="remedioSearch" class="form-control me-2">
                     <button class="btn btn-sm btn-outline-success" type="submit">Buscar</button>
                 </div>
             </div>
         </th:block>
 
     </div>
+    <script type="module" th:inline="javascript" layout:fragment="vue-app">
+        import { createApp, ref } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+
+        const serverData = {
+            remedios: /*[[${remedios}]]*/ []
+        };
+
+        const app = createApp({
+            setup(){
+
+                const remedioSearch = ref('');
+
+                return {
+                    remedioSearch
+                };
+
+            }
+        });
+
+        app.mount('#app');
+
+    </script>
 </html>
