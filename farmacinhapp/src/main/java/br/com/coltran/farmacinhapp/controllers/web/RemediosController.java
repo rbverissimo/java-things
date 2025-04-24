@@ -132,6 +132,6 @@ public class RemediosController extends ControllerCommons {
                 .stream().flatMap(farmacia -> farmacia.getRemedios().stream()).collect(Collectors.toSet());
         model.addAttribute("remedios", remedios);
 
-        return "";
+        return "remedios/catalogo";
     }
 }

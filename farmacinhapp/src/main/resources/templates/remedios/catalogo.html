@@ -1,0 +1,16 @@
+
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/vue-container-layout}">
+<head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Listas de farmácias')"></head>
+    <div class="mt-5" layout:fragment="content">
+
+        <th:block th:if="${remedios.size > 0}" th:insert="components/toolbar :: lightToolbar(~{::#toolbar-catalogo})">
+            <div class="w-100 d-flex justify-content-end" id="toolbar-catalogo" th:fragment="toolbarCatalogo">
+                <div class="col-6 d-inline-flex">
+                    <input type="search" placeholder="Digite o nome do remédio" class="form-control me-2">
+                    <button class="btn btn-sm btn-outline-success" type="submit">Buscar</button>
+                </div>
+            </div>
+        </th:block>
+
+    </div>
+</html>
