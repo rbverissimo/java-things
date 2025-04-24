@@ -3,6 +3,7 @@ package br.com.coltran.farmacinhapp.domain;
 import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
@@ -43,11 +44,11 @@ public class Remedio implements TableEntity, Serializable {
     private ZonedDateTime dataInicioTratamento;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "America/Sao_Paulo")
+    @JsonIgnore
     private ZonedDateTime dataCriacao;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "America/Sao_Paulo")
+    @JsonIgnore
     private ZonedDateTime dataAlteracao;
 
     @Column(name = "expired_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
