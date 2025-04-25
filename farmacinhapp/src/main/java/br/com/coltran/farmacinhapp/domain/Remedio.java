@@ -38,7 +38,7 @@ public class Remedio implements TableEntity, Serializable {
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @PastOrPresent(message = "A data de início de tratamento deve ser anterior à data de hoje")
-    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "America/Sao_Paulo")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "America/Sao_Paulo")
     @NotNull(message = "Informe a data de início do tratamento")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private ZonedDateTime dataInicioTratamento;

@@ -12,9 +12,38 @@
             </div>
         </th:block>
 
+        <div v-for="remedio in remediosList" class="card mt-5">
+            <div class="card-header d-inline-flex flex-wrap justify-content-between">
+                <div class="d-flex">
+                    <a class="d-flex align-items-center" style="cursor:pointer" href="#">
+                        <span class="material-symbols-outlined">medication</span>
+                        <span>{{remedio.nome}}</span>
+                    </a>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-sm btn-outline-danger d-flex align-items-center">
+                        <i class="material-symbols-outlined me-1">delete</i>Deletar
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>Data de início do último tratamento: <span>{{remedio.dataInicioTratamento}}</span></p>
+                <p>Alocado na farmácia: <span></span> </p>
+            </div>
+            <div class="card-footer d-flex justify-content-end">
+                <div class="col-3">
+                    <a href="#" role="button" class="btn btn-sm btn-outline-primary w-100">Gramaturas</a>
+                </div>
+                <div v-if="doses < 1" class="col-3">
+                    <a href="#" class="btn btn-sm btn-outline-primary w-100">Novo tratamento</a>
+                </div>
+            </div>
+
+        </div>
+
     </div>
     <script type="module" th:inline="javascript" layout:fragment="vue-app">
-        import { createApp, ref } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+        import { createApp, ref, onMounted } from '/webjars/vue/dist/vue.esm-browser.prod.js';
 
         const serverData = {
             remedios: /*[[${remedios}]]*/ []
@@ -22,11 +51,17 @@
 
         const app = createApp({
             setup(){
-
                 const remedioSearch = ref('');
+                const remediosList = ref([]);
+
+                onMounted(() => {
+                    remediosList.value = serverData.remedios;
+                });
+
 
                 return {
-                    remedioSearch
+                    remedioSearch,
+                    remediosList
                 };
 
             }
