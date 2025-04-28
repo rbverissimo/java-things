@@ -4,11 +4,12 @@ import br.com.coltran.farmacinhapp.domain.Remedio;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RemedioCatalogoDTO {
+public class RemedioCatalogoDTO implements Serializable {
 
     private long id;
     private String nome;
