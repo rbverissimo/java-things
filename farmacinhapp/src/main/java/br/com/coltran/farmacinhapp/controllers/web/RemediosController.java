@@ -1,6 +1,7 @@
 package br.com.coltran.farmacinhapp.controllers.web;
 
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
+import br.com.coltran.farmacinhapp.controllers.web.dto.RemedioCatalogoDTO;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.Remedio;
 import br.com.coltran.farmacinhapp.domain.valueobjects.ErroMsgVO;
@@ -128,8 +129,11 @@ public class RemediosController extends ControllerCommons {
     @GetMapping("/catalogo/")
     public String showCatalogo(Model model){
 
-        Set<Remedio> remedios = authService.usuarioLogado().getFarmacias()
-                .stream().flatMap(farmacia -> farmacia.getRemedios().stream()).collect(Collectors.toSet());
+
+        Set<RemedioCatalogoDTO> remedios = remedioService.getAllRemedioByUser().stream().map(s -> {
+            return new RemedioCatalogoDTO.Builder(s).build();
+        }).collect(Collectors.toSet());
+
         model.addAttribute("remedios", remedios);
 
         return "remedios/catalogo";

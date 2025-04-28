@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -65,6 +66,10 @@ public class RemedioService extends ServiceWorker implements RepositoryService<R
 
     public Page<Remedio> getRemediosByNome(Long farmaciaId, String nome, Pageable pageable){
         return remedioRepository.findByNome(farmaciaId, nome, pageable);
+    }
+
+    public Set<Remedio> getAllRemedioByUser(){
+        return remedioRepository.findAllRemediosByUser(authService.usuarioLogado().getId());
     }
 
     public boolean canSaveRemedio(){

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -20,6 +21,9 @@ public interface RemedioRepository extends JpaRepository<Remedio, Long> {
 
     @Query("SELECT r, g FROM Remedio r LEFT JOIN r.gramaturas g WHERE r.farmacia.id=:farmaciaId AND (LOWER(r.nome) LIKE LOWER(CONCAT(:nome, '%')))")
     Page<Remedio> findByNome(@Param("farmaciaId") Long farmaciaId, @Param("nome") String nome, Pageable pageable);
+
+    @Query("SELECT r from Remedio r JOIN FETCH r.farmacia f JOIN f.users u WHERE u.id=:userId")
+    Set<Remedio> findAllRemediosByUser(@Param("userId") Long userId);
 
     @Modifying
     @Transactional
