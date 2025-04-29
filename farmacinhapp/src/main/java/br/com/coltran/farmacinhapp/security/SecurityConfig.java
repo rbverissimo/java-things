@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -28,11 +29,20 @@ public class SecurityConfig  {
     @Autowired
     private UserServiceImpl userServiceImpl;
 
+    private final PersistentTokenRepository persistentTokenRepository;
+
     @Autowired
     private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Value("${spring.h2.console.enabled:false}")
     private boolean h2ConsoleEnabled;
+
+    @Value("${app.security.rememberme.key}")
+    private String rememberMeKey;
+
+    public SecurityConfig(PersistentTokenRepository persistentTokenRepository) {
+        this.persistentTokenRepository = persistentTokenRepository;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -61,6 +71,12 @@ public class SecurityConfig  {
                 .formLogin(form -> form.loginPage("/login").usernameParameter("email")
                         .defaultSuccessUrl("/", true)
                         .failureHandler(customAuthenticationFailureHandler)
+                )
+                .rememberMe(rememberMe -> rememberMe
+                        .tokenRepository(persistentTokenRepository)
+                        .userDetailsService(userServiceImpl)
+                        .tokenValiditySeconds(60 * 60 * 24 * 30)
+                        .key(rememberMeKey)
                 )
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
