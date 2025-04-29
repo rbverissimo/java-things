@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <p>Data de início do último tratamento: <span>{{remedio.dataInicioTratamento}}</span></p>
+                <p>Data de início do último tratamento: <span>{{renderizarData(remedio.dataInicioTratamento)}}</span></p>
                 <p>Alocado na farmácia: <span>{{remedio.farmaciaAlocado}}</span> </p>
             </div>
             <div class="card-footer d-flex justify-content-end">
@@ -44,6 +44,7 @@
     </div>
     <script type="module" th:inline="javascript" layout:fragment="vue-app">
         import { createApp, ref, onMounted } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+        import { renderizarData } from '/js/masks.js';
 
         const serverData = {
             remedios: /*[[${remedios}]]*/ []
@@ -58,10 +59,10 @@
                     remediosList.value = serverData.remedios;
                 });
 
-
                 return {
                     remedioSearch,
-                    remediosList
+                    remediosList,
+                    renderizarData
                 };
 
             }
