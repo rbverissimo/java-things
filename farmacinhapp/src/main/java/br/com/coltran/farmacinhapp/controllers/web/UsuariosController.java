@@ -19,14 +19,18 @@ public class UsuariosController extends ControllerCommons {
 
     @GetMapping("/")
     public String index(Model model){
-        model.addAttribute("usuario", authService.usuarioLogado());
+        model.addAttribute("updateUserDto", authService.usuarioLogado());
         return "usuarios/index";
     }
 
     @PutMapping("/update")
     public String update(@Valid @ModelAttribute UpdateUserDto updateUserDto, BindingResult bindingResult, Model model){
-        if(bindingResult.hasErrors()) return "usuarios/index";
+        if(bindingResult.hasErrors()){
+            model.addAttribute("updateUserDto", updateUserDto);
+            return "usuarios/index";
+        }
+
         authService.alterarDadosUsuario(updateUserDto);
-        return "redirect:/usuarios/";
+        return "redirect:/usuario/";
     }
 }

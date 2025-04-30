@@ -4,8 +4,8 @@
 <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Cadastro do usuário')"></head>
     <div layout:fragment="content">
         <div class="mt-3 mb-2" th:insert="components/alerts :: vue-alerts"></div>
-        <form th:object="${usuario}"
-              th:action="${'/usuarios/update'}"
+        <form th:object="${updateUserDto}"
+              th:action="${'/usuario/update'}"
               th:method="${'PUT'}">
             <div class="mt-3 mb-2" th:insert="usuarios/data :: form-data"></div>
         </form>
