@@ -10,6 +10,14 @@
                         <span th:text="${usuario.username}"></span>.
                         <br>
                     </p>
+                    <div v-if="remedios.length > 0">
+                        <p>Identificamos alguns remédios que acabarão em breve:
+                            <div class="alert alert-warning" v-for="(remedio, index) in remedios" :key="index">
+                                <span>{{remedio.nome}}</span> na farmácia {{remedio.nomeFarmacia}} acabará em {{remedio.dosesRestantes}} dia(s).
+                                <br><strong>Ver farmácia</strong>
+                            </div>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

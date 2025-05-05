@@ -16,6 +16,8 @@ public class RemedioIndexVO implements Serializable {
     private Long id;
     private String nome;
     private Long dosesRestantes;
+    private String nomeFarmacia;
+    private Long idFarmacia;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private ZonedDateTime dtInicioTratamento;
@@ -44,6 +46,14 @@ public class RemedioIndexVO implements Serializable {
         this.dosesRestantes = dosesRestantes;
     }
 
+    public String getNomeFarmacia() { return nomeFarmacia; }
+
+    public void setNomeFarmacia(String nomeFarmacia) { this.nomeFarmacia = nomeFarmacia;}
+
+    public Long getIdFarmacia() { return idFarmacia; }
+
+    public void setIdFarmacia(Long idFarmacia) { this.idFarmacia = idFarmacia; }
+
     public ZonedDateTime getDtInicioTratamento() {
         return dtInicioTratamento;
     }
@@ -71,6 +81,9 @@ public class RemedioIndexVO implements Serializable {
                 Duration duration = Duration.between(remedio.getDataInicioTratamento().truncatedTo(ChronoUnit.DAYS), now.truncatedTo(ChronoUnit.DAYS));
                 vo.setDosesRestantes(remedio.getDoses() - Math.abs(duration.toDays()));
             }
+
+            vo.setIdFarmacia(remedio.getFarmacia().getId());
+            vo.setNomeFarmacia(remedio.getFarmacia().getNome());
 
             return vo;
         }

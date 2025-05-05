@@ -2,7 +2,6 @@ package br.com.coltran.farmacinhapp.controllers.web;
 
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.controllers.web.dto.UpdateUserDto;
-import br.com.coltran.farmacinhapp.security.domain.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

@@ -4,6 +4,7 @@ import br.com.coltran.farmacinhapp.config.constants.Business;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.Gramatura;
 import br.com.coltran.farmacinhapp.domain.Remedio;
+import br.com.coltran.farmacinhapp.domain.valueobjects.RemedioIndexVO;
 import br.com.coltran.farmacinhapp.repositories.RemedioRepository;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.services.interfaces.RepositoryService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -83,6 +85,19 @@ public class RemedioService extends ServiceWorker implements RepositoryService<R
     public Remedio addGramatura(Remedio remedio, Gramatura gramatura){
         remedio.setGramaturas(colecoes.addIfNull(remedio.getGramaturas(), gramatura));
         return remedioRepository.save(remedio);
+    }
+
+    public Set<RemedioIndexVO> getRemediosHaUmaSemanaDeAcabar(){
+        return getRemediosInferioresNdoses(8);
+    }
+
+    public Set<RemedioIndexVO> getRemediosInferioresNdoses(int n){
+        return authService.usuarioLogado()
+                .getFarmacias().stream()
+                .flatMap(f -> f.getRemedios().stream()
+                        .map(r -> { return new RemedioIndexVO.Builder().buildFromModel(r);})
+                        .filter(vo -> vo.getDosesRestantes() < n))
+                .collect(Collectors.toSet());
     }
 
 }
