@@ -12,7 +12,7 @@
             </div>
         </th:block>
 
-        <div v-for="(remedio, index) in remediosList" :key="index" class="card mt-5">
+        <div v-for="remedio in remediosList" :key="remedio.id" class="card mt-5">
             <div class="card-header d-inline-flex flex-wrap justify-content-between">
                 <div class="d-flex">
                     <a class="d-flex align-items-center" style="cursor:pointer" href="#">
