@@ -14,13 +14,14 @@
             </div>
         </div>
     </div>
-    <script type="module" layout:fragment="vue-app">
+    <script type="module" th:inline="javascript" layout:fragment="vue-app">
         import { createApp } from '/webjars/vue/dist/vue.esm-browser.prod.js';
 
         const app = createApp({
             data(){
                 return {
-                    cumprimento: this.getCumprimento()
+                    cumprimento: this.getCumprimento(),
+                    remedios: /*[[${remedios}]]*/ []
                 };
             },
             methods: {
