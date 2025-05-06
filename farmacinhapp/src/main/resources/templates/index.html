@@ -12,9 +12,9 @@
                     </p>
                     <div v-if="remedios.length > 0">
                         <p>Identificamos alguns remédios que acabarão em breve:
-                            <div class="alert alert-warning" v-for="(remedio, index) in remedios" :key="index">
+                            <div @click="verFarmacia(remedio.idFarmacia)" class="alert alert-warning" v-for="(remedio, index) in remedios" :key="index">
                                 <span>{{remedio.nome}}</span> na farmácia {{remedio.nomeFarmacia}} acabará em {{remedio.dosesRestantes}} dia(s).
-                                <br><strong>Ver farmácia</strong>
+                                <br><strong style="cursor: pointer">Ver farmácia</strong>
                             </div>
                         </p>
                     </div>
@@ -44,6 +44,9 @@
                     } else {
                         return "Boa noite";
                     }
+                },
+                verFarmacia(farmaciaId){
+                    window.location.href = `/remedios/i/${farmaciaId}`;
                 }
             }
         });
