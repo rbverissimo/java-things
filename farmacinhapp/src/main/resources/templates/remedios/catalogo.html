@@ -6,7 +6,7 @@
         <th:block th:if="${remedios.size > 0}" th:insert="components/toolbar :: lightToolbar(~{::#toolbar-catalogo})">
             <div class="w-100 d-flex justify-content-end" id="toolbar-catalogo" th:fragment="toolbarCatalogo">
                 <div class="col-6 d-inline-flex">
-                    <input type="search" placeholder="Digite o nome do remédio" v-model="remedioSearch" class="form-control me-2">
+                    <input type="search" placeholder="Digite o nome do remédio" v-model="remedioSearch" @keyup="buscarRemedios" class="form-control me-2">
                     <button class="btn btn-sm btn-outline-success" type="submit">Buscar</button>
                 </div>
             </div>
@@ -43,8 +43,9 @@
 
     </div>
     <script type="module" th:inline="javascript" layout:fragment="vue-app">
-        import { createApp, ref, onMounted } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+        import { createApp, ref, onMounted, watch } from '/webjars/vue/dist/vue.esm-browser.prod.js';
         import { renderizarData } from '/js/masks.js';
+        import { debounce } from '/js/reactive.js';
 
         const serverData = {
             remedios: /*[[${remedios}]]*/ []
@@ -59,10 +60,17 @@
                     remediosList.value = serverData.remedios;
                 });
 
+                const buscarRemedios = debounce(async () => {
+                    if(remedioSearch.value.length < 4) return;
+                    console.log(remedioSearch.value);
+
+                }, 500);
+
                 return {
                     remedioSearch,
                     remediosList,
-                    renderizarData
+                    renderizarData,
+                    buscarRemedios
                 };
 
             }
