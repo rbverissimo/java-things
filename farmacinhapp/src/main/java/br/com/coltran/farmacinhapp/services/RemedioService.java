@@ -66,8 +66,13 @@ public class RemedioService extends ServiceWorker implements RepositoryService<R
         return remedioRepository.findAllByFarmacia(farmaciaId, pageable);
     }
 
-    public Page<Remedio> getRemediosByNome(Long farmaciaId, String nome, Pageable pageable){
-        return remedioRepository.findByNome(farmaciaId, nome, pageable);
+    public Page<Remedio> getRemediosByFarmaciaAndNome(Long farmaciaId, String nome, Pageable pageable){
+        return remedioRepository.findByFarmaciaAndNome(farmaciaId, nome, pageable);
+    }
+
+    public Page<RemedioIndexVO> getRemediosCatalogoByNome(String nome, Pageable pageable){
+        Page<Remedio> queryPage = remedioRepository.findByNome(nome, pageable);
+        return queryPage.map(remedio -> { return new RemedioIndexVO.Builder().buildFromModel(remedio);});
     }
 
     public Set<Remedio> getAllRemedioByUser(){

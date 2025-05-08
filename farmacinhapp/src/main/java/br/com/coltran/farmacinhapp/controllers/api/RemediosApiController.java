@@ -2,6 +2,7 @@ package br.com.coltran.farmacinhapp.controllers.api;
 
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.domain.Remedio;
+import br.com.coltran.farmacinhapp.domain.valueobjects.RemedioIndexVO;
 import br.com.coltran.farmacinhapp.services.FarmaciaService;
 import br.com.coltran.farmacinhapp.services.RemedioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,17 @@ public class RemediosApiController extends ControllerCommons {
 
     @GetMapping("/{farmacia_id}")
     @PreAuthorize("@farmaciaService.isResourceOwner(#farmaciaId)")
-    public ResponseEntity<Page<Remedio>> index(@PathVariable("farmacia_id") long farmaciaId,
+    public ResponseEntity<Page<Remedio>> indexByFarmacia(@PathVariable("farmacia_id") long farmaciaId,
                                                @RequestParam(required = false) String nome,
                                                @PageableDefault(size = 12, page = 0) Pageable pageable){
-        Page<Remedio> remedios = remedioService.getRemediosByNome(farmaciaId, nome, pageable);
+        Page<Remedio> remedios = remedioService.getRemediosByFarmaciaAndNome(farmaciaId, nome, pageable);
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(remedios);
+    }
+
+    @GetMapping("/catalogo")
+    public ResponseEntity<Page<RemedioIndexVO>> indexCatalogo(@RequestParam String nome,
+                                                              @PageableDefault(size = 12, page = 0) Pageable pageable){
+        Page<RemedioIndexVO> remedios = remedioService.getRemediosCatalogoByNome(nome, pageable);
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(remedios);
     }
 

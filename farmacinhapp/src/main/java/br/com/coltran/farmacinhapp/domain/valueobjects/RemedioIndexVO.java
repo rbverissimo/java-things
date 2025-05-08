@@ -66,8 +66,6 @@ public class RemedioIndexVO implements Serializable {
 
         private RemedioIndexVO vo;
 
-
-
         public RemedioIndexVO buildFromModel(Remedio remedio){
             this.vo = new RemedioIndexVO();
 
