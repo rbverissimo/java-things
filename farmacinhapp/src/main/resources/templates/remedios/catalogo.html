@@ -15,7 +15,7 @@
         <div v-for="remedio in formattedRemediosList" :key="remedio.id" class="card mt-5">
             <div class="card-header d-inline-flex flex-wrap justify-content-between">
                 <div class="d-flex">
-                    <a class="d-flex align-items-center" style="cursor:pointer" href="#">
+                    <a class="d-flex align-items-center" style="cursor:pointer" :href="`/remedios/show/${remedio.id}`">
                         <span class="material-symbols-outlined">medication</span>
                         <span>{{remedio.nome}}</span>
                     </a>
