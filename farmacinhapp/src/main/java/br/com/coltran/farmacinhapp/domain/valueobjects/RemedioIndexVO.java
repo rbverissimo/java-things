@@ -2,6 +2,7 @@ package br.com.coltran.farmacinhapp.domain.valueobjects;
 
 import br.com.coltran.farmacinhapp.domain.Remedio;
 import br.com.coltran.farmacinhapp.utils.Datas;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,6 +20,7 @@ public class RemedioIndexVO implements Serializable {
     private String nomeFarmacia;
     private Long idFarmacia;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private ZonedDateTime dtInicioTratamento;
 

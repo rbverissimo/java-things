@@ -81,7 +81,7 @@ public class RemediosApiControllerTest {
 
         Page<Remedio> pageImpl = new PageImpl<Remedio>(remedios, pageable, remedios.size());
 
-        given(remedioService.getRemediosByNome(farmaciaId, "Dorflex", pageable))
+        given(remedioService.getRemediosByFarmaciaAndNome(farmaciaId, "Dorflex", pageable))
                 .willReturn(pageImpl);
 
         MockHttpServletResponse response = mvc.perform(get("/api/remedios/"+farmaciaId)).andReturn().getResponse();

@@ -1,6 +1,7 @@
 package br.com.coltran.farmacinhapp.services;
 
 import br.com.coltran.farmacinhapp.config.constants.Business;
+import br.com.coltran.farmacinhapp.controllers.web.dto.RemedioCatalogoDTO;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.Gramatura;
 import br.com.coltran.farmacinhapp.domain.Remedio;
@@ -70,9 +71,9 @@ public class RemedioService extends ServiceWorker implements RepositoryService<R
         return remedioRepository.findByFarmaciaAndNome(farmaciaId, nome, pageable);
     }
 
-    public Page<RemedioIndexVO> getRemediosCatalogoByNome(String nome, Pageable pageable){
+    public Page<RemedioCatalogoDTO> getRemediosCatalogoByNome(String nome, Pageable pageable){
         Page<Remedio> queryPage = remedioRepository.findByNome(nome, pageable);
-        return queryPage.map(remedio -> { return new RemedioIndexVO.Builder().buildFromModel(remedio);});
+        return queryPage.map(remedio -> { return new RemedioCatalogoDTO.Builder(remedio).build();});
     }
 
     public Set<Remedio> getAllRemedioByUser(){

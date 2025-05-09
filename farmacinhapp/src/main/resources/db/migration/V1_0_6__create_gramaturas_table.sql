@@ -1,4 +1,4 @@
-CREATE TABLE gramaturas (
+CREATE TABLE IF NOT EXISTS gramaturas (
     id BIGINT NOT NULL AUTO_INCREMENT,
     principio_ativo CHARACTER VARYING,
     valor_gramatura DOUBLE PRECISION NOT NULL,

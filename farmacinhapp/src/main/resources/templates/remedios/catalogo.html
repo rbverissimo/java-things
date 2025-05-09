@@ -38,7 +38,6 @@
                     <a href="#" class="btn btn-sm btn-outline-primary w-100">Novo tratamento</a>
                 </div>
             </div>
-
         </div>
 
     </div>
@@ -46,6 +45,7 @@
         import { createApp, ref, onMounted, watch } from '/webjars/vue/dist/vue.esm-browser.prod.js';
         import { renderizarData } from '/js/masks.js';
         import { debounce } from '/js/reactive.js';
+        import { get } from '/js/requests.js';
 
         const serverData = {
             remedios: /*[[${remedios}]]*/ []
@@ -63,6 +63,18 @@
                 const buscarRemedios = debounce(async () => {
                     if(remedioSearch.value.length < 4) return;
 
+                    const requestEndpoint = '/api/remedios/catalogo';
+                    const queryParams = new URLSearchParams({nome: remedioSearch.value});
+
+                    try{
+                        const url = `${requestEndpoint}?${queryParams.toString()}`;
+                        const response = await get(url);
+                        console.log(response.content);
+                        remediosList.value = response.content;
+                        console.log(remediosList.value);
+                    }catch (error){
+
+                    }
 
                 }, 500);
 

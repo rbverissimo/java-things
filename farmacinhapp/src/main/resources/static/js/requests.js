@@ -30,3 +30,17 @@ export async function put(url, data){
         throw error;
     }
 }
+
+export async function get(url){
+
+    try {
+        const response = await axios.get(url, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        if(response.status >= 200 && response.status < 300) return response.data;
+    } catch (error){
+        throw error;
+    }
+}
