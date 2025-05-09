@@ -12,7 +12,7 @@
             </div>
         </th:block>
 
-        <div v-for="remedio in remediosList" :key="remedio.id" class="card mt-5">
+        <div v-for="remedio in formattedRemediosList" :key="remedio.id" class="card mt-5">
             <div class="card-header d-inline-flex flex-wrap justify-content-between">
                 <div class="d-flex">
                     <a class="d-flex align-items-center" style="cursor:pointer" href="#">
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <p>Data de início do último tratamento: <span>{{renderizarData(remedio.dataInicioTratamento)}}</span></p>
+                <p>Data de início do último tratamento: <span>{{remedio.dtInicioFormatada}}</span></p>
                 <p>Alocado na farmácia: <span>{{remedio.farmaciaAlocado}}</span> </p>
             </div>
             <div class="card-footer d-flex justify-content-end">
@@ -42,7 +42,7 @@
 
     </div>
     <script type="module" th:inline="javascript" layout:fragment="vue-app">
-        import { createApp, ref, onMounted, watch } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+        import { createApp, ref, onMounted, computed } from '/webjars/vue/dist/vue.esm-browser.prod.js';
         import { renderizarData } from '/js/masks.js';
         import { debounce } from '/js/reactive.js';
         import { get } from '/js/requests.js';
@@ -61,7 +61,7 @@
                 });
 
                 const buscarRemedios = debounce(async () => {
-                    if(remedioSearch.value.length < 4) return;
+                    if(remedioSearch.value !== '' && remedioSearch.value.length < 4) return;
 
                     const requestEndpoint = '/api/remedios/catalogo';
                     const queryParams = new URLSearchParams({nome: remedioSearch.value});
@@ -69,20 +69,28 @@
                     try{
                         const url = `${requestEndpoint}?${queryParams.toString()}`;
                         const response = await get(url);
-                        console.log(response.content);
                         remediosList.value = response.content;
-                        console.log(remediosList.value);
                     }catch (error){
 
                     }
 
                 }, 500);
 
+                const formattedRemediosList = computed(() => {
+                    return remediosList.value.map(remedio => {
+                        return {
+                            ...remedio,
+                            dtInicioFormatada: renderizarData(remedio.dataInicioTratamento)
+                        };
+                    });
+                });
+
                 return {
                     remedioSearch,
                     remediosList,
                     renderizarData,
-                    buscarRemedios
+                    buscarRemedios,
+                    formattedRemediosList
                 };
 
             }
