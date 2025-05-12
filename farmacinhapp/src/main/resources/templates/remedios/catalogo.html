@@ -21,9 +21,23 @@
                     </a>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-sm btn-outline-danger d-flex align-items-center">
+                    <button type="button" class="btn btn-sm btn-outline-danger d-flex align-items-center"
+                        :data-bs-target="`#deletar-remedio-${remedio.id}`" data-bs-toggle="modal"
+                    >
                         <i class="material-symbols-outlined me-1">delete</i>Deletar
                     </button>
+
+                    <modal-delete
+                            :id="`deletar-remedio-${remedio.id}`"
+                            :title="`Confirmar exclusão de ${remedio.nome}`"
+                            :obj="remedio"
+                            @confirmed="handleConfirmDelete"
+                    >
+                        <template v-slot:body>
+                            <p>Deseja mesmo excluir o remédio selecionado?</p>
+                        </template>
+                    </modal-delete>
+
                 </div>
             </div>
             <div class="card-body">
@@ -40,12 +54,15 @@
             </div>
         </div>
 
+
+
     </div>
     <script type="module" th:inline="javascript" layout:fragment="vue-app">
-        import { createApp, ref, onMounted, computed } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+        import { createApp, ref, onMounted, computed, reactive } from '/webjars/vue/dist/vue.esm-browser.prod.js';
         import { renderizarData } from '/js/masks.js';
         import { debounce } from '/js/reactive.js';
         import { get } from '/js/requests.js';
+        import { ModalComponent } from '/js/vue/Modal.js';
 
         const serverData = {
             remedios: /*[[${remedios}]]*/ []
@@ -85,17 +102,23 @@
                     });
                 });
 
+                const handleConfirmDelete = (remedio) => {
+
+                }
+
                 return {
                     remedioSearch,
                     remediosList,
                     renderizarData,
                     buscarRemedios,
-                    formattedRemediosList
+                    formattedRemediosList,
+                    handleConfirmDelete
                 };
 
             }
         });
 
+        app.component('modal-delete', ModalComponent);
         app.mount('#app');
 
     </script>
