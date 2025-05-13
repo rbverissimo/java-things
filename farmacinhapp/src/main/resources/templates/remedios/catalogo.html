@@ -107,8 +107,13 @@
                 });
 
                 const handleConfirmDelete = (remedio) => {
-                    
+                    const url = `/api/remedios/${remedio.id}`;
+                    try{
+                        const response = await delete(url);
+                        refreshRemedios();
+                    } catch (error){
 
+                    }
                 }
 
                 return {
