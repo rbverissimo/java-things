@@ -44,3 +44,19 @@ export async function get(url){
         throw error;
     }
 }
+
+export async function delete(url){
+
+    try{
+        const response = await axios.delete(url, {
+            headers: {
+                'Accept': 'application/json',
+                [csrfheader]: csrftoken
+            }
+        });
+        if(response.status >= 200 && response.status < 300) return response.data;
+    } catch (error){
+        throw error;
+    }
+
+}

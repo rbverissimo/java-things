@@ -58,10 +58,10 @@
 
     </div>
     <script type="module" th:inline="javascript" layout:fragment="vue-app">
-        import { createApp, ref, onMounted, computed, reactive } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+        import { createApp, ref, onMounted, computed } from '/webjars/vue/dist/vue.esm-browser.prod.js';
         import { renderizarData } from '/js/masks.js';
         import { debounce } from '/js/reactive.js';
-        import { get } from '/js/requests.js';
+        import { get, delete } from '/js/requests.js';
         import { ModalComponent } from '/js/vue/Modal.js';
 
         const serverData = {
@@ -79,19 +79,23 @@
 
                 const buscarRemedios = debounce(async () => {
                     if(remedioSearch.value !== '' && remedioSearch.value.length < 4) return;
+                    refreshRemedios();
+                }, 500);
 
-                    const requestEndpoint = '/api/remedios/catalogo';
+                const refreshRemedios = () => {
+
+                    const requestEnpoint = '/api/remedios/catalogo';
                     const queryParams = new URLSearchParams({nome: remedioSearch.value});
 
-                    try{
-                        const url = `${requestEndpoint}?${queryParams.toString()}`;
+                    try {
+                        const url = `${requestEnpoint}?${queryParams.toString()}`;
                         const response = await get(url);
                         remediosList.value = response.content;
-                    }catch (error){
+                    } catch (error){
 
                     }
 
-                }, 500);
+                };
 
                 const formattedRemediosList = computed(() => {
                     return remediosList.value.map(remedio => {
@@ -103,6 +107,7 @@
                 });
 
                 const handleConfirmDelete = (remedio) => {
+                    
 
                 }
 
