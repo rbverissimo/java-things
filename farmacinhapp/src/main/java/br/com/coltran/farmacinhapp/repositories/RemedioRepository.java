@@ -25,7 +25,7 @@ public interface RemedioRepository extends JpaRepository<Remedio, Long> {
     @Query("SELECT r, g FROM Remedio r LEFT JOIN r.gramaturas g WHERE r.farmacia.id=:farmaciaId AND (LOWER(r.nome) LIKE LOWER(CONCAT(:nome, '%')))")
     Page<Remedio> findByFarmaciaAndNome(@Param("farmaciaId") Long farmaciaId, @Param("nome") String nome, Pageable pageable);
 
-    @Query("SELECT r from Remedio r JOIN FETCH r.farmacia f JOIN f.users u WHERE u.id=:userId")
+    @Query("SELECT r from Remedio r JOIN FETCH r.farmacia f JOIN f.users u WHERE u.id=:userId ORDER BY r.id DESC")
     Set<Remedio> findAllRemediosByUser(@Param("userId") Long userId);
 
     @Modifying

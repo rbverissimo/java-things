@@ -60,7 +60,7 @@
     <script type="module" th:inline="javascript" layout:fragment="vue-app">
         import { createApp, ref, onMounted, computed } from '/webjars/vue/dist/vue.esm-browser.prod.js';
         import { renderizarData } from '/js/masks.js';
-        import { debounce } from '/js/reactive.js';
+        import { debounce, infiniteScrollHandler } from '/js/reactive.js';
         import { get, del } from '/js/requests.js';
         import { ModalComponent } from '/js/vue/Modal.js';
 
@@ -72,25 +72,30 @@
             setup(){
                 const remedioSearch = ref('');
                 const remediosList = ref([]);
+                const page = ref(0);
+                const totalPages = ref(0);
+                const isLoading = ref(false);
+                const hasMore = computed(() => page.value < totalPages.value - 1);
 
-                onMounted(() => {
-                    remediosList.value = serverData.remedios;
-                });
+
 
                 const buscarRemedios = debounce(async () => {
                     if(remedioSearch.value !== '' && remedioSearch.value.length < 4) return;
                     refreshRemedios();
                 }, 500);
 
-                const refreshRemedios = async () => {
+                const refreshRemedios = async (currPage) => {
 
                     const requestEnpoint = '/api/remedios/catalogo';
-                    const queryParams = new URLSearchParams({nome: remedioSearch.value});
+                    const queryParams = new URLSearchParams({nome: remedioSearch.value, page: currPage});
 
                     try {
                         const url = `${requestEnpoint}?${queryParams.toString()}`;
                         const response = await get(url);
-                        remediosList.value = response.content;
+                        remediosList.value = [ ...remediosList.value, ...response.content];
+                        page.value = response.number;
+                        totalPages.value = response.totalPages;
+
                     } catch (error){
 
                     }
@@ -110,11 +115,22 @@
                     const url = `/api/remedios/${remedio.id}`;
                     try{
                         const response = await del(url);
-                        refreshRemedios();
+                        
                     } catch (error){
 
                     }
                 }
+
+                const scrollHandler = infiniteScrollHandler(refreshRemedios, page, hasMore, isLoading);
+
+                onMounted(() => {
+                    remediosList.value = serverData.remedios.content;
+                    page.value = serverData.remedios.number;
+                    totalPages.value = serverData.remedios.totalPages;
+
+                    window.addEventListener('scroll', scrollHandler);
+                });
+
 
                 return {
                     remedioSearch,

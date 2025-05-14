@@ -34,3 +34,14 @@ export function throttle(func, limit){
         }
     }
 }
+
+export function infiniteScrollHandler(callbackfn, currPageRef, hasMore, isLoading, threshold = 150){
+
+    const container = document.documentElement;
+    const scrollHeight = container.scrollHeight;
+    const scrollTop = container.scrollTop;
+    const clientHeight = container.clientHeight;
+
+    if(!isLoading.value && hasMore.value && (scrollTop + clientHeight >= scrollHeight - threshold)) callbackfn(currPageRef + 1);
+
+}

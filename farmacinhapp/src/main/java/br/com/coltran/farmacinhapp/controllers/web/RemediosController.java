@@ -13,6 +13,8 @@ import br.com.coltran.farmacinhapp.services.FarmaciaService;
 import br.com.coltran.farmacinhapp.services.RemedioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -129,10 +131,13 @@ public class RemediosController extends ControllerCommons {
     @GetMapping("/catalogo/")
     public String showCatalogo(Model model){
 
+        Pageable pageable = PageRequest.of(0, 12);
 
-        Set<RemedioCatalogoDTO> remedios = remedioService.getAllRemedioByUser().stream().map(s -> {
+        List<RemedioCatalogoDTO> remediosSet = remedioService.getAllRemedioByUser().stream().map(s -> {
             return new RemedioCatalogoDTO.Builder(s).build();
-        }).collect(Collectors.toSet());
+        }).collect(Collectors.toList());
+
+        Page<RemedioCatalogoDTO> remedios = new PageImpl<>(remediosSet, pageable, remediosSet.size());
 
         model.addAttribute("remedios", remedios);
 
