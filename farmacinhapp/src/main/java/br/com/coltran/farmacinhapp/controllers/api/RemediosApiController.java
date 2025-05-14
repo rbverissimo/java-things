@@ -44,4 +44,12 @@ public class RemediosApiController extends ControllerCommons {
     }
 
 
+    @DeleteMapping("/{id}")
+    @PreAuthorize("@remedioService.isResourceOwner(#id)")
+    public ResponseEntity<?> destroy(@PathVariable("id") long id){
+        remedioService.deleteResourceById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).contentType(MediaType.APPLICATION_JSON).build();
+    }
+
+
 }

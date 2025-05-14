@@ -45,7 +45,7 @@ export async function get(url){
     }
 }
 
-export async function delete(url){
+export async function del(url){
 
     try{
         const response = await axios.delete(url, {

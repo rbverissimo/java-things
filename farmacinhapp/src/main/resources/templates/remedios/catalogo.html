@@ -61,7 +61,7 @@
         import { createApp, ref, onMounted, computed } from '/webjars/vue/dist/vue.esm-browser.prod.js';
         import { renderizarData } from '/js/masks.js';
         import { debounce } from '/js/reactive.js';
-        import { get, delete } from '/js/requests.js';
+        import { get, del } from '/js/requests.js';
         import { ModalComponent } from '/js/vue/Modal.js';
 
         const serverData = {
@@ -82,7 +82,7 @@
                     refreshRemedios();
                 }, 500);
 
-                const refreshRemedios = () => {
+                const refreshRemedios = async () => {
 
                     const requestEnpoint = '/api/remedios/catalogo';
                     const queryParams = new URLSearchParams({nome: remedioSearch.value});
@@ -106,10 +106,10 @@
                     });
                 });
 
-                const handleConfirmDelete = (remedio) => {
+                const handleConfirmDelete = async (remedio) => {
                     const url = `/api/remedios/${remedio.id}`;
                     try{
-                        const response = await delete(url);
+                        const response = await del(url);
                         refreshRemedios();
                     } catch (error){
 
