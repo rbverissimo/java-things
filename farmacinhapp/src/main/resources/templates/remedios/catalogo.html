@@ -124,9 +124,8 @@
                     const url = `/api/remedios/${remedio.id}`;
                     try{
                         const response = await del(url);
-                        remediosList.value = remediosList.value.filter(item => item.id !== remedio.id);
-                        pageState.value.list = remediosList.value;
-                        console.log(`${remedio.nome} deletado com sucesso!`);
+                        pageState.value.list = pageState.value.list.filter(obj => obj.id !== remedio.id);
+                        nameSearchState.value.list = nameSearchState.value.list.filter(obj => obj.id !== remedio.id);
                     } catch (error){
 
                     }
