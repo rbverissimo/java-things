@@ -71,19 +71,26 @@
         const app = createApp({
             setup(){
                 const remedioSearch = ref('');
-                const remediosList = computed(() => { return isSearching.value ? nameSearchState.value.list : pageState.value.list; });
+                const remediosList = computed(() => {
+                    return isSearching.value ? nameSearchState.value.list : pageState.value.list;
+                });
                 const page = computed(() => { return isSearching.value ? nameSearchState.value.searchPage : pageState.value.statePage; });
                 const totalPages = computed(() => { return isSearching.value ? nameSearchState.value.searchTotalPages : pageState.value.stateTotalPages; });
                 const isLoading = ref(false);
                 const hasMore = computed(() => page.value < totalPages.value - 1);
 
-                const pageState = ref({});
-                const nameSearchState = ref({searchPage: 0, searchTotalPages: 0, list: [{}]});
+                const pageState = ref({statePage: serverData.remedios.number, stateTotalPages: serverData.remedios.totalPages, list: serverData.remedios.content});
+                const nameSearchState = ref({searchPage: 0, searchTotalPages: 0, list: []});
 
-                const isSearching = computed(() => remedioSearch.value.trim() !== '' && remedioSearch.value.length > 2 );
+                const isSearching = ref(false);
 
                 const buscarRemedios = debounce(async () => {
                     if(remedioSearch.value.trim() !== '' && remedioSearch.value.length < 3) return;
+                    if(remedioSearch.value.trim() === ''){
+                        isSearching.value = false;
+                        return;
+                    }
+                    isSearching.value = true;
                     refreshRemedios(0);
                 }, 500);
 
@@ -123,14 +130,6 @@
 
                 const scrollHandler = infiniteScrollHandler(refreshRemedios, page, hasMore, isLoading);
 
-                onMounted(() => {
-                    pageState.value = {statePage: serverData.remedios.number, stateTotalPages: serverData.remedios.totalPages, list: serverData.remedios.content};
-                    console.log(pageState.value);
-                    console.log(isSearching.value);
-                    console.log(nameSearchState.value);
-                    window.addEventListener('scroll', scrollHandler);
-                });
-
                 const formattedRemediosList = computed(() => {
                     return remediosList.value.map(remedio => {
                         return {
@@ -138,6 +137,10 @@
                             dtInicioFormatada: renderizarData(remedio.dataInicioTratamento)
                         };
                     });
+                });
+
+                onMounted(() => {
+                    window.addEventListener('scroll', scrollHandler);
                 });
 
 
