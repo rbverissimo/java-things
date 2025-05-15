@@ -76,7 +76,7 @@
                 });
                 const page = computed(() => { return isSearching.value ? nameSearchState.value.searchPage : pageState.value.statePage; });
                 const totalPages = computed(() => { return isSearching.value ? nameSearchState.value.searchTotalPages : pageState.value.stateTotalPages; });
-                const isLoading = ref(false);
+                const isLoading = ref(true);
                 const hasMore = computed(() => page.value < totalPages.value - 1);
 
                 const pageState = ref({statePage: serverData.remedios.number, stateTotalPages: serverData.remedios.totalPages, list: serverData.remedios.content});
@@ -103,6 +103,8 @@
                         const url = `${requestEnpoint}?${queryParams.toString()}`;
                         const response = await get(url);
 
+                        isLoading.value = true;
+
                         if(isSearching.value){
                             const searchList = currPage > 0 ? [...nameSearchState.value.list, ...response.content] : response.content;
                             nameSearchState.value = {searchPage: response.number, searchTotalPages: response.totalPages, list: searchList };
@@ -112,6 +114,8 @@
 
                     } catch (error){
 
+                    } finally {
+                        isLoading.value = false;
                     }
                 };
 
@@ -140,7 +144,8 @@
                 });
 
                 onMounted(() => {
-                    window.addEventListener('scroll', scrollHandler);
+                    window.addEventListener('scroll', () => { scrollHandler();});
+                    isLoading.value = false;
                 });
 
 

@@ -35,13 +35,17 @@ export function throttle(func, limit){
     }
 }
 
-export function infiniteScrollHandler(callbackfn, currPageRef, hasMore, isLoading, threshold = 150){
+export function infiniteScrollHandler(callbackfn, currPageRef, hasMoreRef, isLoadingRef, threshold = 150){
+    const logic = () => {
 
-    const container = document.documentElement;
-    const scrollHeight = container.scrollHeight;
-    const scrollTop = container.scrollTop;
-    const clientHeight = container.clientHeight;
+        const container = document.documentElement;
+        const scrollHeight = container.scrollHeight;
+        const scrollTop = container.scrollTop;
+        const clientHeight = container.clientHeight;
 
-    if(!isLoading.value && hasMore.value && (scrollTop + clientHeight >= scrollHeight - threshold)) callbackfn(currPageRef + 1);
+        if(!isLoadingRef.value && hasMoreRef.value && (scrollTop + clientHeight >= scrollHeight - threshold)) callbackfn(currPageRef.value + 1);
+    }
 
+    const throttleLogic = throttle(logic, 80);
+    return throttleLogic;
 }
