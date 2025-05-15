@@ -1,20 +1,25 @@
-export class InfoAlert {
-    constructor(mensagem){
+export class Alert {
+    constructor(mensagem, bsType, isFixed = true){
         this.mensagem = mensagem;
-        this.bsType = 'info';
+        this.bsType = bsType;
+        this.isFixed = isFixed;
     }
 }
 
-export class SuccessAlert {
+export class InfoAlert extends Alert {
     constructor(mensagem){
-        this.mensagem = mensagem;
-        this.bsType = 'success';
+        super(mensagem, 'info');
     }
 }
 
-export class DangerAlert {
+export class SuccessAlert extends Alert {
     constructor(mensagem){
-        this.mensagem = mensagem;
-        this.bsType = 'danger';
+        super(mensagem, 'success');
+    }
+}
+
+export class DangerAlert extends Alert {
+    constructor(mensagem){
+        super(mensagem, 'danger');
     }
 }

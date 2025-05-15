@@ -3,6 +3,8 @@
 <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Listas de farmácias')"></head>
     <div class="mt-5" layout:fragment="content">
 
+        <div th:insert="components/alerts :: vue-alerts"></div>
+
         <th:block th:if="${remedios.size > 0}" th:insert="components/toolbar :: lightToolbar(~{::#toolbar-catalogo})">
             <div class="w-100 d-flex justify-content-end" id="toolbar-catalogo" th:fragment="toolbarCatalogo">
                 <div class="col-6 d-inline-flex">
@@ -63,6 +65,7 @@
         import { debounce, infiniteScrollHandler } from '/js/reactive.js';
         import { get, del } from '/js/requests.js';
         import { ModalComponent } from '/js/vue/Modal.js';
+        import { DangerAlert, SuccessAlert } from '/js/AlertMessage.js';
 
         const serverData = {
             remedios: /*[[${remedios}]]*/ []
@@ -70,10 +73,13 @@
 
         const app = createApp({
             setup(){
+
+                const alerts = ref([]);
                 const remedioSearch = ref('');
                 const remediosList = computed(() => {
                     return isSearching.value ? nameSearchState.value.list : pageState.value.list;
                 });
+
                 const page = computed(() => { return isSearching.value ? nameSearchState.value.searchPage : pageState.value.statePage; });
                 const totalPages = computed(() => { return isSearching.value ? nameSearchState.value.searchTotalPages : pageState.value.stateTotalPages; });
                 const isLoading = ref(true);
@@ -81,7 +87,6 @@
 
                 const pageState = ref({statePage: serverData.remedios.number, stateTotalPages: serverData.remedios.totalPages, list: serverData.remedios.content});
                 const nameSearchState = ref({searchPage: 0, searchTotalPages: 0, list: []});
-
                 const isSearching = ref(false);
 
                 const buscarRemedios = debounce(async () => {
@@ -126,6 +131,7 @@
                         const response = await del(url);
                         pageState.value.list = pageState.value.list.filter(obj => obj.id !== remedio.id);
                         nameSearchState.value.list = nameSearchState.value.list.filter(obj => obj.id !== remedio.id);
+                        alerts.value.push(new SuccessAlert(`O remédio ${remedio.nome} foi deletado com sucesso.`));
                     } catch (error){
 
                     }
@@ -149,6 +155,7 @@
 
 
                 return {
+                    alerts,
                     remedioSearch,
                     remediosList,
                     renderizarData,

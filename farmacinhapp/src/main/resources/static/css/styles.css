@@ -30,6 +30,16 @@ a {
     margin-bottom: 0;
 }
 
+.fixed-alert {
+    position: fixed;
+    left: calc((100vw - 300px) / 2);
+    z-index: 1000;
+}
+
+.alert-sizing {
+    width: 300px;
+}
+
 .footer-wrapper {
       display: flex;
       justify-content: center;
