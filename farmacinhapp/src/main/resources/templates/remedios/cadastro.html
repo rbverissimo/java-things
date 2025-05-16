@@ -3,6 +3,7 @@
     <head layout:fragment="title" th:insert="fragments/title :: title(title = 'Farmacinha - Cadastro de remédio')"></head>
     <div layout:fragment="content">
         <div class="mt-5 w-100" >
+            <th:block th:insert="components/alerts :: alerts"></th:block>
             <div th:if="${remedio.id != 0}" th:insert="components/toolbar :: lightToolbar(~{::#toolbar-remedios})">
                 <div class="w-100" id="toolbar-remedios" th:fragment="toolbarRemedios">
                     <div class="row">

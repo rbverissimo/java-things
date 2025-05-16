@@ -1,5 +1,5 @@
 <div th:fragment="vue-alerts">
-    <div v-for="(alert, index) in alerts" :key="index" :class="['alert', 'alert-' + alert.bsType, 'alert-dismissible fade show', {'fixed-alert': alert.isFixed}, 'alert-sizing']" role="alert">
+    <div v-for="(alert, index) in alerts" :key="index" :class="['alert', 'alert-' + alert.type, 'alert-dismissible fade show', {'fixed-alert': alert.isFixed}, 'alert-sizing']" role="alert">
         <span style="font-size: 0.8rem">{{alert.mensagem}}</span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -8,7 +8,7 @@
 
 
 <div th:fragment="alerts">
-    <div th:each="alert : ${mensagens}" class="alert alert-dismissible fade show" th:classappend="${'alert-'+alert.bsType}" role="alert">
+    <div th:each="alert : ${mensagens}" class="alert alert-dismissible fade show" th:classappend="${'alert-'+alert.type}" role="alert">
         <span style="font-size: 0.8rem" th:text="${alert.mensagem}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>

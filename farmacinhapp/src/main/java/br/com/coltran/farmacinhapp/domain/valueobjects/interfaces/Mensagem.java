@@ -1,7 +1,9 @@
 package br.com.coltran.farmacinhapp.domain.valueobjects.interfaces;
 
+import br.com.coltran.farmacinhapp.domain.enums.MsgType;
+
 public interface Mensagem {
 
-    String getBsType();
+    MsgType getMsgType();
     String getMensagem();
 }

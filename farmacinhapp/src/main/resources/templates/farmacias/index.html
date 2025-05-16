@@ -4,6 +4,7 @@
     <div  layout:fragment="content">
 
         <div class="w-100 mt-5" th:if="${farmacias != null and !farmacias.isEmpty()}">
+            <th:block th:insert="components/alerts :: alerts"></th:block>
             <th:block th:if="${farmacias.size > 0}" th:insert="components/toolbar :: lightToolbar(~{::#toolbar-farmacias})">
                 <div class="w-100" id="toolbar-farmacias" th:fragment="toolbarFarmacias">
                     <div class="row">

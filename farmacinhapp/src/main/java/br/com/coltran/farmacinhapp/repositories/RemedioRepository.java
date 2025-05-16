@@ -27,7 +27,7 @@ public interface RemedioRepository extends JpaRepository<Remedio, Long> {
     @Query("SELECT r from Remedio r JOIN FETCH r.farmacia f JOIN f.users u WHERE u.id=:userId ORDER BY r.id DESC")
     Set<Remedio> findAllRemedioByUser(@Param("userId") Long userId);
 
-    @Query("SELECT r from Remedio r JOIN FETCH r.farmacia f JOIN f.users u WHERE u.id=:userId ORDER BY r.id DESC")
+    @Query("SELECT r from Remedio r JOIN r.farmacia f JOIN f.users u WHERE u.id=:userId ORDER BY r.id DESC")
     Page<Remedio> findAllRemedioPageByUser(@Param("userId") Long userId, Pageable pageable);
 
     @Modifying
