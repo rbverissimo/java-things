@@ -1,7 +1,7 @@
 export class Alert {
-    constructor(mensagem, bsType, isFixed = true){
+    constructor(mensagem, type, isFixed = true){
         this.mensagem = mensagem;
-        this.bsType = bsType;
+        this.type = type;
         this.isFixed = isFixed;
     }
 }
