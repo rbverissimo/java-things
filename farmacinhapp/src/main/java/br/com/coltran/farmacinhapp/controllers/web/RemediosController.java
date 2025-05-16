@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -128,19 +129,10 @@ public class RemediosController extends ControllerCommons {
         return "redirect:/remedios/show/"+id;
     }
 
-    @GetMapping("/catalogo/")
-    public String showCatalogo(Model model){
-
-        Pageable pageable = PageRequest.of(0, 12);
-
-        List<RemedioCatalogoDTO> remediosSet = remedioService.getAllRemedioByUser().stream().map(s -> {
-            return new RemedioCatalogoDTO.Builder(s).build();
-        }).collect(Collectors.toList());
-
-        Page<RemedioCatalogoDTO> remedios = new PageImpl<>(remediosSet, pageable, remediosSet.size());
-
+    @GetMapping("/catalogo")
+    public String showCatalogo(@PageableDefault(size = 12) Pageable pageable, Model model){
+        Page<RemedioCatalogoDTO> remedios = remedioService.getAllRemedioPagedByUser(pageable).map(s -> { return new RemedioCatalogoDTO.Builder(s).build();});
         model.addAttribute("remedios", remedios);
-
         return "remedios/catalogo";
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -26,7 +25,10 @@ public interface RemedioRepository extends JpaRepository<Remedio, Long> {
     Page<Remedio> findByFarmaciaAndNome(@Param("farmaciaId") Long farmaciaId, @Param("nome") String nome, Pageable pageable);
 
     @Query("SELECT r from Remedio r JOIN FETCH r.farmacia f JOIN f.users u WHERE u.id=:userId ORDER BY r.id DESC")
-    Set<Remedio> findAllRemediosByUser(@Param("userId") Long userId);
+    Set<Remedio> findAllRemedioByUser(@Param("userId") Long userId);
+
+    @Query("SELECT r from Remedio r JOIN FETCH r.farmacia f JOIN f.users u WHERE u.id=:userId ORDER BY r.id DESC")
+    Page<Remedio> findAllRemedioPageByUser(@Param("userId") Long userId, Pageable pageable);
 
     @Modifying
     @Transactional

@@ -2,7 +2,6 @@ package br.com.coltran.farmacinhapp.services;
 
 import br.com.coltran.farmacinhapp.config.constants.Business;
 import br.com.coltran.farmacinhapp.controllers.web.dto.RemedioCatalogoDTO;
-import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.Gramatura;
 import br.com.coltran.farmacinhapp.domain.Remedio;
 import br.com.coltran.farmacinhapp.domain.valueobjects.RemedioIndexVO;
@@ -77,7 +76,11 @@ public class RemedioService extends ServiceWorker implements RepositoryService<R
     }
 
     public Set<Remedio> getAllRemedioByUser(){
-        return remedioRepository.findAllRemediosByUser(authService.usuarioLogado().getId());
+        return remedioRepository.findAllRemedioByUser(authService.usuarioLogado().getId());
+    }
+
+    public Page<Remedio> getAllRemedioPagedByUser(Pageable pageable){
+        return remedioRepository.findAllRemedioPageByUser(authService.usuarioLogado().getId(), pageable);
     }
 
     public boolean canSaveRemedio(){
