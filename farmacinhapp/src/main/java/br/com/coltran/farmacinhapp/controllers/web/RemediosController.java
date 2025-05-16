@@ -9,7 +9,6 @@ import br.com.coltran.farmacinhapp.domain.interfaces.UIMessage;
 import br.com.coltran.farmacinhapp.domain.valueobjects.ErroMsgVO;
 import br.com.coltran.farmacinhapp.domain.valueobjects.RemedioIndexVO;
 import br.com.coltran.farmacinhapp.domain.valueobjects.SuccessoMsgVO;
-import br.com.coltran.farmacinhapp.domain.valueobjects.interfaces.Mensagem;
 import br.com.coltran.farmacinhapp.repositories.MedidaRepository;
 import br.com.coltran.farmacinhapp.repositories.TipoRemedioRepository;
 import br.com.coltran.farmacinhapp.services.FarmaciaService;

@@ -6,7 +6,6 @@ import br.com.coltran.farmacinhapp.domain.adapters.BootstrapMessage;
 import br.com.coltran.farmacinhapp.domain.interfaces.UIMessage;
 import br.com.coltran.farmacinhapp.domain.valueobjects.ErroMsgVO;
 import br.com.coltran.farmacinhapp.domain.valueobjects.SuccessoMsgVO;
-import br.com.coltran.farmacinhapp.domain.valueobjects.interfaces.Mensagem;
 import br.com.coltran.farmacinhapp.security.domain.User;
 import br.com.coltran.farmacinhapp.services.FarmaciaService;
 import br.com.coltran.farmacinhapp.utils.Colecoes;
