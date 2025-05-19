@@ -10,9 +10,6 @@
                         <div class="col-3">
                             <a th:href="${'/remedios/cadastro/'+farmaciaId}" class="btn btn-sm btn-outline-primary w-100">Novo remédio</a>
                         </div>
-                        <div class="col-3">
-                            <a th:href="${'/gramaturas/cadastro/'+remedio.id}" class="btn btn-sm btn-outline-primary w-100">Cadastrar gramatura</a>
-                        </div>
                         <div th:if="${not #sets.isEmpty(remedio.gramaturas)}" class="col-3">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#gramaturas-modal" class="btn btn-sm btn-outline-primary w-100">Ver gramaturas</a>
                             <th:block th:insert="components/modal :: simpleModal(toggleId='gramaturas-modal', modalTitle='Gramaturas do medicamento', modalBodyContent=~{::#modal-body-content})">
