@@ -48,7 +48,11 @@ public class GramaturaService extends ServiceWorker implements RepositoryService
 
     @Override
     public Gramatura update(Gramatura managed, Gramatura formUpdated) {
-        return null;
+        updateTimestamp(managed);
+        managed.setPrincipioAtivo(formUpdated.getPrincipioAtivo());
+        managed.setValorGramatura(formUpdated.getValorGramatura());
+
+        return gramaturaRepository.save(managed);
     }
 
     public Gramatura save(Gramatura gramatura){

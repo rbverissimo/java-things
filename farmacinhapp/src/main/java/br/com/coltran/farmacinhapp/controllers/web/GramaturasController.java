@@ -49,9 +49,9 @@ public class GramaturasController extends ControllerCommons {
             model.addAttribute("medidas", medidaRepository.findAll());
             return "gramaturas/cadastro";
         }
-        mensagens.add(new BootstrapMessage(new SuccessoMsgVO("Gramatura salva com sucesso!")));
         redirectAttributes.addFlashAttribute(mensagens);
         gramaturaService.save(gramatura);
+        mensagens.add(new BootstrapMessage(new SuccessoMsgVO("Gramatura salva com sucesso!")));
 
         return "redirect:/gramaturas/show/"+gramatura.getId();
     }
@@ -66,8 +66,18 @@ public class GramaturasController extends ControllerCommons {
 
     @PutMapping("/update/{id}")
     @PreAuthorize("@gramaturaSerivce.isResourceOwner(#gramaturaId)")
-    public String edit(@PathVariable("id") long gramaturaId, @Valid @ModelAttribute Gramatura gramatura, BindingResult bindingResult, Model model){
-        return "";
+    public String edit(@PathVariable("id") long gramaturaId, @Valid @ModelAttribute Gramatura gramatura, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("medidas", medidaRepository.findAll());
+            return "gramaturas/show/"+gramaturaId;
+        }
+        
+        gramaturaService.update(gramaturaService.findResourceById(gramaturaId), gramatura);
+
+        List<UIMessage> mensagens = messageProcessor.process(new BootstrapMessage(new SuccessoMsgVO("A gramatura foi atualizada com sucesso!")));
+        redirectAttributes.addFlashAttribute(mensagens);
+        return "redirect:/gramaturas/show/"+gramaturaId;
     }
 
     @DeleteMapping("/deletar/{id}")
