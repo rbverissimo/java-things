@@ -72,7 +72,7 @@ public class GramaturasController extends ControllerCommons {
             model.addAttribute("medidas", medidaRepository.findAll());
             return "gramaturas/show/"+gramaturaId;
         }
-        
+
         gramaturaService.update(gramaturaService.findResourceById(gramaturaId), gramatura);
 
         List<UIMessage> mensagens = messageProcessor.process(new BootstrapMessage(new SuccessoMsgVO("A gramatura foi atualizada com sucesso!")));
