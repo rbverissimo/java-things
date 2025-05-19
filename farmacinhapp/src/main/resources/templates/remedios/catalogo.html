@@ -7,7 +7,7 @@
 
         <th:block th:if="${remedios.size > 0}" th:insert="components/toolbar :: lightToolbar(~{::#toolbar-catalogo})">
             <div class="w-100 d-flex justify-content-end" id="toolbar-catalogo" th:fragment="toolbarCatalogo">
-                <div class="col-3 ">
+                <div class="col-3 d-inline-flex">
                     <a th:href="${'/gramaturas/cadastro'}" class="btn btn-sm btn-outline-primary">Cadastrar gramatura</a>
                 </div>
                 <div class="col-6 d-inline-flex">
