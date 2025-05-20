@@ -36,9 +36,11 @@ public class GramaturasController extends ControllerCommons {
     @Autowired
     private MedidaRepository medidaRepository;
 
-    @GetMapping("/cadastro")
-    public String cadastroGET(@ModelAttribute Gramatura gramatura, Model model){
+    @GetMapping("/cadastro/{remedio_id}")
+    @PreAuthorize("@remedioService.isResourceOwner(#remedioId)")
+    public String cadastroGET(@PathVariable("remedio_id") long remedioId, @ModelAttribute Gramatura gramatura, Model model){
         model.addAttribute("medidas", medidaRepository.findAll());
+        model.addAttribute("remedioId", remedioId);
         return "gramaturas/cadastro";
     }
 
