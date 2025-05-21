@@ -4,6 +4,14 @@
 <div layout:fragment="content">
     <div class="mt-5 w-100">
         <th:block th:insert="components/alerts :: alerts"></th:block>
+        <div th:if="${gramatura.id != 0}" th:insert="components/toolbar :: lightToolbar(~{::#crud-toolbar})">
+            <div class="w-100" id="crud-toolbar" th:fragment="toolbarGramaturas">
+                <div class="row">
+                    <div class="col-3">
+                    </div>
+                </div>
+            </div>
+        </div>
         <form th:object="${gramatura}"
               th:action="${gramatura.id == 0 ? '/gramaturas/cadastro/'+remedioId : '/gramaturas/update/'+remedioId}"
               th:method="${gramatura.id == 0 ? 'POST' : 'PUT'}" >
