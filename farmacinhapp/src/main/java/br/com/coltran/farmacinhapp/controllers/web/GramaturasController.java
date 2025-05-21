@@ -44,15 +44,22 @@ public class GramaturasController extends ControllerCommons {
         return "gramaturas/cadastro";
     }
 
-    @PostMapping("/cadastro")
-    public String cadastroPOST(@Valid @ModelAttribute Gramatura gramatura, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
+    @PostMapping("/cadastro/{remedio_id}")
+    @PreAuthorize("@remedioService.isResourceOwner(#remedioId)")
+    public String cadastroPOST(@PathVariable("remedio_id") long remedioId, @Valid @ModelAttribute Gramatura gramatura, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
         List<UIMessage> mensagens = new ArrayList<>();
         if(bindingResult.hasErrors()){
             model.addAttribute("medidas", medidaRepository.findAll());
+            model.addAttribute("remedioId", remedioId);
             return "gramaturas/cadastro";
         }
         redirectAttributes.addFlashAttribute(mensagens);
+        Remedio remedio = remedioService.findResourceById(remedioId);
+
+        gramatura.setRemedios(new HashSet<>(){{add(remedio);}});
+
         gramaturaService.save(gramatura);
+        remedioService.addGramatura(remedio, gramatura);
         mensagens.add(new BootstrapMessage(new SuccessoMsgVO("Gramatura salva com sucesso!")));
 
         return "redirect:/gramaturas/show/"+gramatura.getId();
@@ -67,12 +74,12 @@ public class GramaturasController extends ControllerCommons {
     }
 
     @PutMapping("/update/{id}")
-    @PreAuthorize("@gramaturaSerivce.isResourceOwner(#gramaturaId)")
+    @PreAuthorize("@gramaturaService.isResourceOwner(#gramaturaId)")
     public String edit(@PathVariable("id") long gramaturaId, @Valid @ModelAttribute Gramatura gramatura, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
 
         if(bindingResult.hasErrors()){
             model.addAttribute("medidas", medidaRepository.findAll());
-            return "gramaturas/show/"+gramaturaId;
+            return "gramaturas/cadastro";
         }
 
         gramaturaService.update(gramaturaService.findResourceById(gramaturaId), gramatura);
