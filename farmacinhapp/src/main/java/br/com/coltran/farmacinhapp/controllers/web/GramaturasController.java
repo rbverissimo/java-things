@@ -47,20 +47,20 @@ public class GramaturasController extends ControllerCommons {
     @PostMapping("/cadastro/{remedio_id}")
     @PreAuthorize("@remedioService.isResourceOwner(#remedioId)")
     public String cadastroPOST(@PathVariable("remedio_id") long remedioId, @Valid @ModelAttribute Gramatura gramatura, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
-        List<UIMessage> mensagens = new ArrayList<>();
+
         if(bindingResult.hasErrors()){
             model.addAttribute("medidas", medidaRepository.findAll());
             model.addAttribute("remedioId", remedioId);
             return "gramaturas/cadastro";
         }
-        redirectAttributes.addFlashAttribute(mensagens);
         Remedio remedio = remedioService.findResourceById(remedioId);
 
         gramatura.setRemedios(new HashSet<>(){{add(remedio);}});
 
         gramaturaService.save(gramatura);
         remedioService.addGramatura(remedio, gramatura);
-        mensagens.add(new BootstrapMessage(new SuccessoMsgVO("Gramatura salva com sucesso!")));
+        List<UIMessage> mensagens = messageProcessor.process(new SuccessoMsgVO("A gramatura foi salva com sucesso!"));
+        redirectAttributes.addFlashAttribute(mensagens);
 
         return "redirect:/gramaturas/show/"+gramatura.getId();
     }
@@ -84,7 +84,7 @@ public class GramaturasController extends ControllerCommons {
 
         gramaturaService.update(gramaturaService.findResourceById(gramaturaId), gramatura);
 
-        List<UIMessage> mensagens = messageProcessor.process(new BootstrapMessage(new SuccessoMsgVO("A gramatura foi atualizada com sucesso!")));
+        List<UIMessage> mensagens = messageProcessor.process(new SuccessoMsgVO("A gramatura foi atualizada com sucesso!"));
         redirectAttributes.addFlashAttribute(mensagens);
         return "redirect:/gramaturas/show/"+gramaturaId;
     }

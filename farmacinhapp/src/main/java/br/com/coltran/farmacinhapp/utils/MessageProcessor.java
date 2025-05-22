@@ -1,6 +1,8 @@
 package br.com.coltran.farmacinhapp.utils;
 
+import br.com.coltran.farmacinhapp.domain.adapters.BootstrapMessage;
 import br.com.coltran.farmacinhapp.domain.interfaces.UIMessage;
+import br.com.coltran.farmacinhapp.domain.valueobjects.MensagemVO;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -17,6 +19,10 @@ public class MessageProcessor {
 
     public List<UIMessage> process(UIMessage... messages){
         return Arrays.stream(messages).collect(Collectors.toList());
+    }
+
+    public List<UIMessage> process(MensagemVO... mensagens){
+        return Arrays.stream(mensagens).map(BootstrapMessage::new).collect(Collectors.toList());
     }
 
 
