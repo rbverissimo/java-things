@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -68,7 +67,10 @@ public class GramaturasController extends ControllerCommons {
     @GetMapping("/show/{id}")
     @PreAuthorize("@gramaturaService.isResourceOwner(#gramaturaId)")
     public String show(@PathVariable("id") long gramaturaId, Model model){
-        model.addAttribute("gramatura", gramaturaService.findResourceById(gramaturaId));
+        Gramatura gramatura = gramaturaService.findResourceById(gramaturaId);
+        Remedio remedio = gramatura.getRemedios().stream().findAny().orElseThrow(() -> new RuntimeException("Remédio não encontrado."));
+        model.addAttribute("gramatura", gramatura);
+        model.addAttribute("remedioId", remedio.getId());
         model.addAttribute("medidas", medidaRepository.findAll());
         return "gramaturas/cadastro";
     }
