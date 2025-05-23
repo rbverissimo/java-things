@@ -39,7 +39,7 @@ public class RemediosApiController extends ControllerCommons {
     @GetMapping("/catalogo")
     public ResponseEntity<Page<RemedioCatalogoDTO>> indexCatalogo(@RequestParam String nome,
                                                                   @PageableDefault(size = 12, page = 0) Pageable pageable){
-        Page<RemedioCatalogoDTO> remedios = remedioService.getRemediosCatalogoByNome(nome, pageable);
+        Page<RemedioCatalogoDTO> remedios = remedioService.getCatalogo(nome, pageable);
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(remedios);
     }
 
