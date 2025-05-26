@@ -101,6 +101,7 @@
                 const isSearching = ref(false);
 
                 const gramaturas = ref([]);
+                const remedioGramatura = ref({});
                 const gramaturaModalTitle = ref('');
 
                 const buscarRemedios = debounce(async () => {
@@ -157,14 +158,14 @@
                     try{
                         const response = await get(url);
                         gramaturas.value = response.content;
+                        remedioGramatura.value = remedio;
                     } catch(error){
                         alerts.value.push(new DangerAlert('Não foi possível encontrar as gramaturas do remédio selecionado.'));
                     }
                 }
 
                 const deletarGramatura = throttle(async(gramaturaId) => {
-
-                    const url = `/api/gramaturas/delete/${gramaturaId}/${serverData.remedio_id}`;
+                    const url = `/api/gramaturas/delete/${gramaturaId}/${remedioGramatura.value.id}`;
 
 
                 }, 600);
