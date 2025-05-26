@@ -118,7 +118,7 @@
                         }
 
                     } catch (error){
-
+                        alerts.value.push(new DangerAlert(`Não conseguimos pesquisar pelo remédio`));
                     } finally {
                         isLoading.value = false;
                     }
@@ -133,7 +133,7 @@
                         nameSearchState.value.list = nameSearchState.value.list.filter(obj => obj.id !== remedio.id);
                         alerts.value.push(new SuccessAlert(`O remédio ${remedio.nome} foi deletado com sucesso.`));
                     } catch (error){
-
+                        alerts.value.push(new DangerAlert(`Não foi possível deletar o remédio ${remedio.nome}. Tente novamente mais tarde.`))
                     }
                 }
 
