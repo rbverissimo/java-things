@@ -91,7 +91,7 @@
 
                 const buscarRemedios = debounce(async () => {
                     if(remedioSearch.value.trim() !== '' && remedioSearch.value.length < 3) return;
-                    if(remedioSearch.value.trim() === ''){
+                    if(remedioSearch.value.trim() === '' || remedioSearch.value.trim() === 'pa:'){
                         isSearching.value = false;
                         return;
                     }
