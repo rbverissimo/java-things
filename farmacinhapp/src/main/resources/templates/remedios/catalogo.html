@@ -62,6 +62,7 @@
             :title="gramaturaModalTitle"
         >
             <template v-slot:body>
+                <th:block th:insert="components/alerts :: vue-alerts('gramaturasAlerts')"></th:block>
                 <th:block th:insert="gramaturas/lists :: vue-index"></th:block>
             </template>
         </modal-gramatura>
@@ -70,7 +71,7 @@
     <script type="module" th:inline="javascript" layout:fragment="vue-app">
         import { createApp, ref, onMounted, computed } from '/webjars/vue/dist/vue.esm-browser.prod.js';
         import { renderizarData } from '/js/masks.js';
-        import { debounce, infiniteScrollHandler } from '/js/reactive.js';
+        import { debounce, throttle, infiniteScrollHandler } from '/js/reactive.js';
         import { get, del } from '/js/requests.js';
         import { ModalComponent } from '/js/vue/Modal.js';
         import { DangerAlert, SuccessAlert } from '/js/AlertMessage.js';
@@ -83,6 +84,8 @@
             setup(){
 
                 const alerts = ref([]);
+                const gramaturasAlerts = ref([]);
+
                 const remedioSearch = ref('');
                 const remediosList = computed(() => {
                     return isSearching.value ? nameSearchState.value.list : pageState.value.list;
@@ -159,6 +162,13 @@
                     }
                 }
 
+                const deletarGramatura = throttle(async(gramaturaId) => {
+
+                    const url = `/api/gramaturas/delete/${gramaturaId}/${serverData.remedio_id}`;
+
+
+                }, 600);
+
                 const scrollHandler = infiniteScrollHandler(refreshRemedios, page, hasMore, isLoading);
 
                 const formattedRemediosList = computed(() => {
@@ -186,7 +196,9 @@
                     handleConfirmDelete,
                     fetchGramaturas,
                     gramaturas,
-                    gramaturaModalTitle
+                    gramaturaModalTitle,
+                    gramaturasAlerts,
+                    deletarGramatura
                 };
 
             }
