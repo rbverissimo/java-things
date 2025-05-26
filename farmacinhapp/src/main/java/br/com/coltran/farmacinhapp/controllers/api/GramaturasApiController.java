@@ -60,6 +60,4 @@ public class GramaturasApiController extends ControllerCommons {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).contentType(MediaType.APPLICATION_JSON).body(null);
     }
 
-
-
 }
