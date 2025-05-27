@@ -62,7 +62,7 @@
             :title="gramaturaModalTitle"
         >
             <template v-slot:body>
-                <th:block th:insert="components/alerts :: d-vue-alerts('gramaturasAlerts')"></th:block>
+                <th:block th:insert="components/alerts :: d-vue-alerts(arrName='gramaturasAlerts', fullWidth=true)"></th:block>
                 <th:block th:insert="gramaturas/lists :: vue-index"></th:block>
             </template>
         </modal-gramatura>
@@ -74,7 +74,7 @@
         import { debounce, throttle, infiniteScrollHandler } from '/js/reactive.js';
         import { get, del } from '/js/requests.js';
         import { ModalComponent } from '/js/vue/Modal.js';
-        import { DangerAlert, SuccessAlert } from '/js/AlertMessage.js';
+        import { DangerAlert, SuccessAlert, SuccessNonFixedAlert } from '/js/AlertMessage.js';
 
         const serverData = {
             remedios: /*[[${remedios}]]*/ []

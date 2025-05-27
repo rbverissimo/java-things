@@ -18,6 +18,13 @@ export class SuccessAlert extends Alert {
     }
 }
 
+export class SuccessNonFixedAlert extends SuccessAlert {
+    constructor(mensagem){
+        super(mensagem, 'success');
+        this.isFixed = false;
+    }
+}
+
 export class DangerAlert extends Alert {
     constructor(mensagem){
         super(mensagem, 'danger');
