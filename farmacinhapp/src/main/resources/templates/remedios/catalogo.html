@@ -168,7 +168,7 @@
                     const url = `/api/gramaturas/delete/${gramaturaId}/${remedioGramatura.value.id}`;
                     try {
                         const response = await del(url);
-                        gramaturas.value = gramaturas.value.filter(g => { g.id !== gramaturaId});
+                        gramaturas.value = gramaturas.value.filter(g => g.id !== gramaturaId);
                         gramaturasAlerts.value.push(new SuccessNonFixedAlert(`A gramatura foi excluída do remédio ${remedioGramatura.value.nome}`));
                     } catch(error){
                         gramaturasAlerts.value.push(new DangerNonFixedAlert(`Não foi possível excluir a gramatura selecionada`));
