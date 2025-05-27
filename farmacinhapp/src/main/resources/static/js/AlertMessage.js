@@ -30,3 +30,9 @@ export class DangerAlert extends Alert {
         super(mensagem, 'danger');
     }
 }
+
+export class DangerNonFixedAlert extends DangerAlert {
+    constructor(mensagem){
+        this.isFixed = false;
+    }
+}
