@@ -120,8 +120,8 @@
                         gramaturas.value = serverData.gramaturas;
                     });
 
-                    const deletarGramatura = throttle(async (gramaturaId) => {
-                        const url = `/api/gramaturas/delete/${gramaturaId}/${serverData.remedio_id}`;
+                    const deletarGramatura = throttle(async (gramatura) => {
+                        const url = `/api/gramaturas/delete/${gramatura.id}/${serverData.remedio_id}`;
                         const config = {
                             method: 'DELETE',
                             headers: {

@@ -164,12 +164,12 @@
                     }
                 }
 
-                const deletarGramatura = throttle(async(gramaturaId) => {
-                    const url = `/api/gramaturas/delete/${gramaturaId}/${remedioGramatura.value.id}`;
+                const deletarGramatura = throttle(async(gramatura) => {
+                    const url = `/api/gramaturas/delete/${gramatura.id}/${remedioGramatura.value.id}`;
                     try {
                         const response = await del(url);
-                        gramaturas.value = gramaturas.value.filter(g => g.id !== gramaturaId);
-                        gramaturasAlerts.value.push(new SuccessNonFixedAlert(`A gramatura foi excluída do remédio ${remedioGramatura.value.nome}`));
+                        gramaturas.value = gramaturas.value.filter(g => g.id !== gramatura.id);
+                        gramaturasAlerts.value.push(new SuccessNonFixedAlert(`A gramatura ${gramatura.principioAtivo} foi excluída do remédio ${remedioGramatura.value.nome} com sucesso!`));
                     } catch(error){
                         gramaturasAlerts.value.push(new DangerNonFixedAlert(`Não foi possível excluir a gramatura selecionada`));
                     }

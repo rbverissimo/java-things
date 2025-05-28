@@ -20,7 +20,7 @@ export class SuccessAlert extends Alert {
 
 export class SuccessNonFixedAlert extends SuccessAlert {
     constructor(mensagem){
-        super(mensagem, 'success');
+        super(mensagem);
         this.isFixed = false;
     }
 }
@@ -33,6 +33,7 @@ export class DangerAlert extends Alert {
 
 export class DangerNonFixedAlert extends DangerAlert {
     constructor(mensagem){
+        super(mensagem);
         this.isFixed = false;
     }
 }
