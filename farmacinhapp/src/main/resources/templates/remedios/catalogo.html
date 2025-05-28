@@ -24,21 +24,10 @@
                 </div>
                 <div>
                     <button type="button" class="btn btn-sm btn-outline-danger d-flex align-items-center"
-                        :data-bs-target="`#deletar-remedio-${remedio.id}`" data-bs-toggle="modal"
+                        @click="confirmDelete(remedio)" :data-bs-target="`#deletar-remedio`" data-bs-toggle="modal"
                     >
                         <i class="material-symbols-outlined me-1">delete</i>Deletar
                     </button>
-
-                    <modal-delete
-                            :id="`deletar-remedio-${remedio.id}`"
-                            :title="`Confirmar exclusão de ${remedio.nome}`"
-                            :obj="remedio"
-                            @confirmed="handleConfirmDelete"
-                    >
-                        <template v-slot:body>
-                            <p>Deseja mesmo excluir o remédio selecionado?</p>
-                        </template>
-                    </modal-delete>
 
                 </div>
             </div>
@@ -56,6 +45,17 @@
                 </div>
             </div>
         </div>
+
+        <modal-delete
+                :id="`deletar-remedio`"
+                :title="remedioDeleteModalTitle"
+                :obj="remedioDelete"
+                @confirmed="handleConfirmDelete"
+        >
+            <template v-slot:body>
+                <p>Deseja mesmo excluir {{remedioDelete.nome}} do seu catálogo?</p>
+            </template>
+        </modal-delete>
 
         <modal-gramatura
             :id="`gramaturasModal`"
@@ -103,6 +103,9 @@
                 const nameSearchState = ref({searchPage: 0, searchTotalPages: 0, list: []});
                 const isSearching = ref(false);
 
+                const remedioDelete = ref({});
+                const remedioDeleteModalTitle = ref('');
+
                 const gramaturas = ref([]);
                 const remedioGramatura = ref({});
                 const gramaturaModalTitle = ref('');
@@ -141,6 +144,11 @@
                         isLoading.value = false;
                     }
                 };
+
+                const confirmDelete = (remedio) => {
+                    remedioDeleteModalTitle.value = `Confirmar a exclusão de ${remedio.nome}`;
+                    remedioDelete.value = remedio;
+                }
 
 
                 const handleConfirmDelete = async (remedio) => {
@@ -208,7 +216,10 @@
                     gramaturas,
                     gramaturaModalTitle,
                     gramaturasAlerts,
-                    deletarGramatura
+                    deletarGramatura,
+                    confirmDelete,
+                    remedioDelete,
+                    remedioDeleteModalTitle
                 };
 
             }
