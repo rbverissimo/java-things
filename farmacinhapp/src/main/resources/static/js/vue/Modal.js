@@ -29,12 +29,12 @@ export const ModalComponent = {
                         <slot name="body"></slot>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secondary" @click="$emit('canceled')" data-bs-dismiss="modal">Cancelar</button>
                         <button type="button" class="btn btn-danger" @click="$emit('confirmed', this.obj)" data-bs-dismiss="modal">{{confirmText}}</button>
                     </div>
                 </div>
             </div>
         </div>
     `,
-    emits: ['confirmed']
+    emits: ['canceled', 'confirmed']
 };
