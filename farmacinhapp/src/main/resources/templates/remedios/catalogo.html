@@ -64,6 +64,9 @@
             <template v-slot:body>
                 <th:block th:insert="components/alerts :: d-vue-alerts(arrName='gramaturasAlerts', fullWidth=true)"></th:block>
                 <th:block th:insert="gramaturas/lists :: vue-index"></th:block>
+                <div v-if="gramaturas.length < 1">
+                    <p class="fs-6">Não encontramos nenhuma gramatura cadastrada para este medicamento.</p>
+                </div>
             </template>
         </modal-gramatura>
 
