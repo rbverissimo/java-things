@@ -71,7 +71,7 @@ public class RemedioService extends ServiceWorker implements RepositoryService<R
     }
 
     public Page<RemedioCatalogoDTO> getCatalogo(String nome, Pageable pageable){
-        if(nome.startsWith("pa:")){
+        if(nome.toLowerCase().startsWith("pa:")){
             String principioAtivo = nome.substring(nome.indexOf(":")+1).trim();
             return getRemediosCatalogoByPrincipioAtivo(principioAtivo, pageable);
         }
