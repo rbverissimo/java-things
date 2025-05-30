@@ -17,6 +17,7 @@
                             <a href="#" data-bs-toggle="modal" data-bs-target="#gramaturas-modal" class="btn btn-sm btn-outline-primary w-100">Ver gramaturas</a>
                             <th:block th:insert="components/modal :: simpleModal(toggleId='gramaturas-modal', modalTitle='Gramaturas do medicamento', modalBodyContent=~{::#modal-body-content})">
                                 <div id="modal-body-content">
+                                    <th:block th:insert="components/alerts :: d-vue-alerts(arrName='gramaturasAlerts', fullWidth=true)"></th:block>
                                     <th:block th:insert="gramaturas/lists :: vue-index"></th:block>
                                 </div>
                             </th:block>
@@ -103,6 +104,7 @@
             import { createApp, ref, onMounted } from '/webjars/vue/dist/vue.esm-browser.prod.js';
             import { debounce, throttle } from '/js/reactive.js';
             import { csrftoken, csrfheader } from '/js/token.js';
+            import { SuccessNonFixedAlert, DangerNonFixedAlert } from '/js/AlertMessage.js';
 
             const serverData = {
                 farmacia_id: /*[[${farmaciaId}]]*/ null,
@@ -115,6 +117,7 @@
                     const resultadoNomes = ref([]);
                     const gramaturas = ref([]);
                     const farmacia_id = serverData.farmacia_id;
+                    const gramaturasAlerts = ref([]);
 
                     onMounted(() => {
                         gramaturas.value = serverData.gramaturas;
@@ -128,11 +131,12 @@
                                 [csrfheader]: csrftoken
                             }
                         };
-                        const response = await fetch(url, config);
-                        if(response.ok){
+                        try {
+                            const response = await fetch(url, config);
                             refreshGramaturas();
-                        } else {
-                            throw new Error(`Erro HTTP! Status: ${response.status}`);
+                            gramaturasAlerts.value.push(new SuccessNonFixedAlert(`A gramatura ${gramatura.principioAtivo} foi excluída com sucesso!`));
+                        } catch (err){
+                            gramaturasAlerts.value.push(new DangerNonFixedAlert(`Não foi possível excluir a gramatura ${gramatura.principioAtivo}.`));
                         }
                     }, 600);
 
@@ -168,7 +172,8 @@
                         buscarNomesRemedio,
                         gramaturas,
                         deletarGramatura,
-                        refreshGramaturas
+                        refreshGramaturas,
+                        gramaturasAlerts
                     };
                 }
             });
