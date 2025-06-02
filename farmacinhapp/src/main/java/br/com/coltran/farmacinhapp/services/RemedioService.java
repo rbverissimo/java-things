@@ -122,7 +122,7 @@ public class RemedioService extends ServiceWorker implements RepositoryService<R
                 .getFarmacias().stream()
                 .flatMap(f -> f.getRemedios().stream()
                         .map(r -> { return new RemedioIndexVO.Builder().buildFromModel(r);})
-                        .filter(vo -> vo.getDosesRestantes() < n))
+                        .filter(vo -> vo.getDosesRestantes() < n && vo.getDosesRestantes() > -1))
                 .collect(Collectors.toSet());
     }
 

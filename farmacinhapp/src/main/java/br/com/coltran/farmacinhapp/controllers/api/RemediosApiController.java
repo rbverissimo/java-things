@@ -3,7 +3,6 @@ package br.com.coltran.farmacinhapp.controllers.api;
 import br.com.coltran.farmacinhapp.controllers.ControllerCommons;
 import br.com.coltran.farmacinhapp.controllers.web.dto.RemedioCatalogoDTO;
 import br.com.coltran.farmacinhapp.domain.Remedio;
-import br.com.coltran.farmacinhapp.domain.valueobjects.RemedioIndexVO;
 import br.com.coltran.farmacinhapp.services.FarmaciaService;
 import br.com.coltran.farmacinhapp.services.RemedioService;
 import org.springframework.beans.factory.annotation.Autowired;
