@@ -3,6 +3,8 @@ package br.com.coltran.farmacinhapp.security.domain;
 import br.com.coltran.farmacinhapp.domain.Farmacia;
 import br.com.coltran.farmacinhapp.domain.interfaces.TableEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,10 +18,15 @@ public class User implements TableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonIgnore
     private long id;
     private String username;
     private String email;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String passwordConfirm;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -29,6 +36,7 @@ public class User implements TableEntity {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Role> roles;
 
 
@@ -40,14 +48,18 @@ public class User implements TableEntity {
     private Set<Farmacia> farmacias;
 
     @OneToMany(targetEntity = VerificationToken.class, mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<VerificationToken> verificationTokens;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @JsonIgnore
     private ZonedDateTime dataCriacao;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @JsonIgnore
     private ZonedDateTime dataAlteracao;
 
+    @JsonIgnore
     private boolean verificado;
 
     @OneToMany(targetEntity = FarmaciaShareToken.class, mappedBy = "farmacia", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
