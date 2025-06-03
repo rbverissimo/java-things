@@ -70,8 +70,8 @@ public class FarmaciasController extends ControllerCommons {
     }
 
     @GetMapping("/cadastro")
-    public String cadastroGET(@ModelAttribute Farmacia farmacia){
-        Set<Farmacia> farmaciasUsuario = authService.usuarioLogado().getFarmacias();
+    public String cadastroGET(@ModelAttribute Farmacia farmacia, Model model){
+        model.addAttribute("user", authService.usuarioLogado());
         return "farmacias/cadastro";
     }
 

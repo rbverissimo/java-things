@@ -36,6 +36,7 @@ public class User implements TableEntity {
     @JoinTable(name = "users_farmacias",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "farmacia_id"))
+    @JsonBackReference
     private Set<Farmacia> farmacias;
 
     @OneToMany(targetEntity = VerificationToken.class, mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

@@ -125,8 +125,8 @@
 
                 watch(usarDadosUsuarioPaciente, (usarDados) => {
                     if(usarDados){
-                        nomeUser.value = user?.username || '';
-                        dtNasctoUser.value = user?.dataNascimento || '';
+                        nomeUser.value = serverData.user?.username || '';
+                        dtNasctoUser.value = serverData.user?.dataNascimento || '';
                     }
                 });
 
