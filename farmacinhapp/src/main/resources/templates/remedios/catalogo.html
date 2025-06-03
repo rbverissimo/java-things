@@ -8,7 +8,7 @@
         <th:block th:if="${remedios.size > 0}" th:insert="components/toolbar :: lightToolbar(~{::#toolbar-catalogo})">
             <div class="w-100 d-flex justify-content-end" id="toolbar-catalogo" th:fragment="toolbarCatalogo">
                 <div class="col-5 d-inline-flex align-items-center">
-                    <span class="material-symbols-outlined me-2">search</span>
+                    <i class="material-symbols-outlined me-2">search</i>
                     <input type="search" placeholder="Digite o nome do remédio" v-model="remedioSearch" @keyup="buscarRemedios" class="form-control me-2">
                 </div>
             </div>
@@ -221,7 +221,6 @@
                     remedioDelete,
                     remedioDeleteModalTitle
                 };
-
             }
         });
 
