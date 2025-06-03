@@ -60,7 +60,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" value="" role="switch" id="usarInfoUsuarioCheckbox">
+                                            <input class="form-check-input" type="checkbox" v-model="usarDadosUsuarioPaciente" role="switch" id="usarInfoUsuarioCheckbox">
                                             <label class="form-check-label" for="usarInfoUsuarioCheckbox">Eu sou o paciente desta farmácia</label>
                                         </div>
                                     </div>
@@ -68,8 +68,8 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-floating py-1">
-                                            <input class="form-control" type="text" id="nome-paciente"
-                                                   th:field="*{paciente.nome}" placeholder="Nome do paciente" />
+                                            <input class="form-control" type="text" id="nome-paciente" v-model="nomeUser"
+                                                   th:field="*{paciente.nome}" placeholder="Nome do paciente" :readonly="usarDadosUsuarioPaciente" />
                                             <label for="nome-paciente">Nome do paciente</label>
                                             <span th:if="${#fields.hasErrors('paciente.nome')}" style="font-size: 0.8rem"
                                                   th:errors="*{paciente.nome}" class="text-danger"></span>
@@ -79,8 +79,8 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-floating py-1">
-                                            <input id="nascimento-paciente"
-                                                   th:field="*{paciente.dataNascimento}" type="date" class="form-control"/>
+                                            <input id="nascimento-paciente" v-model="dtNasctoUser"
+                                                   th:field="*{paciente.dataNascimento}" type="date" class="form-control" :readonly="usarDadosUsuarioPaciente" />
                                             <label for="nascimento-paciente">Data de nascimento:</label>
                                             <span th:if="${#fields.hasErrors('paciente.dataNascimento')}" style="font-size: 0.8rem"
                                                   th:errors="*{paciente.dataNascimento}" class="text-danger"></span>
@@ -110,13 +110,30 @@
         </div>
     </div>
     <script type="module" th:inline="javascript" layout:fragment="vue-app">
-        import { createApp, ref } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+        import { createApp, ref, watch } from '/webjars/vue/dist/vue.esm-browser.prod.js';
+
+        const serverData = {
+            user: /*[[${user}]]*/ null
+        }
 
         const app = createApp({
             setup(){
 
-                return {
+                const usarDadosUsuarioPaciente = ref(false);
+                const nomeUser = ref('');
+                const dtNasctoUser = ref('');
 
+                watch(usarDadosUsuarioPaciente, (usarDados) => {
+                    if(usarDados){
+                        nomeUser.value = user?.username || '';
+                        dtNasctoUser.value = user?.dataNascimento || '';
+                    }
+                });
+
+                return {
+                    usarDadosUsuarioPaciente,
+                    nomeUser,
+                    dtNasctoUser
                 }
             }
         });
