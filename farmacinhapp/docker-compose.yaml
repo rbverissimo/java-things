@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  spring:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: farmacinhapp
+    restart: unless-stoped
+    ports:
+      - "8088:8080"
+    volumes:
+      - ./:/app
+      - ~/.m2:/root/.m2
+      - h2-data:/app/data/h2
+    command: ./mvnw spring-boot:run
+volumes:
+  h2-data:
