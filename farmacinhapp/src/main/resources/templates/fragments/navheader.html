@@ -1,10 +1,13 @@
 <div th:fragment="navheader">
-    <nav sec:authorize="isAuthenticated()" class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <nav sec:authorize="isAuthenticated()" class="navbar navbar-light">
         <div class="container-fluid">
             <a class="navbar-brand" th:href="@{/}">Farmacinha</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div class="d-inline-flex align-items-center">
+                <i id="themeModeIcon" class="material-symbols-outlined me-3">light_mode</i>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link active" aria-current="page" th:href="@{/usuario/}">Usuário</a>

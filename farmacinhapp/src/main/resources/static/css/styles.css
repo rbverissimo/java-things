@@ -1,3 +1,17 @@
+:root {
+    --bs-nav-color: #e3f2fd;
+    --bs-text-color: #3e3e3e;
+}
+
+[data-theme='dark']{
+    --bs-nav-color: #3e454c;
+    --bs-text-color: #f4f4f4;
+}
+
+i, div, span, p {
+    color: var(--bs-text-color) !important;
+}
+
 .main-container {
     display: flex;
     width: 95%;
@@ -10,11 +24,12 @@
 }
 
 a {
-    color: inherit;
+    color: var(--bs-text-color) !important;
     font-size: inherit;
     font-weight: inherit;
     text-decoration: none !important;
     background-color: transparent;
+    transition: color 0.3s ease;
 }
 
 .fs-08rem {
@@ -44,8 +59,8 @@ a {
       display: flex;
       justify-content: center;
       background-color: #333;
-      color: #fff;
       padding: 0.5%;
+      color: #f4f4f4 !important;
       text-align: center;
       position: fixed;
       bottom: 0;
