@@ -2,13 +2,3 @@
     background-color: var(--bs-nav-color);
     transition: background-color 0.3s ease-in-out;
 }
-
-#themeModeIcon {
-    border-radius: 50%;
-    padding: 0.5rem;
-    cursor: pointer;
-}
-
-#themeModeIcon:hover {
-    background-color: #f1f1f1;
-}

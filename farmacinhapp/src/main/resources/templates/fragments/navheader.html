@@ -2,17 +2,24 @@
     <nav sec:authorize="isAuthenticated()" class="navbar navbar-light">
         <div class="container-fluid">
             <a class="navbar-brand" th:href="@{/}">Farmacinha</a>
-            <div class="d-inline-flex align-items-center">
-                <i id="themeModeIcon" class="material-symbols-outlined me-3">light_mode</i>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" th:href="@{/usuario/}">Usuário</a>
-                    <a class="nav-link" th:href="@{/farmacias/}">Farmácias</a>
-                    <a class="nav-link" th:href="@{/remedios/catalogo/}">Catálogo de Remédios</a>
+                    <hr>
+                    <a class="nav-link active" aria-current="page" th:href="@{/usuario/}">Minha conta</a>
+                    <a class="nav-link" th:href="@{/farmacias/}">Minhas farmácias</a>
+                    <a class="nav-link" th:href="@{/remedios/catalogo/}">Catálogo de remédios</a>
+                    <hr>
+                    <div class="d-flex w-25 justify-content-between" >
+                        <i id="themeModeIcon" class="material-symbols-outlined">dark_mode</i>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" role="switch" type="checkbox" id="darkMode">
+                            <label class="form-check-label" for="darkMode"></label>
+                        </div>
+                    </div>
+                    <hr>
                     <a class="nav-link" th:href="@{/logout}">Sair</a>
                 </div>
             </div>
