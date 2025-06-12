@@ -2,3 +2,13 @@
     background-color: var(--bs-nav-color);
     transition: background-color 0.3s ease-in-out;
 }
+
+a.nav-link span {
+    border-bottom: 2px solid transparent;
+    transition: border-bottom-color 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+a.nav-link span:hover {
+    border-bottom-color: inherit;
+}
