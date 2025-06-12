@@ -6,20 +6,18 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <hr>
+                <div class="navbar-nav align-items-end">
+                    <hr class="w-100">
                     <a class="nav-link active" aria-current="page" th:href="@{/usuario/}">Minha conta</a>
                     <a class="nav-link" th:href="@{/farmacias/}">Minhas farmácias</a>
                     <a class="nav-link" th:href="@{/remedios/catalogo/}">Catálogo de remédios</a>
-                    <hr>
-                    <div class="d-flex w-25 justify-content-between" >
-                        <i id="themeModeIcon" class="material-symbols-outlined">dark_mode</i>
+                    <div class="d-flex w-25 justify-content-end" >
+                        <i id="themeModeIcon" class="material-symbols-outlined me-3">dark_mode</i>
                         <div class="form-check form-switch">
                             <input class="form-check-input" role="switch" type="checkbox" id="darkMode">
                             <label class="form-check-label" for="darkMode"></label>
                         </div>
                     </div>
-                    <hr>
                     <a class="nav-link" th:href="@{/logout}">Sair</a>
                 </div>
             </div>
