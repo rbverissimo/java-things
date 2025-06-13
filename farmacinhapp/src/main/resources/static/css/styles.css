@@ -1,5 +1,7 @@
 :root {
     --bs-nav-color: #e3f2fd;
+    --bs-footer-color: #e3f2fd;
+    --bs-dark-button-color: #e3f2fd;
     --bs-text-color: #3e3e3e;
 }
 
@@ -8,7 +10,7 @@
     --bs-text-color: #f4f4f4;
 }
 
-i, div, span, p {
+i, span, a {
     color: var(--bs-text-color) !important;
 }
 
@@ -30,6 +32,10 @@ a {
     text-decoration: none !important;
     background-color: transparent;
     transition: color 0.3s ease;
+}
+
+.btn-primary a {
+    color: var(--bs-dark-button-color);
 }
 
 .fs-08rem {
@@ -60,11 +66,14 @@ a {
       justify-content: center;
       background-color: #333;
       padding: 0.5%;
-      color: #f4f4f4 !important;
       text-align: center;
       position: fixed;
       bottom: 0;
       width: 100%;
+}
+
+.footer-wrapper p, .footer-wrapper span {
+    color: var(--bs-footer-color) !important;
 }
 
 @media(max-width: 767px){
