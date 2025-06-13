@@ -4,15 +4,20 @@ services:
   spring:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dev.dockerfile
     container_name: farmacinhapp
     restart: unless-stoped
     ports:
       - "8088:8080"
+    env_file:
+      - ./.env.dev.secrets
     volumes:
       - ./:/app
       - ~/.m2:/root/.m2
       - h2-data:/app/data/h2
     command: ./mvnw spring-boot:run
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - APP_VERIFICATION_BASE_URL=http://localhost:8088
 volumes:
   h2-data:
