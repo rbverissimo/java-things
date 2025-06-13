@@ -34,8 +34,8 @@ a {
     transition: color 0.3s ease;
 }
 
-.btn-primary a {
-    color: var(--bs-dark-button-color);
+a.btn-primary {
+    color: var(--bs-dark-button-color) !important;
 }
 
 .fs-08rem {
