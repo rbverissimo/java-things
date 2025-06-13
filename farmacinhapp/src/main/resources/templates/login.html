@@ -8,7 +8,6 @@
 
     <main class="form-signin w-100 m-auto">
 
-
         <form th:action="@{/login}" method="post">
             <h1 class="h3 mb-3 fw-normal">Olá, seja bem-vindo(a)</h1>
 
@@ -27,8 +26,7 @@
                 <span style="font-size: 0.8rem" th:text="${infoErr}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-
-
+            
 
             <div class="form-floating">
                 <input type="email" class="form-control" id="floatingInput" name="email" placeholder="usuario@email.com.br" th:value="${emailRegistrado}">
