@@ -82,7 +82,7 @@ public class RemediosController extends ControllerCommons {
         if(bindingResult.hasErrors()){
             model.addAttribute("farmaciaId", farmaciaId);
             model.addAttribute("tiposRemedio", tipoRemedioRepository.findAll());
-            return "/remedios/cadastro";
+            return "remedios/cadastro";
         }
 
         if(authService.usuarioLogado().getFarmacias().stream()
@@ -92,7 +92,7 @@ public class RemediosController extends ControllerCommons {
             model.addAttribute("tiposRemedio", tipoRemedioRepository.findAll());
             mensagens.add(new BootstrapMessage(new ErroMsgVO("O número de remédios cadastrados foi excedido")));
             model.addAttribute("mensagens", mensagens);
-            return "/remedios/cadastro";
+            return "remedios/cadastro";
         }
 
         Farmacia farmacia = farmaciaService.findResourceById(farmaciaId);
@@ -114,7 +114,7 @@ public class RemediosController extends ControllerCommons {
         model.addAttribute("farmaciaId", remedio.getFarmacia().getId());
         model.addAttribute("remedioId", remedio.getId());
         model.addAttribute("tiposRemedio", tipoRemedioRepository.findAll());
-        return "/remedios/cadastro";
+        return "remedios/cadastro";
     }
 
     @DeleteMapping("/deletar/{id}")

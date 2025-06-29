@@ -41,13 +41,13 @@ public class FarmaciasController extends ControllerCommons {
 
         List<UIMessage> mensagens = new ArrayList<>();
 
-        if(bindingResult.hasErrors()) return "/farmacias/cadastro";
+        if(bindingResult.hasErrors()) return "farmacias/cadastro";
 
         User usuario = authService.usuarioLogado();
         if(usuario.getFarmacias().size() > 1){
             mensagens.add(new BootstrapMessage(new ErroMsgVO("O seu limite de farmácias foi atingido.")));
             model.addAttribute("mensagens", mensagens);
-            return "/farmacias/cadastro";
+            return "farmacias/cadastro";
         }
 
         Optional.ofNullable(farmacia.getPaciente()).ifPresent(p -> {
