@@ -10,10 +10,6 @@
     --bs-text-color: #f4f4f4;
 }
 
-i, span, a {
-    color: var(--bs-text-color) !important;
-}
-
 .main-container {
     display: flex;
     width: 95%;
@@ -26,16 +22,12 @@ i, span, a {
 }
 
 a {
-    color: var(--bs-text-color) !important;
+    color: inherit;
     font-size: inherit;
     font-weight: inherit;
     text-decoration: none !important;
     background-color: transparent;
     transition: color 0.3s ease;
-}
-
-a.btn-primary {
-    color: var(--bs-dark-button-color) !important;
 }
 
 .fs-08rem {
