@@ -30,13 +30,13 @@ public class FarmaciasApiController extends ControllerCommons {
 
        Optional<User> usuarioRecebedor = authService.usuarioByEmail(shareFarmacia.getEmailUsuario());
 
-       if(!usuarioRecebedor.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND)
+       if(!usuarioRecebedor.isPresent()) return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                .body(Map.of("mensagem", "O usuário declarado não foi encontrado"));
 
 
        Optional<Farmacia> farmaciaCompartilhada = farmaciaService.findByNomeAndUser(shareFarmacia.getNomeFarmacia());
 
-       if(!farmaciaCompartilhada.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND)
+       if(!farmaciaCompartilhada.isPresent()) return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                .body(Map.of("mensagem", "Sua farmácia não foi encontrada"));
 
        boolean isFarmaciaJaCompartilhadaComUsuario = usuarioRecebedor.get().getFarmacias().stream()
